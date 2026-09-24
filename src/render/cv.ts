@@ -1,0 +1,127 @@
+import { byOrder, experience, headlines, order, person, skills, summary, ventures, type Employer } from '../content/cv';
+import { stackLogos, summaryIcons } from '../content/icons';
+import { escapeHtml, rich } from '../content/rich';
+import type { Focus } from '../types';
+
+const sectionHead = (num: string, title: string, cont = false) =>
+  `<div class="section-head"><span class="section-num">${num}</span><h2>${title}${
+    cont ? ' <span class="section-cont">continued</span>' : ''
+  }</h2></div>`;
+
+function header(focus: Focus) {
+  const { kicker, role } = headlines[focus];
+  return `
+  <header class="identity">
+    <div class="identity-row">
+      <div class="identity-main">
+        <span class="avatar-frame">
+          <img class="avatar" src="${person.photo}" alt="${escapeHtml(person.name)}">
+        </span>
+        <div>
+          <p class="kicker">${escapeHtml(kicker)}</p>
+          <h1>${escapeHtml(person.name)}</h1>
+          <p class="role-title">${escapeHtml(role)}</p>
+        </div>
+      </div>
+      <div class="contact">
+        <span>${escapeHtml(person.location)}</span>
+        <a href="mailto:${person.email}">${person.email}</a>
+        <a href="https://${person.linkedin}">${person.linkedin}</a>
+      </div>
+    </div>
+  </header>`;
+}
+
+function summarySection(focus: Focus) {
+  const items = byOrder(summary, order[focus].summary)
+    .map(
+      (item) => `
+      <li data-flip="summary-${item.id}">
+        <span class="summary-icon" aria-hidden="true">${summaryIcons[item.id]}</span>
+        <span><b class="summary-label">${escapeHtml(item.label)}</b> • ${rich(item.text)}</span>
+      </li>`,
+    )
+    .join('');
+  return `
+  <section>
+    ${sectionHead('01', 'Summary')}
+    <ul class="summary-list">${items}</ul>
+  </section>`;
+}
+
+function employerBlock(e: Employer) {
+  const jobs = e.jobs
+    .map(
+      (job) => `
+      <div class="job">
+        ${
+          job.title
+            ? `<div class="job-head">
+          <span class="job-title">${escapeHtml(job.title)}</span>
+          <span class="job-meta">${escapeHtml(job.dates ?? '')}</span>
+        </div>`
+            : ''
+        }
+        <ul class="bullets">${job.bullets.map((b) => `<li>${rich(b)}</li>`).join('')}</ul>
+      </div>`,
+    )
+    .join('');
+  return `
+    <div class="employer-block${e.long ? ' employer-long' : ''}">
+      <div class="employer-head">
+        <img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}">
+        <div class="employer-copy">
+          <div class="employer-tags">${escapeHtml(e.tags)}</div>
+          <div class="employer-name">${rich(e.name)}</div>
+        </div>
+      </div>
+      <div class="employer-span">${escapeHtml(e.span)}</div>
+      ${e.intro ? `<p class="employer-intro">${rich(e.intro)}</p>` : ''}
+      ${jobs}
+    </div>`;
+}
+
+function skillsSection(focus: Focus) {
+  const groups = byOrder(skills, order[focus].skills)
+    .map(
+      (g) => `
+      <div class="skill-group" data-flip="skills-${g.id}">
+        <h3>${escapeHtml(g.title)}</h3>
+        <div class="skill-list">${rich(g.skills)}</div>
+        <div class="logo-wrapper" aria-label="${escapeHtml(g.logosLabel)}">
+          ${g.logos.map((name) => `<div class="stack-logo">${stackLogos[name]}</div>`).join('')}
+        </div>
+      </div>`,
+    )
+    .join('');
+  return `
+  <section>
+    ${sectionHead('04', 'Skills &amp; Stacks')}
+    <div class="grid-three">${groups}</div>
+  </section>`;
+}
+
+export function renderCv(root: HTMLElement, focus: Focus) {
+  const [intuit, ...earlier] = experience;
+  root.innerHTML = `
+<div class="page">
+  ${header(focus)}
+  ${summarySection(focus)}
+  <section>
+    ${sectionHead('02', 'Experience')}
+    ${employerBlock(intuit)}
+  </section>
+</div>
+
+<div class="page">
+  <section>
+    ${sectionHead('02', 'Experience', true)}
+    ${earlier.map(employerBlock).join('')}
+  </section>
+  <section>
+    ${sectionHead('03', 'Ventures')}
+    ${ventures.map(employerBlock).join('')}
+  </section>
+  ${skillsSection(focus)}
+</div>`;
+}

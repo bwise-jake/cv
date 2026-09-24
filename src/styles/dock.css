@@ -1,0 +1,278 @@
+/*
+ * Floating control dock. It sits outside the page's themes on purpose: a neutral dark glass pill
+ * that reads on light and dark CVs alike. Only the PDF button picks up the active theme.
+ */
+.dock {
+  --dock-bg: rgb(17 17 19 / 0.8);
+  --dock-fg: #f4f4f5;
+  --dock-muted: #a1a1aa;
+  --dock-line: rgb(255 255 255 / 0.1);
+  --dock-hi: rgb(255 255 255 / 0.13);
+
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--dock-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.dock-panel,
+.dock-toggle {
+  background: var(--dock-bg);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+  border: 1px solid var(--dock-line);
+  box-shadow:
+    0 18px 40px -16px rgb(0 0 0 / 0.5),
+    0 2px 6px rgb(0 0 0 / 0.18),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.dock-panel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 999px;
+}
+
+.dock-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dock-caption {
+  padding: 0 6px 0 10px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dock-muted);
+}
+
+/* The theme swatches are self-explanatory in the pill; the caption returns in the mobile sheet. */
+.dock-themes .dock-caption,
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.dock-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: 999px;
+  background: var(--dock-hi);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  pointer-events: none;
+  transition:
+    transform 380ms cubic-bezier(0.3, 1.25, 0.5, 1),
+    width 380ms cubic-bezier(0.3, 1.25, 0.5, 1),
+    height 380ms ease;
+}
+
+.dock button {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dock button:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.9);
+  outline-offset: 2px;
+}
+
+.dock-option {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dock-muted) !important;
+  white-space: nowrap;
+  transition: color 180ms ease;
+}
+
+.dock-option:hover,
+.dock-option[aria-checked="true"] {
+  color: var(--dock-fg) !important;
+}
+
+.dock-swatch {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px rgb(255 255 255 / 0.28);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+  background: var(--dock-line);
+}
+
+.dock-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px 0 12px;
+  border-radius: 999px;
+  background: var(--cta-bg) !important;
+  color: var(--cta-fg) !important;
+  font-weight: 600 !important;
+  transition: filter 160ms ease, transform 160ms ease, background-color 200ms ease;
+}
+
+.dock-pdf:hover { filter: brightness(1.12); }
+.dock-pdf:active { transform: scale(0.97); }
+
+.dock svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.dock-toggle { display: none; }
+
+.no-anim .dock-indicator { transition: none; }
+
+/* Tablet: swatches only, the active theme keeps its name. */
+@media screen and (max-width: 1099px) {
+  .dock-themes .dock-option { padding: 0 11px; }
+  .dock-themes .dock-option:not([aria-checked="true"]) .dock-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+/* Phone: a single floating button that opens a bottom sheet. */
+@media screen and (max-width: 640px) {
+  body { padding-bottom: 88px; }
+
+  .dock {
+    left: auto;
+    right: 16px;
+    bottom: 16px;
+    transform: none;
+    font-size: 14px;
+  }
+
+  .dock-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 16px 0 14px;
+    border-radius: 999px;
+    background: var(--dock-bg) !important;
+    font-weight: 600 !important;
+  }
+
+  .dock-panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 76px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 22px;
+    background: rgb(17 17 19 / 0.92);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(0.98);
+    transform-origin: bottom right;
+    transition: opacity 200ms ease, transform 240ms cubic-bezier(0.3, 1.2, 0.5, 1), visibility 0s linear 240ms;
+  }
+
+  .dock.is-open .dock-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 200ms ease, transform 240ms cubic-bezier(0.3, 1.2, 0.5, 1), visibility 0s;
+  }
+
+  .dock-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+
+  .dock-focus { grid-template-columns: repeat(3, 1fr); }
+
+  .dock-group .dock-caption,
+  .dock-themes .dock-caption {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    grid-column: 1 / -1;
+    padding: 0 4px 2px;
+  }
+
+  .dock-option {
+    height: 44px;
+    justify-content: flex-start;
+    padding: 0 12px;
+    border-radius: 12px;
+  }
+
+  .dock-themes .dock-option:not([aria-checked="true"]) .dock-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+
+  .dock-focus .dock-option { justify-content: center; }
+  .dock-indicator { border-radius: 12px; }
+
+  .dock-divider {
+    width: auto;
+    height: 1px;
+    margin: 0;
+  }
+
+  .dock-pdf {
+    justify-content: center;
+    height: 46px;
+    border-radius: 14px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-indicator,
+  .dock-panel { transition: none !important; }
+}

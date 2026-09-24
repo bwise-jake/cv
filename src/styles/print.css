@@ -1,0 +1,93 @@
+/* Print / Save-as-PDF: A4, zero margins, backgrounds kept so the PDF matches the screen. */
+@media print {
+  /* Paper colour, not white, so dark themes (Linear) print edge to edge. */
+  body {
+    background: var(--paper);
+  }
+
+  .dock {
+    display: none !important;
+  }
+
+  /* The header's soft-light noise puts the PDF page in a blend group, which makes Preview and
+     Quick Look flatten gradients. It's a near-invisible texture, so print without it. */
+  header.identity::before {
+    display: none;
+  }
+
+  html,
+  body,
+  .page,
+  .page * {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Exactly one sheet per .page; --fit (fit.ts) guarantees the content fits inside it. */
+  .page {
+    zoom: var(--fit);
+    width: calc(210mm / var(--fit));
+    height: calc(297mm / var(--fit));
+    overflow: hidden;
+    margin: 0;
+    padding: var(--page-pad-top) var(--page-pad-x) 56px;
+    background: var(--paper);
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .page + .page {
+    margin-top: 0;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .employer-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .employer-block.employer-long {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .section-head,
+  .employer-head,
+  .employer-span,
+  .employer-intro {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .job {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .grid-two,
+  .grid-three {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .identity,
+  .summary-list li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

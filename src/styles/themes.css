@@ -1,0 +1,199 @@
+/*
+ * Company themes. Each one only overrides tokens from base.css.
+ * Colours were sampled from each company's live marketing site (computed styles / CSS custom
+ * properties, Sept 2026). Proprietary typefaces are swapped for the closest open font:
+ *   Atlassian  Charlie Text/Display, Atlassian Mono → Inter, JetBrains Mono
+ *   Notion     NotionInter                          → Inter
+ *   Canva      Canva Sans                           → Plus Jakarta Sans
+ *   Stripe     Söhne                                → Inter Tight, Source Code Pro
+ *   Linear     Inter Variable, Berkeley Mono        → Inter, JetBrains Mono
+ *   Vercel     Geist, Geist Mono                    → same (open source)
+ */
+
+/* ---------- Atlassian ---------- */
+:root[data-theme="atlassian"] {
+  --paper: #ffffff;
+  --canvas: #f8f8f8;
+  --ink: #101214;
+  --ink-soft: #292a2e;
+  --ink-faint: #6b6e76;
+  --line: #dddee1;
+  --line-soft: #ebecf0;
+  --accent: #1868db;
+  --accent-wash: #e9f2fe;
+  --tag: #1558bc;
+  --link: #1868db;
+
+  --header-bg: #1868db;
+  --header-noise-opacity: 0;
+  --paper-on-ink: #ffffff;
+  --muted-on-ink: #e9f2fe;
+  --line-on-ink: rgb(255 255 255 / 0.4);
+  --accent-on-ink: #cfe1fd;
+
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --name-weight: 600;
+  --name-tracking: -0.015em;
+  --radius-avatar: 50%;
+  --radius-logo: 4px;
+}
+
+/* ---------- Notion ---------- */
+:root[data-theme="notion"] {
+  --paper: #ffffff;
+  --canvas: #f9f9f8;
+  --ink: #191918;
+  --ink-soft: #37352f;
+  --ink-faint: #787774;
+  --line: #e9e9e7;
+  --line-soft: #f1f1ef;
+  --accent: #0075de;
+  --accent-wash: #e6f3fe;
+  --tag: #615d59;
+  --link: #0075de;
+
+  /* Light header, like a Notion page title rather than a hero band. */
+  --header-bg: #ffffff;
+  --header-noise-opacity: 0;
+  --header-border: 1px solid #e9e9e7;
+  --paper-on-ink: #191918;
+  --muted-on-ink: #615d59;
+  --line-on-ink: #d3d1cb;
+  --accent-on-ink: #0075de;
+
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --mono: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+  --name-weight: 700;
+  --name-tracking: -0.035em;
+  --radius-avatar: 6px;
+  --radius-logo: 4px;
+}
+
+/* ---------- Canva ---------- */
+:root[data-theme="canva"] {
+  --paper: #ffffff;
+  --canvas: #f2f3f5;
+  --ink: #0f1015;
+  --ink-soft: #3c3e44;
+  --ink-faint: #6e7076;
+  --line: #e3e4e8;
+  --line-soft: #f0f1f4;
+  --accent: #8b3dff;
+  --accent-wash: #f3ecff;
+  --tag: #7630d7;
+  --link: #8b3dff;
+
+  --header-bg: linear-gradient(98deg, #00c4cc -9%, #5a32fa 78%, #7630d7 158%);
+  --header-noise-opacity: 0.1;
+  --paper-on-ink: #ffffff;
+  --muted-on-ink: rgb(255 255 255 / 0.88);
+  --line-on-ink: rgb(255 255 255 / 0.45);
+  --accent-on-ink: #c9fbfc;
+
+  --sans: 'Plus Jakarta Sans', 'Noto Sans', Helvetica, Arial, sans-serif;
+  --mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --name-weight: 800;
+  --name-tracking: -0.02em;
+  --heading-weight: 700;
+  --radius-avatar: 50%;
+  --radius-logo: 8px;
+}
+
+/* ---------- Stripe ---------- */
+:root[data-theme="stripe"] {
+  --paper: #ffffff;
+  --canvas: #f8fafd;
+  --ink: #061b31;
+  --ink-soft: #50617a;
+  --ink-faint: #64748d;
+  --line: #e5edf5;
+  --line-soft: #eef3f8;
+  --accent: #533afd;
+  --accent-wash: #e8e9ff;
+  --tag: #533afd;
+  --link: #533afd;
+
+  /*
+   * PDF-safe gradients: linear, opaque, and every stop a distinct colour spanning 0–100%.
+   * Radial/translucent layers and repeated stops (hard edges) break in Preview/Quick Look.
+   */
+  --header-bg: linear-gradient(112deg, #061b31 0%, #0a2046 40%, #1d2a86 70%, #533afd 100%);
+  --header-noise-opacity: 0;
+  --paper-on-ink: #ffffff;
+  --muted-on-ink: #adbdcc;
+  --line-on-ink: rgb(255 255 255 / 0.22);
+  --accent-on-ink: #9e9eff;
+
+  --sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'Source Code Pro', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Stripe sets headlines light (Söhne 300). */
+  --name-weight: 400;
+  --name-tracking: -0.02em;
+  --heading-weight: 500;
+  --radius-avatar: 50%;
+  --radius-logo: 6px;
+}
+
+/* ---------- Linear (dark) ---------- */
+:root[data-theme="linear"] {
+  color-scheme: dark;
+  --paper: #0f1011;
+  --canvas: #08090a;
+  --ink: #f7f8f8;
+  --ink-soft: #b4b9c2;
+  --ink-faint: #8a8f98;
+  --line: #23252a;
+  --line-soft: #1c1c1f;
+  --accent: #7170ff;
+  --accent-wash: #1d1e3a;
+  --tag: #828fff;
+  --link: #828fff;
+
+  --header-bg: linear-gradient(160deg, #1b1a38 0%, #0e0e1a 40%, #0a0b0e 70%, #08090a 100%);
+  --header-noise-opacity: 0;
+  --header-border: 1px solid #23252a;
+  --paper-on-ink: #f7f8f8;
+  --muted-on-ink: #8a8f98;
+  --line-on-ink: #34343a;
+  --accent-on-ink: #828fff;
+
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --name-weight: 510;
+  --name-tracking: -0.022em;
+  --heading-weight: 510;
+  --strong-weight: 590;
+  --radius-avatar: 50%;
+  --radius-logo: 6px;
+}
+
+/* ---------- Vercel ---------- */
+:root[data-theme="vercel"] {
+  --paper: #ffffff;
+  --canvas: #fafafa;
+  --ink: #171717;
+  --ink-soft: #4d4d4d;
+  --ink-faint: #8f8f8f;
+  --line: #ebebeb;
+  --line-soft: #f2f2f2;
+  /* Monochrome: accents are ink; only links use Geist blue. */
+  --accent: #171717;
+  --accent-wash: #f2f2f2;
+  --tag: #666666;
+  --link: #006bff;
+  --cta-bg: #ffffff;
+  --cta-fg: #000000;
+
+  --header-bg: #000000;
+  --header-noise-opacity: 0;
+  --paper-on-ink: #ededed;
+  --muted-on-ink: #a1a1a1;
+  --line-on-ink: #2e2e2e;
+  --accent-on-ink: #52a8ff;
+
+  --name-weight: 600;
+  --name-tracking: -0.045em;
+  --radius-avatar: 50%;
+  --radius-logo: 6px;
+}

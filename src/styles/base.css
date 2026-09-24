@@ -1,0 +1,561 @@
+/* Base CV styles, ported from the original static index.html. Themes override the tokens in :root. */
+:root {
+  --paper: oklch(98.2% 0.006 40);
+  --ink: oklch(20% 0.015 40);
+  --ink-soft: oklch(39% 0.014 40);
+  --ink-faint: oklch(58% 0.012 40);
+  --line: oklch(88% 0.012 40);
+  --line-soft: oklch(93% 0.008 40);
+  --accent: oklch(46% 0.15 38);
+  --accent-wash: oklch(95% 0.02 38);
+  --tag: oklch(48% 0.06 240);
+  --canvas: oklch(94% 0.006 40);
+  --paper-on-ink: oklch(96% 0.006 40);
+  --muted-on-ink: oklch(78% 0.012 40);
+  --line-on-ink: oklch(38% 0.012 40);
+  --accent-on-ink: oklch(72% 0.12 38);
+  --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --page-pad-x: 48px;
+  --page-pad-top: 48px;
+
+  /* Tokens added so company themes can restyle the page without touching rules. */
+  --header-bg: linear-gradient(165deg, oklch(23.5% 0.016 40) 0%, var(--ink) 48%, oklch(17.5% 0.014 38) 100%);
+  --header-noise-opacity: 0.22;
+  --header-border: none;
+  --display: var(--sans);
+  --name-weight: 700;
+  --name-tracking: -0.02em;
+  --heading-weight: 600;
+  --strong-weight: 600;
+  --radius-avatar: 30px;
+  --radius-logo: 7px;
+  --link: var(--accent);
+  --cta-bg: var(--accent);
+  --cta-fg: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Each page is a fixed A4 sheet. fit.ts measures the content and sets --fit (≤ 1) when a theme's
+ * fonts or a focus make it run long; zoom then scales everything (padding included) uniformly,
+ * while width/height divide by the same factor so the sheet itself stays exactly 210 × 297mm.
+ */
+.page {
+  --fit: 1;
+  zoom: var(--fit);
+  width: calc(210mm / var(--fit));
+  height: calc(297mm / var(--fit));
+  margin: calc(40px / var(--fit)) auto;
+  background: var(--paper);
+  padding: var(--page-pad-top) var(--page-pad-x) 56px;
+  box-sizing: border-box;
+}
+
+.page + .page {
+  margin-top: calc(32px / var(--fit));
+}
+
+/* Measuring natural content height (fit.ts): unscaled, unconstrained A4-width pages. */
+:root[data-measure] .page {
+  zoom: 1;
+  height: auto;
+}
+
+header.identity {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--header-bg);
+  color: var(--paper-on-ink);
+  margin: calc(-1 * var(--page-pad-top)) calc(-1 * var(--page-pad-x)) 22px;
+  padding: 28px var(--page-pad-x) 26px;
+  border-bottom: var(--header-border);
+  overflow: hidden;
+}
+
+header.identity::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--header-noise-opacity);
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+header.identity > * {
+  position: relative;
+  z-index: 1;
+}
+
+.identity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.identity-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.avatar-frame {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-avatar);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 32%;
+  transform: scale(1.2);
+  transform-origin: center 37%;
+}
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-on-ink);
+  font-weight: 500;
+  margin: 0 0 6px;
+  line-height: 1;
+  padding-top: 6px;
+}
+
+h1 {
+  font-family: var(--display);
+  font-size: 28px;
+  letter-spacing: var(--name-tracking);
+  line-height: 1.05;
+  margin: 0;
+  font-weight: var(--name-weight);
+  white-space: nowrap;
+  color: var(--paper-on-ink);
+}
+
+.role-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--paper-on-ink);
+}
+
+.role-title::before {
+  content: "";
+  width: 14px;
+  height: 2px;
+  background: var(--accent-on-ink);
+  flex-shrink: 0;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted-on-ink);
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 6px;
+}
+
+.contact a {
+  color: var(--muted-on-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-on-ink);
+}
+
+.contact a:hover {
+  color: var(--accent-on-ink);
+  border-color: var(--accent-on-ink);
+}
+
+section { margin-bottom: 24px; }
+section:last-child { margin-bottom: 0; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+h2 {
+  font-family: var(--display);
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: var(--heading-weight);
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+.section-cont {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+ul.summary-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.summary-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+ul.summary-list li:last-child { margin-bottom: 0; }
+ul.summary-list b { color: var(--ink); font-weight: var(--strong-weight); }
+ul.summary-list .summary-label {
+  color: var(--accent);
+  font-weight: var(--strong-weight);
+}
+
+.summary-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.summary-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.job {
+  margin-bottom: 10px;
+  padding-left: 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.job:last-child { margin-bottom: 0; }
+
+.job-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.job-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.job-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+ul.bullets {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.bullets li {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: 3px;
+  padding-left: 14px;
+  position: relative;
+}
+
+ul.bullets li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--ink-faint);
+}
+
+ul.bullets li:last-child { margin-bottom: 0; }
+
+.fill {
+  color: var(--accent);
+  font-style: italic;
+  border-bottom: 1px dashed var(--accent);
+}
+.fill.fill-block {
+  display: block;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.4;
+  max-width: 22em;
+  margin-top: 4px;
+}
+
+.employer-block { margin-bottom: 16px; }
+.employer-block:last-child { margin-bottom: 0; }
+
+.employer-block:not(:last-child) {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.employer-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 3px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.employer-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.employer-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-logo);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+}
+
+.employer-name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.employer-name a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.employer-name a:hover {
+  color: var(--link);
+  border-bottom-color: var(--link);
+}
+
+/* Focus-driven emphasis. `.kw` is only bold when the active focus is listed in data-f.
+   Bold text keeps its context colour (ink in the summary, inherited elsewhere) via --strong-color. */
+b { font-weight: var(--strong-weight); }
+[data-focus] b.kw {
+  font-weight: inherit;
+  color: inherit;
+}
+[data-focus="balanced"] b.kw[data-f~="balanced"],
+[data-focus="growth"] b.kw[data-f~="growth"],
+[data-focus="engineering"] b.kw[data-f~="engineering"] {
+  font-weight: var(--strong-weight);
+  color: var(--strong-color, currentColor);
+}
+ul.summary-list { --strong-color: var(--ink); }
+
+/* Briefly highlight keywords that a focus change just emphasised. */
+@keyframes kw-flash {
+  from { background-color: var(--accent-wash); box-shadow: 0 0 0 2px var(--accent-wash); }
+  to { background-color: transparent; box-shadow: 0 0 0 2px transparent; }
+}
+b.kw.kw-flash {
+  border-radius: 2px;
+  animation: kw-flash 1400ms ease-out;
+}
+
+/* Theme switches ease colours rather than snapping. */
+body,
+.page,
+header.identity,
+.section-head,
+.employer-block,
+.employer-logo {
+  transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.employer-span {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin: 3px 0 4px 46px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.employer-intro {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 10px 46px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.employer-tags {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--tag);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+}
+
+.grid-three {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.skill-group { margin-bottom: 0; }
+
+.skill-group h3 {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  color: var(--accent);
+  margin: 0 0 4px;
+}
+
+.skill-list {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.skill-group .logo-wrapper {
+  margin-top: 10px;
+}
+
+.logo-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.stack-logo {
+  width: 18px;
+  height: 18px;
+  color: var(--ink-soft);
+  flex-shrink: 0;
+}
+
+.stack-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.meta-note {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+
+/* Phone screens reflow into a single scrolling column. Skipped while measuring, so the
+   A4 fit (used for print) is always computed from the desktop layout. */
+@media screen and (max-width: 640px) {
+  :root:not([data-measure]) {
+    --page-pad-x: 24px;
+    --page-pad-top: 40px;
+
+    .page {
+      zoom: 1;
+      width: auto;
+      height: auto;
+      padding: 40px 24px;
+      margin: 0;
+    }
+
+    .page + .page {
+      margin-top: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .identity-row { flex-direction: column; align-items: flex-start; }
+    .identity-main > div { min-width: 0; }
+    h1 { white-space: normal; }
+    .contact { text-align: left; align-items: flex-start; }
+    .grid-two,
+    .grid-three { grid-template-columns: 1fr; }
+    .employer-span,
+    .employer-intro { margin-left: 0; }
+  }
+}
