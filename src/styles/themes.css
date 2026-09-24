@@ -70,6 +70,13 @@
   --radius-logo: 4px;
 }
 
+/* Notion-style illustrated face in place of the photo (alt text and layout unchanged). */
+:root[data-theme="notion"] .avatar {
+  content: url('../assets/notion-face.png');
+  object-fit: contain;
+  transform: none;
+}
+
 /* ---------- Canva ---------- */
 :root[data-theme="canva"] {
   --paper: #ffffff;
