@@ -2,7 +2,7 @@
 
 A two-page A4 CV that restyles itself for the company reading it.
 
-- **Company themes**: Default, Atlassian, Notion, Canva, Stripe, Linear, Vercel. Colours were
+- **Company themes**: Default, Atlassian, Notion, Canva, Stripe, Linear, Relevance AI. Colours were
   sampled from each company's live site; proprietary typefaces are swapped for the closest open
   font (see the header of `src/styles/themes.css`).
 - **Focus modes**: Balanced, Growth, Engineering. Each changes which phrases are bold, the order
@@ -10,6 +10,10 @@ A two-page A4 CV that restyles itself for the company reading it.
 - **Download PDF**: prints exactly what's on screen (vector, selectable text), named
   `Jake-Thornton-Bowen-CV-<Theme>-<Focus>.pdf`.
 - **Shareable state**: `?theme=atlassian&focus=growth` opens straight into that view.
+
+The CV stays centred and the controls sit in a panel in the right-hand gutter (it stays put while the pages scroll): a Theme
+dropdown, a Focus switch and Download PDF. Below 1200px wide they collapse into a floating
+"Customise" button that opens the same panel as a sheet.
 
 Keyboard: `T` / `Shift+T` cycle themes, `F` / `Shift+F` cycle focus, `P` downloads the PDF.
 

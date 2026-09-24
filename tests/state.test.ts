@@ -32,6 +32,9 @@ describe('pdfFileName', () => {
   it('names the file after theme and focus', () => {
     expect(pdfFileName({ theme: 'atlassian', focus: 'growth' })).toBe('Jake-Thornton-Bowen-CV-Atlassian-Growth');
     expect(pdfFileName(DEFAULT_STATE)).toBe('Jake-Thornton-Bowen-CV-Default');
+    expect(pdfFileName({ theme: 'relevance', focus: 'engineering' })).toBe(
+      'Jake-Thornton-Bowen-CV-Relevance-AI-Engineering',
+    );
   });
 });
 

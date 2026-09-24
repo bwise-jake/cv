@@ -5,8 +5,19 @@
     background: var(--paper);
   }
 
-  .dock {
+  .stack-logo::after {
+    display: none;
+  }
+
+  .controls {
     display: none !important;
+  }
+
+  .layout,
+  #cv {
+    display: block;
+    height: auto;
+    overflow: visible;
   }
 
   /* The header's soft-light noise puts the PDF page in a blend group, which makes Preview and

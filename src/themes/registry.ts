@@ -3,7 +3,7 @@ import type { ThemeId } from '../types';
 export interface Theme {
   id: ThemeId;
   label: string;
-  /** CSS background for the dock swatch. */
+  /** CSS background for colour swatches. */
   swatch: string;
   /** Google Fonts css2 query (without the base URL). Null when the fonts are already loaded. */
   fonts: string | null;
@@ -63,12 +63,12 @@ export const themes: Theme[] = [
     note: 'Inter + JetBrains Mono, standing in for Berkeley Mono',
   },
   {
-    id: 'vercel',
-    label: 'Vercel',
-    swatch: '#000000',
-    fonts: null,
-    families: ['Geist', 'Geist Mono'],
-    note: 'Geist, Vercel’s own open-source typeface',
+    id: 'relevance',
+    label: 'Relevance AI',
+    swatch: 'linear-gradient(135deg, #6056ff, #3b32f9)',
+    fonts: 'family=Sora:wght@400;600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500',
+    families: ['Sora', 'Inter', 'JetBrains Mono'],
+    note: 'Sora + Inter, Relevance AI’s own open-source typefaces',
   },
 ];
 

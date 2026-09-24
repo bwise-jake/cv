@@ -7,7 +7,7 @@
  *   Canva      Canva Sans                           → Plus Jakarta Sans
  *   Stripe     Söhne                                → Inter Tight, Source Code Pro
  *   Linear     Inter Variable, Berkeley Mono        → Inter, JetBrains Mono
- *   Vercel     Geist, Geist Mono                    → same (open source)
+ *   Relevance  Sora + Inter                         → same (open source)
  */
 
 /* ---------- Atlassian ---------- */
@@ -175,32 +175,36 @@
   --radius-logo: 6px;
 }
 
-/* ---------- Vercel ---------- */
-:root[data-theme="vercel"] {
+/* ---------- Relevance AI ---------- */
+:root[data-theme="relevance"] {
   --paper: #ffffff;
-  --canvas: #fafafa;
-  --ink: #171717;
-  --ink-soft: #4d4d4d;
-  --ink-faint: #8f8f8f;
-  --line: #ebebeb;
-  --line-soft: #f2f2f2;
-  /* Monochrome: accents are ink; only links use Geist blue. */
-  --accent: #171717;
-  --accent-wash: #f2f2f2;
-  --tag: #666666;
-  --link: #006bff;
-  --cta-bg: #ffffff;
-  --cta-fg: #000000;
+  --canvas: #f8fafc;
+  --ink: #0d162f;
+  --ink-soft: #374151;
+  --ink-faint: #868a97;
+  --line: #e5e7eb;
+  --line-soft: #f3f3f4;
+  --accent: #6056ff;
+  --accent-wash: #efedff;
+  --tag: #0e9384;
+  --link: #4b40d6;
 
-  --header-bg: #000000;
+  /* Light hero with the site's lavender → pink glow, as a PDF-safe linear gradient. */
+  --header-bg: linear-gradient(115deg, #ece7ff 0%, #f3efff 45%, #f9f0fb 75%, #fdeef6 100%);
   --header-noise-opacity: 0;
-  --paper-on-ink: #ededed;
-  --muted-on-ink: #a1a1a1;
-  --line-on-ink: #2e2e2e;
-  --accent-on-ink: #52a8ff;
+  --header-border: 1px solid #e6e7ea;
+  --paper-on-ink: #0d162f;
+  --muted-on-ink: #5b6070;
+  --line-on-ink: #d6d1f5;
+  --accent-on-ink: #4b40d6;
 
-  --name-weight: 600;
+  --sans: 'Inter', system-ui, sans-serif;
+  --display: 'Sora', 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Sora headlines are set regular with tight tracking. */
+  --name-weight: 400;
   --name-tracking: -0.045em;
+  --heading-weight: 400;
   --radius-avatar: 50%;
-  --radius-logo: 6px;
+  --radius-logo: 8px;
 }

@@ -84,10 +84,14 @@ the two-page layout hold everywhere.
 | Canva | Plus Jakarta Sans (Canva Sans) + DM Mono | #8B3DFF | teal → violet gradient |
 | Stripe | Inter Tight (Söhne) + Source Code Pro | #533AFD | navy → blurple sweep |
 | Linear | Inter + JetBrains Mono (Berkeley Mono) | #7170FF | dark page, violet haze |
-| Vercel | Geist + Geist Mono | monochrome, #006BFF links | black |
+| Relevance AI | Sora + Inter (both open) | #6056FF, teal #0E9384 tags | light lavender → pink wash |
 
-The floating control dock deliberately sits outside the theme system (neutral dark glass) so it
-reads on light and dark CVs; only its PDF button takes the theme's accent.
+The controls panel (`src/render/controls.ts`) sits in the gutter to the right of the centred CV and is sticky, so only
+the pages scroll. It deliberately sits outside the theme system (neutral dark glass) so it reads
+beside light and dark CVs; only its PDF button takes the theme's accent. One line per control:
+Theme is a listbox dropdown showing each company's app icon (from its own site; `src/themes/logos.ts`) with the name set in that theme's own typeface, Focus is a
+segmented radiogroup, and the PDF button shows the filename it will save as. Under 1200px it
+becomes a floating "Customise" button + sheet.
 
 ## Focus modes
 

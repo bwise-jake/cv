@@ -67,6 +67,39 @@ body {
   margin-top: calc(32px / var(--fit));
 }
 
+/*
+ * Wide screens: the CV stays centred in the window and the controls panel sits in the right-hand
+ * gutter (controls.css makes it sticky). The right column never gets narrower than the panel, so
+ * when the window is too tight for both, the CV eases left rather than the panel overlapping it.
+ * The CV column is its own scroll container, so the scrollbar sits beside the pages, not at the
+ * window edge.
+ */
+@media screen and (min-width: 1200px) {
+  .layout {
+    /* Sized so a 1440px window still centres the CV exactly: (1440 − 210mm) / 2 ≥ 296 + 20 + 6. */
+    --panel-w: 296px;
+    --panel-gap: 20px;
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto
+      minmax(calc(var(--panel-w) + var(--panel-gap) + 6px), 1fr);
+    align-items: start;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #cv {
+    grid-column: 2;
+    height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* both-edges keeps the pages centred when the scrollbar takes up space. */
+    scrollbar-gutter: stable both-edges;
+    padding-inline: 12px;
+  }
+}
+
 /* Measuring natural content height (fit.ts): unscaled, unconstrained A4-width pages. */
 :root[data-measure] .page {
   zoom: 1;
@@ -514,6 +547,44 @@ header.identity,
   height: 18px;
   color: var(--ink-soft);
   flex-shrink: 0;
+}
+
+.stack-logo {
+  position: relative;
+  cursor: default;
+  outline: none;
+}
+
+.stack-logo::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease, transform 120ms ease;
+  z-index: 10;
+}
+
+.stack-logo:hover::after,
+.stack-logo:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.stack-logo:focus-visible {
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px var(--accent);
 }
 
 .stack-logo svg {

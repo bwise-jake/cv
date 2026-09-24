@@ -89,7 +89,7 @@ function skillsSection(focus: Focus) {
         <h3>${escapeHtml(g.title)}</h3>
         <div class="skill-list">${rich(g.skills)}</div>
         <div class="logo-wrapper" aria-label="${escapeHtml(g.logosLabel)}">
-          ${g.logos.map((name) => `<div class="stack-logo">${stackLogos[name]}</div>`).join('')}
+          ${g.logos.map((name) => `<div class="stack-logo" role="img" tabindex="0" aria-label="${escapeHtml(name)}" data-tooltip="${escapeHtml(name)}">${stackLogos[name]}</div>`).join('')}
         </div>
       </div>`,
     )

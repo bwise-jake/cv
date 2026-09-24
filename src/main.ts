@@ -1,12 +1,12 @@
 import './styles/base.css';
 import './styles/themes.css';
-import './styles/dock.css';
+import './styles/controls.css';
 import './styles/print.css';
 
 import { fitPages } from './fit';
 import { bindPrintTitle, downloadPdf } from './pdf';
 import { renderCv } from './render/cv';
-import { mountDock } from './render/dock';
+import { mountControls } from './render/controls';
 import { getState, initState, setState, subscribe } from './state';
 import { ensureThemeFonts, getTheme, themes } from './themes/registry';
 import { FOCUSES, type CvState, type Focus } from './types';
@@ -63,8 +63,10 @@ async function applyTheme(state: CvState) {
 
 /** Once the page is idle, fetch every theme's fonts so later switches are instant. */
 function warmThemeFonts() {
-  const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1200));
-  idle(() => themes.forEach((t) => void ensureThemeFonts(t, 10_000)));
+  const warm = () => themes.forEach((t) => void ensureThemeFonts(t, 10_000));
+  // requestIdleCallback can be starved indefinitely, so give it a deadline.
+  if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 2000 });
+  else setTimeout(warm, 1200);
 }
 
 function cycle<T>(list: readonly T[], current: T, step = 1): T {
@@ -73,7 +75,7 @@ function cycle<T>(list: readonly T[], current: T, step = 1): T {
 
 function bindShortcuts() {
   document.addEventListener('keydown', (e) => {
-    if (e.metaKey || e.ctrlKey || e.altKey || (e.target as HTMLElement).closest('input, textarea, [contenteditable]')) return;
+    if (e.metaKey || e.ctrlKey || e.altKey || (e.target as HTMLElement).closest('input, textarea, [contenteditable], [role="listbox"]')) return;
     const { theme, focus } = getState();
     const step = e.shiftKey ? -1 : 1;
     const key = e.key.toLowerCase();
@@ -93,7 +95,7 @@ function boot() {
   // Web fonts arriving late change line wrapping, so refit whenever any finish loading.
   document.fonts.addEventListener('loadingdone', () => fitPages(cvRoot));
 
-  mountDock(document.getElementById('dock')!, downloadPdf);
+  mountControls(document.getElementById('controls')!, downloadPdf);
   bindShortcuts();
   bindPrintTitle();
   addEventListener('load', warmThemeFonts, { once: true });
