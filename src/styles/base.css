@@ -237,6 +237,16 @@ h1 {
   border-color: var(--accent-on-ink);
 }
 
+/* Tailored links (?for=Company): a quiet line above the contact details. */
+.prepared-for {
+  color: var(--accent-on-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 9px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
 section { margin-bottom: 24px; }
 section:last-child { margin-bottom: 0; }
 

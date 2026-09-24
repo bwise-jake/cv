@@ -32,6 +32,16 @@ export function toSearch(state: CvState, current = ''): string {
   return qs ? `?${qs}` : '';
 }
 
+/**
+ * Company a tailored link was made for (`?for=Atlassian`). Deliberately not part of CvState:
+ * it comes only from the link, is never saved, and is carried along by toSearch() untouched.
+ */
+export function getRecipient(search: string): string | null {
+  const raw = new URLSearchParams(search).get('for');
+  const clean = raw?.replace(/[^\p{L}\p{N} &.'’-]/gu, '').replace(/\s+/g, ' ').trim().slice(0, 40);
+  return clean || null;
+}
+
 function readSaved(): Partial<CvState> | null {
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null');

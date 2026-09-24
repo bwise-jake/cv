@@ -17,6 +17,19 @@ dropdown, a Focus switch and Download PDF. Below 1200px wide they collapse into 
 
 Keyboard: `T` / `Shift+T` cycle themes, `F` / `Shift+F` cycle focus, `P` downloads the PDF.
 
+## Tailored links, analytics and metric notes
+
+- **Tailored links**: add `for=` to any link, e.g.
+  `…/?theme=atlassian&focus=growth&for=Atlassian`. The header shows "Prepared for Atlassian",
+  and the website link in the header (and so in the PDF) carries the same view.
+- **Analytics** (Umami, cookieless): create a free site at cloud.umami.is, then add its website
+  ID as a repo Actions variable `UMAMI_WEBSITE_ID`. Events: `Visit`, `Theme`, `Focus`,
+  `PDF download`, `Metric note`, each tagged with `for`. Off locally and when the ID is unset
+  (events are logged to the console in dev instead).
+- **Metric notes**: "how this was measured" popovers on key numbers, written in `metricNotes`
+  in `src/content/cv.ts`. Notes that still contain a `{{placeholder}}` only appear in `npm run dev`,
+  never on the deployed site.
+
 ## Develop
 
 ```bash

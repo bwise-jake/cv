@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { order, skills, summary } from '../src/content/cv';
 import { pdfFileName } from '../src/pdf';
-import { DEFAULT_STATE, resolveState, toSearch } from '../src/state';
+import { visibleNotes } from '../src/notes';
+import { DEFAULT_STATE, getRecipient, resolveState, toSearch } from '../src/state';
 import { FOCUSES } from '../src/types';
 
 describe('resolveState', () => {
@@ -44,5 +45,27 @@ describe('content order', () => {
       expect([...order[focus].summary].sort()).toEqual(summary.map((s) => s.id).sort());
       expect([...order[focus].skills].sort()).toEqual(skills.map((s) => s.id).sort());
     }
+  });
+});
+
+describe('getRecipient', () => {
+  it('reads and tidies ?for=', () => {
+    expect(getRecipient('?for=Atlassian')).toBe('Atlassian');
+    expect(getRecipient('?for=%20Relevance%20%20AI%20')).toBe('Relevance AI');
+    expect(getRecipient('?for=<script>alert(1)</script>')).toBe('scriptalert1script');
+    expect(getRecipient('?theme=canva')).toBeNull();
+    expect(getRecipient('?for=')).toBeNull();
+  });
+
+  it('caps the length', () => {
+    expect(getRecipient(`?for=${'a'.repeat(80)}`)?.length).toBe(40);
+  });
+});
+
+describe('visibleNotes', () => {
+  const notes = { a: 'Measured with a 12-month holdout', b: '{{placeholder}}', c: ' ' };
+  it('hides placeholder notes outside dev', () => {
+    expect(Object.keys(visibleNotes(notes, false))).toEqual(['a']);
+    expect(Object.keys(visibleNotes(notes, true))).toEqual(['a', 'b']);
   });
 });

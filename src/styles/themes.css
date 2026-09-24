@@ -208,3 +208,11 @@
   --radius-avatar: 50%;
   --radius-logo: 8px;
 }
+
+/* Pixel-art knight in place of the photo, kept crisp when scaled. */
+:root[data-theme="relevance"] .avatar {
+  content: url('../assets/relevance-knight.png');
+  object-fit: cover;
+  transform: none;
+  image-rendering: pixelated;
+}

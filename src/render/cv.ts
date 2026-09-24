@@ -8,7 +8,9 @@ const sectionHead = (num: string, title: string, cont = false) =>
     cont ? ' <span class="section-cont">continued</span>' : ''
   }</h2></div>`;
 
-function header(focus: Focus) {
+const displayUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+
+function header(focus: Focus, recipient: string | null) {
   const { kicker, role } = headlines[focus];
   return `
   <header class="identity">
@@ -24,8 +26,10 @@ function header(focus: Focus) {
         </div>
       </div>
       <div class="contact">
+        ${recipient ? `<span class="prepared-for">Prepared for ${escapeHtml(recipient)}</span>` : ''}
         <span>${escapeHtml(person.location)}</span>
         <a href="mailto:${person.email}">${person.email}</a>
+        <a href="${person.website}" data-live-link>${displayUrl(person.website)}</a>
         <a href="https://${person.linkedin}">${person.linkedin}</a>
       </div>
     </div>
@@ -101,11 +105,11 @@ function skillsSection(focus: Focus) {
   </section>`;
 }
 
-export function renderCv(root: HTMLElement, focus: Focus) {
+export function renderCv(root: HTMLElement, focus: Focus, recipient: string | null = null) {
   const [intuit, ...earlier] = experience;
   root.innerHTML = `
 <div class="page">
-  ${header(focus)}
+  ${header(focus, recipient)}
   ${summarySection(focus)}
   <section>
     ${sectionHead('02', 'Experience')}

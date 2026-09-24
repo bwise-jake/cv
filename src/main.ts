@@ -1,19 +1,37 @@
 import './styles/base.css';
 import './styles/themes.css';
 import './styles/controls.css';
+import './styles/notes.css';
 import './styles/print.css';
 
+import { initAnalytics, track } from './analytics';
+import { person } from './content/cv';
 import { fitPages } from './fit';
+import { annotateNotes, mountNotes } from './notes';
 import { bindPrintTitle, downloadPdf } from './pdf';
 import { renderCv } from './render/cv';
 import { mountControls } from './render/controls';
-import { getState, initState, setState, subscribe } from './state';
+import { getRecipient, getState, initState, setState, subscribe } from './state';
 import { ensureThemeFonts, getTheme, themes } from './themes/registry';
 import { FOCUSES, type CvState, type Focus } from './types';
 
 const html = document.documentElement;
 const cvRoot = document.getElementById('cv')!;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const recipient = getRecipient(location.search);
+
+/** Render the CV for a focus, then everything that depends on the fresh DOM. */
+function render(focus: Focus) {
+  renderCv(cvRoot, focus, recipient);
+  annotateNotes(cvRoot);
+  syncLiveLinks();
+  fitPages(cvRoot);
+}
+
+/** The header's website link opens the live CV in the same theme/focus/company as this view. */
+function syncLiveLinks() {
+  cvRoot.querySelectorAll<HTMLAnchorElement>('[data-live-link]').forEach((a) => (a.href = person.website + location.search));
+}
 
 /** FLIP: re-render, then animate every [data-flip] element from its old position to its new one. */
 function renderWithFlip(focus: Focus) {
@@ -22,8 +40,7 @@ function renderWithFlip(focus: Focus) {
   const boldBefore = new Set(emphasised().map((el) => el.textContent));
 
   html.dataset.focus = focus;
-  renderCv(cvRoot, focus);
-  fitPages(cvRoot);
+  render(focus);
   if (reducedMotion.matches) return;
 
   cvRoot.querySelectorAll<HTMLElement>('[data-flip]').forEach((el) => {
@@ -89,9 +106,9 @@ function boot() {
   const state = initState();
   html.dataset.theme = state.theme;
   html.dataset.focus = state.focus;
-  renderCv(cvRoot, state.focus);
-  fitPages(cvRoot);
+  render(state.focus);
   void applyTheme(state);
+  mountNotes(cvRoot);
   // Web fonts arriving late change line wrapping, so refit whenever any finish loading.
   document.fonts.addEventListener('loadingdone', () => fitPages(cvRoot));
 
@@ -100,9 +117,21 @@ function boot() {
   bindPrintTitle();
   addEventListener('load', warmThemeFonts, { once: true });
 
+  initAnalytics({ for: recipient });
+  track('Visit', { theme: state.theme, focus: state.focus });
+  // beforeprint covers the PDF button, the P shortcut and Cmd/Ctrl+P alike.
+  addEventListener('beforeprint', () => track('PDF download', { ...getState() }));
+
   subscribe((next, prev) => {
-    if (next.theme !== prev.theme) void applyTheme(next);
-    if (next.focus !== prev.focus) renderWithFlip(next.focus);
+    if (next.theme !== prev.theme) {
+      void applyTheme(next);
+      track('Theme', { theme: next.theme });
+    }
+    if (next.focus !== prev.focus) {
+      renderWithFlip(next.focus);
+      track('Focus', { focus: next.focus });
+    }
+    syncLiveLinks();
   });
 }
 

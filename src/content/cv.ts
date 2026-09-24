@@ -50,6 +50,25 @@ export const person = {
   location: 'Sydney, NSW, Australia',
   email: 'jakethorntonbowen@gmail.com',
   linkedin: 'linkedin.com/in/jaketb',
+  /** Live interactive CV. Shown in the header (and so in every PDF); swap for a custom domain. */
+  website: 'https://bwise-jake.github.io/jaketb-cv-repo/',
+};
+
+/**
+ * "How this was measured" notes, shown on hover/focus over the matching phrase in the CV.
+ * Keys must match the phrase text exactly. Notes still containing a {{placeholder}} only show in
+ * local dev, never in the deployed site or the PDF.
+ */
+export const metricNotes: Record<string, string> = {
+  '$5.5m+ in incremental LTV': '{{How LTV was calculated: attribution model, retention window, source (e.g. Amplitude/Optimizely)}}',
+  '60+ web experiments': '{{Period, platforms and what counted as an experiment; win rate}}',
+  '10× traffic': '{{Baseline vs expanded traffic, markets included}}',
+  'triple experimentation velocity': '{{Tests per quarter before vs after}}',
+  '15+ countries': '{{Which markets the winners were rolled out to}}',
+  '3k+ incremental subscriptions': '{{Measurement window and method (holdout, A/B lift)}}',
+  'doubling marketing velocity': '{{What was measured: requests shipped per month before vs after}}',
+  'Lighthouse 90+': '{{Pages, device profile and how it was maintained}}',
+  '25 small businesses': '{{Types of businesses and what was delivered}}',
 };
 
 export const headlines: Record<Focus, Headline> = {
