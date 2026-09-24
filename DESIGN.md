@@ -86,12 +86,14 @@ the two-page layout hold everywhere.
 | Linear | Inter + JetBrains Mono (Berkeley Mono) | #7170FF | dark page, violet haze |
 | Relevance AI | Sora + Inter (both open) | #6056FF, teal #0E9384 tags | light lavender → pink wash |
 
-The controls panel (`src/render/controls.ts`) sits in the gutter to the right of the centred CV and is sticky, so only
-the pages scroll. It deliberately sits outside the theme system (neutral dark glass) so it reads
-beside light and dark CVs; only its PDF button takes the theme's accent. One line per control:
-Theme is a listbox dropdown showing each company's app icon (from its own site; `src/themes/logos.ts`) with the name set in that theme's own typeface, Focus is a
-segmented radiogroup, and the PDF button shows the filename it will save as. Under 1200px it
-becomes a floating "Customise" button + sheet.
+The controls (`src/render/controls.ts`) are typeset as a CV section headed **Version** in the
+margin beside the centred page, sticky so only the pages scroll. No card, blur or pills: a section
+head styled like "01 Summary", then ruled lines of lead word + value. *Style* is a listbox showing each
+company's app icon (`src/themes/logos.ts`) with names set in the theme's own typeface; *Emphasis* is
+three words (Balanced / Growth / Engineering) with the chosen one underlined in the accent; then an
+ink Download PDF button with the filename in mono beneath. Colours come from the active theme's
+tokens so it belongs on light and dark pages; type stays Geist so it doesn't shift while switching.
+Under 1200px an ink "Version" button opens the same content on a paper sheet.
 
 ## Focus modes
 

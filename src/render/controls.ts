@@ -12,7 +12,6 @@ const FOCUS_LABELS: Record<Focus, string> = {
 };
 
 const ICON_DOWNLOAD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>`;
-const ICON_SLIDERS = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7"/><path d="M4 10V3"/><path d="M12 21v-9"/><path d="M12 8V3"/><path d="M20 21v-5"/><path d="M20 12V3"/><path d="M1 14h6"/><path d="M9 8h6"/><path d="M17 16h6"/></svg>`;
 const ICON_CHEVRON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`;
 const ICON_CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
 
@@ -22,7 +21,7 @@ const brandMark = (t: Theme) =>
 
 /**
  * The CV controls: a sticky panel beside the CV on wide screens, a floating button + bottom sheet
- * below that. One line each for Theme (listbox dropdown), Focus (segmented radiogroup) and PDF.
+ * below that. Typeset like a CV section headed "Version": Style (listbox), Emphasis (word radios), PDF.
  */
 export function mountControls(root: HTMLElement, onDownload: () => void) {
   root.className = 'controls';
@@ -30,17 +29,16 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
   root.innerHTML = `
     <button type="button" class="controls-toggle" aria-expanded="false" aria-controls="controls-panel">
       <span class="brand-slot" data-current-mark></span>
-      <span>Customise</span>
-      ${ICON_SLIDERS}
+      <span>Version</span>
+      ${ICON_CHEVRON}
     </button>
     <div class="controls-panel" id="controls-panel">
       <div class="controls-head">
-        <span class="controls-title">Customise this CV</span>
-        <span class="controls-keys" title="Keyboard: T theme, F focus, P PDF"><kbd>T</kbd><kbd>F</kbd><kbd>P</kbd></span>
+        <h2 class="controls-title">Version</h2>
       </div>
 
-      <div class="controls-row">
-        <span class="controls-label" id="theme-label">Theme</span>
+      <div class="controls-line">
+        <span class="controls-lead" id="theme-label">Style</span>
         <div class="theme-select">
           <button type="button" class="theme-trigger" aria-haspopup="listbox" aria-expanded="false"
             aria-controls="theme-list" aria-labelledby="theme-label theme-current">
@@ -66,29 +64,31 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
         </div>
       </div>
 
-      <div class="controls-row">
-        <span class="controls-label" id="focus-label">Focus</span>
-        <div class="segmented" role="radiogroup" aria-labelledby="focus-label">
-          <span class="segmented-indicator" aria-hidden="true"></span>
+      <div class="controls-line">
+        <span class="controls-lead" id="focus-label">Emphasis</span>
+        <div class="focus-words" role="radiogroup" aria-labelledby="focus-label">
           ${FOCUSES.map(
-            (f) =>
-              `<button type="button" role="radio" class="segmented-option" data-value="${f}">${FOCUS_LABELS[f]}</button>`,
-          ).join('')}
+            (f) => `<button type="button" role="radio" class="focus-word" data-value="${f}">${FOCUS_LABELS[f]}</button>`,
+          ).join('<span class="focus-sep" aria-hidden="true">/</span>')}
         </div>
       </div>
 
-      <div class="controls-pdf-row">
-        <button type="button" class="controls-pdf">${ICON_DOWNLOAD}<span>Download PDF</span></button>
+      <div class="controls-download">
+        <button type="button" class="controls-pdf">
+          ${ICON_DOWNLOAD}<span>Download PDF</span><span class="controls-pdf-meta">A4 · 2 pages</span>
+        </button>
         <span class="controls-file" data-file-name></span>
       </div>
+
+      <p class="controls-keys">Keys: <kbd>T</kbd> style, <kbd>F</kbd> emphasis, <kbd>P</kbd> PDF</p>
     </div>`;
 
   const toggle = root.querySelector<HTMLButtonElement>('.controls-toggle')!;
   const trigger = root.querySelector<HTMLButtonElement>('.theme-trigger')!;
   const list = root.querySelector<HTMLUListElement>('.theme-list')!;
   const options = [...list.querySelectorAll<HTMLLIElement>('.theme-option')];
-  const segmented = root.querySelector<HTMLElement>('.segmented')!;
-  const radios = [...segmented.querySelectorAll<HTMLButtonElement>('.segmented-option')];
+  const focusGroup = root.querySelector<HTMLElement>('.focus-words')!;
+  const radios = [...focusGroup.querySelectorAll<HTMLButtonElement>('.focus-word')];
 
   // ---- Sync UI from state (dropdown, radios, filename) ----
   const sync = (state: CvState) => {
@@ -103,24 +103,14 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
       radio.tabIndex = checked ? 0 : -1;
     }
     root.querySelector('[data-file-name]')!.textContent = `${pdfFileName(state)}.pdf`;
-    requestAnimationFrame(placeIndicator);
   };
 
-  // ---- Focus: segmented radiogroup with a sliding indicator ----
-  const placeIndicator = () => {
-    const active = segmented.querySelector<HTMLElement>('[aria-checked="true"]');
-    const indicator = segmented.querySelector<HTMLElement>('.segmented-indicator')!;
-    if (!active || !active.offsetWidth) return;
-    indicator.style.width = `${active.offsetWidth}px`;
-    indicator.style.height = `${active.offsetHeight}px`;
-    indicator.style.transform = `translate(${active.offsetLeft}px, ${active.offsetTop}px)`;
-  };
-
-  segmented.addEventListener('click', (e) => {
-    const radio = (e.target as HTMLElement).closest<HTMLButtonElement>('.segmented-option');
+  // ---- Emphasis: three words acting as a radiogroup ----
+  focusGroup.addEventListener('click', (e) => {
+    const radio = (e.target as HTMLElement).closest<HTMLButtonElement>('.focus-word');
     if (radio) setState({ focus: radio.dataset.value as Focus });
   });
-  segmented.addEventListener('keydown', (e) => {
+  focusGroup.addEventListener('keydown', (e) => {
     const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
     const current = radios.indexOf(e.target as HTMLButtonElement);
     if (!step || current < 0) return;
@@ -217,8 +207,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
   const setSheetOpen = (open: boolean) => {
     root.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    if (open) requestAnimationFrame(placeIndicator);
-    else closeList(false);
+    if (!open) closeList(false);
   };
   toggle.addEventListener('click', () => setSheetOpen(!root.classList.contains('is-open')));
   document.addEventListener('keydown', (e) => e.key === 'Escape' && setSheetOpen(false));
@@ -229,11 +218,6 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
     }
   });
 
-  new ResizeObserver(placeIndicator).observe(segmented);
-  document.fonts.addEventListener('loadingdone', placeIndicator);
   subscribe(sync);
   sync(getState());
-  // First placement shouldn't animate in from 0,0.
-  root.classList.add('no-anim');
-  requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('no-anim')));
 }
