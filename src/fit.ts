@@ -4,8 +4,19 @@
  * A4 layout (see [data-measure] in base.css) and binary-search the largest zoom that fits.
  */
 // A few px of headroom: print layout can differ from screen by sub-pixel rounding.
-const A4_HEIGHT_PX = (297 / 25.4) * 96 - 6;
+const A4_HEIGHT_PX = (297 / 25.4) * 96 - 12;
 const MIN_FIT = 0.8;
+
+/** Phone screens reflow into one column (base.css), so the A4 fit only matters for print there. */
+const phoneLayout = matchMedia('screen and (max-width: 640px)');
+
+/**
+ * Fit pages now on A4 layouts; on phones, defer until printing. Measuring briefly lays the page
+ * out at A4 width, which on a phone can trigger mobile text inflation, so avoid it while browsing.
+ */
+export function fitPagesForScreen(root: ParentNode = document) {
+  if (!phoneLayout.matches) fitPages(root);
+}
 
 export function fitPages(root: ParentNode = document) {
   const html = document.documentElement;

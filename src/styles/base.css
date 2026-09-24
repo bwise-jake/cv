@@ -37,10 +37,20 @@
 
 * { box-sizing: border-box; }
 
-html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  /* Stop mobile browsers (iOS Safari, Chrome Android) inflating text in blocks they think are
+     wide. The CV sets every size deliberately, and inflation made theme switches jump in size. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   margin: 0;
+  /* Normalise x-height across theme fonts to Geist's (0.53), so switching theme keeps the same
+     apparent text size. Geist itself is unchanged. */
+  font-size-adjust: 0.53;
   background: var(--canvas);
   font-family: var(--sans);
   color: var(--ink);

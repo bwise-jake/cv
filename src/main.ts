@@ -6,7 +6,7 @@ import './styles/print.css';
 
 import { initAnalytics, track } from './analytics';
 import { person } from './content/cv';
-import { fitPages } from './fit';
+import { fitPages, fitPagesForScreen } from './fit';
 import { annotateNotes, mountNotes } from './notes';
 import { bindPrintTitle, downloadPdf } from './pdf';
 import { renderCv } from './render/cv';
@@ -25,7 +25,7 @@ function render(focus: Focus) {
   renderCv(cvRoot, focus, recipient);
   annotateNotes(cvRoot);
   syncLiveLinks();
-  fitPages(cvRoot);
+  fitPagesForScreen(cvRoot);
 }
 
 /** The header's website link opens the live CV in the same theme/focus/company as this view. */
@@ -74,7 +74,7 @@ async function applyTheme(state: CvState) {
   // A later click may have won the race while fonts loaded.
   if (getState().theme === state.theme) {
     html.dataset.theme = state.theme;
-    fitPages(cvRoot);
+    fitPagesForScreen(cvRoot);
   }
 }
 
@@ -110,7 +110,7 @@ function boot() {
   void applyTheme(state);
   mountNotes(cvRoot);
   // Web fonts arriving late change line wrapping, so refit whenever any finish loading.
-  document.fonts.addEventListener('loadingdone', () => fitPages(cvRoot));
+  document.fonts.addEventListener('loadingdone', () => fitPagesForScreen(cvRoot));
 
   mountControls(document.getElementById('controls')!, downloadPdf);
   bindShortcuts();
@@ -119,8 +119,12 @@ function boot() {
 
   initAnalytics({ for: recipient });
   track('Visit', { theme: state.theme, focus: state.focus });
-  // beforeprint covers the PDF button, the P shortcut and Cmd/Ctrl+P alike.
-  addEventListener('beforeprint', () => track('PDF download', { ...getState() }));
+  // beforeprint covers the PDF button, the P shortcut and Cmd/Ctrl+P alike. Fit here too, since
+  // phones skip fitting while browsing.
+  addEventListener('beforeprint', () => {
+    fitPages(cvRoot);
+    track('PDF download', { ...getState() });
+  });
 
   subscribe((next, prev) => {
     if (next.theme !== prev.theme) {
