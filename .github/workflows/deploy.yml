@@ -25,6 +25,14 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - name: Install Chromium for layout checks
+        run: npx playwright install --with-deps chromium
+      # Both checks run their own `vite build`; they go before the real build so the uploaded
+      # dist/ is the one built with the analytics variable below.
+      - name: PDF check (every theme × emphasis is exactly 2 A4 pages)
+        run: npm run pdf
+      - name: Contrast check (WCAG AA for small text in every theme)
+        run: npm run check:contrast
       - run: npm run build
         env:
           # Optional: set in repo Settings → Secrets and variables → Actions → Variables.
