@@ -60,15 +60,19 @@ export const person = {
  * local dev, never in the deployed site or the PDF.
  */
 export const metricNotes: Record<string, string> = {
-  '$5.5m+ in incremental LTV': '{{How LTV was calculated: attribution model, retention window, source (e.g. Amplitude/Optimizely)}}',
-  '60+ web experiments': '{{Period, platforms and what counted as an experiment; win rate}}',
-  '10× traffic': '{{Baseline vs expanded traffic, markets included}}',
-  'triple experimentation velocity': '{{Tests per quarter before vs after}}',
-  '15+ countries': '{{Which markets the winners were rolled out to}}',
-  '3k+ incremental subscriptions': '{{Measurement window and method (holdout, A/B lift)}}',
-  'doubling marketing velocity': '{{What was measured: requests shipped per month before vs after}}',
-  'Lighthouse 90+': '{{Pages, device profile and how it was maintained}}',
-  '25 small businesses': '{{Types of businesses and what was delivered}}',
+  '$5.5m+ in incremental LTV':
+    'Sum of incremental subscriptions measured by A/B test or holdout, multiplied by 36-month LTV, 2022–2026.',
+  '60+ web experiments':
+    'Split and multi-armed bandit tests across key landing pages, scoped with FullStory and measured in Adobe Analytics to statistical significance, 2022–2026.',
+  '10× traffic': 'From ~100k monthly visits (QuickBooks AU) to ~1m across APAC when the role expanded to the region.',
+  'triple experimentation velocity':
+    'Pooling ~10× the traffic let tests reach statistical significance far sooner, so the same team concluded roughly three times as many tests per quarter.',
+  '15+ countries': 'Including AU, NZ, PH, SG, MY, JP, HK, CH and KR.',
+  '3k+ incremental subscriptions':
+    'Incremental subscriptions from winning tests rolled out across APAC, measured by A/B test or holdout, Jun 2025–Aug 2026.',
+  'doubling marketing velocity':
+    'Measured briefed-to-shipped: scored triage plus agency workstreams for content and simple builds halved the time from brief to live page, so twice as much shipped.',
+  'Lighthouse 90+': 'Google Core Web Vitals passed on 100% of mobile and 90% of desktop page loads.',
 };
 
 export const headlines: Record<Focus, Headline> = {
@@ -139,7 +143,7 @@ export const experience: Employer[] = [
         title: 'Senior Web Development & CRO Manager',
         dates: 'Jan 2022 – Aug 2023',
         bullets: [
-          'Added [[CRO experimentation|g]] and [[performance|e]] to the remit, turning the website into a measurable sales channel with a larger budget. Ran {{XX}} experiments, delivering {{XX% lift in XX}}.',
+          'Added [[CRO experimentation|g]] and [[performance|e]] to the remit, turning the website into a measurable sales channel with a larger budget. Ran numerous full-funnel personalisation experiments, delivering a [[28% increase in traffic to sign-up|b,g]].',
         ],
       },
       {
