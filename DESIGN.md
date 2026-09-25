@@ -18,12 +18,13 @@ deliberately, not everywhere. OKLCH throughout, no pure `#000`/`#fff`.
 | `--canvas` | `oklch(94% 0.006 40)` | body background behind the page |
 | `--ink` | `oklch(20% 0.015 40)` | headings, primary text |
 | `--ink-soft` | `oklch(39% 0.014 40)` | body copy |
-| `--ink-faint` | `oklch(58% 0.012 40)` | metadata, dates |
+| `--ink-faint` | `oklch(52% 0.012 40)` | metadata, dates |
 | `--line` | `oklch(88% 0.012 40)` | hairline rules |
 | `--accent` | `oklch(46% 0.15 38)` | kicker, section numbers, links, skill labels, brand mark |
 
 Contrast verified: ink-on-paper 17.2:1, ink-soft-on-paper 9.1:1,
 accent-on-paper 7.3:1. All clear WCAG AAA for normal text.
+Every theme's small text is checked for WCAG AA (4.5:1) in a real browser by `npm run check:contrast`.
 
 ## Typography
 
@@ -34,7 +35,7 @@ accent-on-paper 7.3:1. All clear WCAG AAA for normal text.
 - **Geist Mono** — dates, locations, contact details, section numbers,
   skill-group labels, industry tags. Used for anything that's metadata, not
   prose — the mono/sans split IS the hierarchy signal, not color or boxes.
-- Scale: name 30px/700, section h2 15px/600, employer name 15.5px/700, job
+- Scale: name 28px/700, section h2 15px/600, employer name 15.5px/700, job
   title 14px/600, body 13.5px/13px, metadata 10-11.5px. Hierarchy carried by
   weight + family switch (sans/mono), not by large size jumps — a dense
   resume needs many small steps, not a marketing-page modular scale.
@@ -52,28 +53,28 @@ accent-on-paper 7.3:1. All clear WCAG AAA for normal text.
   borders anywhere (banned pattern).
 - Every page uses the same fit scale (the smallest any page needs), so type size and margins are
   identical from page to page.
-- One small accent-colored mark (34x4px bar) as the page's only graphic
-  flourish. No icons, no stock imagery — a CV is a text-evidence document,
-  not an imagery-led brand surface.
+- Graphic elements are few and deliberate: the accent bar before the role title, small line
+  icons on the summary items, employer logos, and monochrome tech-stack logos. No stock imagery.
 
 ## Components
 
-- **No pill/chip badges anywhere.** Skills and industry tags are plain
-  comma- or interpunct-separated text in mono/ink-soft. This was the biggest
-  anti-reference: pill tags read as "generic resume template."
+- **Default theme: no pill/chip badges.** Skills and industry tags are plain comma- or
+  interpunct-separated text in mono. Pill tags read as "generic resume template." Brand themes
+  are the deliberate exception: they render tags as that company's own component (see
+  "Brand components per theme" below).
 - **Placeholder callouts** (`.fill`): accent-colored italic text with a
   dashed underline, not a yellow highlighter block — reads as a considered
   annotation rather than a Word tracked-change leftover.
-- **Company logos**: small (26px) squares with a hairline border, sitting
-  inline with the employer name at normal weight — treated as real brand
-  marks, not decorative icon badges.
+- **Company logos**: 36px squares (corner radius from the `--radius-logo` token) with a hairline
+  border, beside the employer tags and name — treated as real brand marks, not decorative badges.
 
 ## Print
 
-`@media print`: page fills the print area (0.3in/0.5in padding, A4 via
-`@page`), background goes pure white, layout collapses to a single column
-under 640px. Google Fonts load before print since the page is fully
-rendered in-browser first.
+`@media print` (`src/styles/print.css`): `@page { size: A4; margin: 0 }`; each `.page` is exactly
+one sheet, scaled by the fit factor from `src/fit.ts` so content never spills to a third page.
+Backgrounds print (`print-color-adjust: exact`) so the PDF matches the screen in every theme.
+The controls, metric-note tooltips and the header's noise texture are hidden in print (the noise
+uses a blend mode that makes Apple's PDF renderer flatten gradients).
 
 ## Company themes (interactive version)
 

@@ -9,7 +9,8 @@
     display: none;
   }
 
-  .controls {
+  .controls,
+  .skip-link {
     display: none !important;
   }
 
@@ -90,7 +91,6 @@
     page-break-inside: avoid;
   }
 
-  .grid-two,
   .grid-three {
     break-inside: avoid;
     page-break-inside: avoid;

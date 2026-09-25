@@ -116,9 +116,10 @@ function skillsSection(focus: Focus) {
   </section>`;
 }
 
-export function renderCv(root: HTMLElement, focus: Focus, recipient: string | null = null) {
+/** The whole CV (both A4 pages) as an HTML string. Pure: also used to pre-render index.html at build. */
+export function cvMarkup(focus: Focus, recipient: string | null = null): string {
   const [intuit, ...earlier] = experience;
-  root.innerHTML = `
+  return `
 <div class="page">
   ${header(focus, recipient)}
   ${summarySection(focus)}
@@ -139,4 +140,8 @@ export function renderCv(root: HTMLElement, focus: Focus, recipient: string | nu
   </section>
   ${skillsSection(focus)}
 </div>`;
+}
+
+export function renderCv(root: HTMLElement, focus: Focus, recipient: string | null = null) {
+  root.innerHTML = cvMarkup(focus, recipient);
 }

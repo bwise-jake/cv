@@ -78,12 +78,15 @@ async function applyTheme(state: CvState) {
   }
 }
 
-/** Once the page is idle, fetch every theme's fonts so later switches are instant. */
-function warmThemeFonts() {
+/**
+ * Fetch every theme's fonts once the visitor shows interest in switching (pointer, focus or touch on
+ * the controls), so switches feel instant without making every visitor download all seven themes.
+ */
+function warmThemeFontsOnIntent(controls: HTMLElement) {
   const warm = () => themes.forEach((t) => void ensureThemeFonts(t, 10_000));
-  // requestIdleCallback can be starved indefinitely, so give it a deadline.
-  if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 2000 });
-  else setTimeout(warm, 1200);
+  for (const type of ['pointerenter', 'focusin', 'touchstart'] as const) {
+    controls.addEventListener(type, warm, { once: true, passive: true });
+  }
 }
 
 function cycle<T>(list: readonly T[], current: T, step = 1): T {
@@ -115,7 +118,7 @@ function boot() {
   mountControls(document.getElementById('controls')!, downloadPdf);
   bindShortcuts();
   bindPrintTitle();
-  addEventListener('load', warmThemeFonts, { once: true });
+  warmThemeFontsOnIntent(document.getElementById('controls')!);
 
   initAnalytics({ for: recipient });
   track('Visit', { theme: state.theme, focus: state.focus });
