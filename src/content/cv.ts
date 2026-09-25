@@ -67,12 +67,12 @@ export const metricNotes: Record<string, string> = {
   '10× traffic': 'From ~100k monthly visits (QuickBooks AU) to ~1m across APAC when the role expanded to the region.',
   'triple experimentation velocity':
     'Pooling ~10× the traffic let tests reach statistical significance far sooner, so the same team concluded roughly three times as many tests per quarter.',
-  '15+ countries': 'Including AU, NZ, PH, SG, MY, JP, HK, CH and KR.',
+  '9+ countries': 'Including AU, NZ, PH, SG, MY, JP, HK, CN and KR.',
   '3k+ incremental subscriptions':
     'Incremental subscriptions from winning tests rolled out across APAC, measured by A/B test or holdout, Jun 2025–Aug 2026.',
   'doubling marketing velocity':
     'Measured briefed-to-shipped: scored triage plus agency workstreams for content and simple builds halved the time from brief to live page, so twice as much shipped.',
-  'Lighthouse 90+': 'Google Core Web Vitals passed on 100% of mobile and 90% of desktop page loads.',
+  'Core Web Vitals passed': 'Google Core Web Vitals passed on 100% of desktop and 90% of mobile page loads.',
 };
 
 export const headlines: Record<Focus, Headline> = {
@@ -85,7 +85,7 @@ export const headlines: Record<Focus, Headline> = {
     role: 'Senior Growth Engineer',
   },
   engineering: {
-    kicker: '10+ yrs · Ex-Intuit · React & TypeScript · Lighthouse 90+',
+    kicker: '10+ yrs · Ex-Intuit · React & TypeScript · Core Web Vitals',
     role: 'Senior Front-End Engineer',
   },
 };
@@ -120,15 +120,15 @@ export const experience: Employer[] = [
     tags: 'Enterprise · SaaS · Finance · Tech · B2C · B2B · AI',
     name: 'Intuit – [QuickBooks](https://quickbooks.intuit.com/au/) & [Mailchimp](https://mailchimp.com/?currency=AUD)',
     span: 'Mar 2020 – Aug 2026 · 6 yrs 6 months',
-    intro: 'Promoted 3× from Senior Web Development Manager (M1) to Senior Staff Growth Engineer (P6), starting on QuickBooks Australia and expanding to Mailchimp and 15+ countries across APAC, owning web development, authoring, experimentation and growth delivery.',
+    intro: 'Promoted 3× from Senior Web Development Manager (M1) to Senior Staff Growth Engineer (P6), starting on QuickBooks Australia and expanding to Mailchimp and 9+ countries across APAC, owning web development, authoring, experimentation and growth delivery.',
     long: true,
     jobs: [
       {
         title: 'Senior Staff Growth Engineer, APAC',
         dates: 'Jun 2025 – Aug 2026',
         bullets: [
-          'Owned [[growth engineering and experimentation strategy|g]] for QuickBooks and Mailchimp across APAC, using the [[10× traffic|b,g]] from my expanded scope to [[triple experimentation velocity|b,g]] and roll proven A/B winners out to [[15+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]].',
-          '[[Technical lead|e]] for regional GTM launches, including 3 global AI rebrands, balancing rich experiences with page performance ([[Lighthouse 90+|e]]).',
+          'Owned [[growth engineering and experimentation strategy|g]] for QuickBooks and Mailchimp across APAC, using the [[10× traffic|b,g]] from my expanded scope to [[triple experimentation velocity|b,g]] and roll proven A/B winners out to [[9+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]].',
+          '[[Technical lead|e]] for regional GTM launches, including 3 global AI rebrands, balancing rich experiences with page performance ([[Core Web Vitals passed|e]]).',
         ],
       },
       {
