@@ -207,13 +207,25 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
     toggle.setAttribute('aria-expanded', String(open));
     if (!open) closeList(false);
   };
-  toggle.addEventListener('click', () => setSheetOpen(!root.classList.contains('is-open')));
+  toggle.addEventListener('click', () => {
+    const open = !root.classList.contains('is-open');
+    setSheetOpen(open);
+    if (open) trigger.focus();
+  });
   document.addEventListener('keydown', (e) => e.key === 'Escape' && setSheetOpen(false));
   document.addEventListener('click', (e) => {
     if (!root.contains(e.target as Node)) {
       setSheetOpen(false);
       closeList(false);
     }
+  });
+
+  // ---- Skip link: straight to the first control, opening the sheet on small screens ----
+  document.querySelector<HTMLAnchorElement>('.skip-link')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // the outside-click handler above would close the sheet again
+    if (getComputedStyle(toggle).display !== 'none') setSheetOpen(true);
+    trigger.focus();
   });
 
   subscribe(sync);
