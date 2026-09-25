@@ -90,7 +90,6 @@
     page-break-inside: avoid;
   }
 
-  .grid-two,
   .grid-three {
     break-inside: avoid;
     page-break-inside: avoid;

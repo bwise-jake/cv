@@ -5,7 +5,6 @@
   --ink-soft: oklch(39% 0.014 40);
   --ink-faint: oklch(58% 0.012 40);
   --line: oklch(88% 0.012 40);
-  --line-soft: oklch(93% 0.008 40);
   --accent: oklch(46% 0.15 38);
   --accent-wash: oklch(95% 0.02 38);
   --tag: oklch(48% 0.06 240);
@@ -410,15 +409,6 @@ ul.bullets li:last-child { margin-bottom: 0; }
   font-style: italic;
   border-bottom: 1px dashed var(--accent);
 }
-.fill.fill-block {
-  display: block;
-  white-space: normal;
-  text-align: left;
-  line-height: 1.4;
-  max-width: 22em;
-  margin-top: 4px;
-}
-
 .employer-block { margin-bottom: 16px; }
 .employer-block:last-child { margin-bottom: 0; }
 
@@ -546,12 +536,6 @@ header.identity,
   content: "· ";
 }
 
-.grid-two {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 32px;
-}
-
 .grid-three {
   display: grid;
   grid-template-columns: 1fr;
@@ -638,13 +622,6 @@ header.identity,
   height: 100%;
 }
 
-.meta-note {
-  font-size: 11.5px;
-  color: var(--ink-faint);
-  font-style: italic;
-}
-
-
 /* Phone screens reflow into a single scrolling column. Skipped while measuring, so the
    A4 fit (used for print) is always computed from the desktop layout. */
 @media screen and (max-width: 640px) {
@@ -669,7 +646,6 @@ header.identity,
     .identity-main > div { min-width: 0; }
     h1 { white-space: normal; }
     .contact { text-align: left; align-items: flex-start; }
-    .grid-two,
     .grid-three { grid-template-columns: 1fr; }
     .employer-span,
     .employer-intro { margin-left: 0; }
