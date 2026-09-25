@@ -24,7 +24,7 @@ function header(focus: Focus, recipient: string | null) {
     <div class="identity-row">
       <div class="identity-main">
         <span class="avatar-frame">
-          <img class="avatar" src="${person.photo}" alt="${escapeHtml(person.name)}">
+          <img class="avatar" src="${person.photo}" alt="${escapeHtml(person.name)}" width="80" height="80">
         </span>
         <div>
           <p class="kicker">${escapeHtml(kicker)}</p>
@@ -81,7 +81,7 @@ function employerBlock(e: Employer) {
   return `
     <div class="employer-block${e.long ? ' employer-long' : ''}">
       <div class="employer-head">
-        <img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}">
+        <img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}" width="36" height="36">
         <div class="employer-copy">
           <div class="employer-tags">${e.tags
             .split(' · ')
