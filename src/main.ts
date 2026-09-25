@@ -99,8 +99,8 @@ function bindShortcuts() {
     const { theme, focus } = getState();
     const step = e.shiftKey ? -1 : 1;
     const key = e.key.toLowerCase();
-    if (key === 't') setState({ theme: cycle(themes.map((t) => t.id), theme, step) });
-    else if (key === 'f') setState({ focus: cycle(FOCUSES, focus, step) });
+    if (key === 's') setState({ theme: cycle(themes.map((t) => t.id), theme, step) });
+    else if (key === 'e') setState({ focus: cycle(FOCUSES, focus, step) });
     else if (key === 'p') downloadPdf();
   });
 }

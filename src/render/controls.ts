@@ -38,9 +38,9 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
       </div>
 
       <div class="controls-line">
-        <span class="controls-lead"><span id="theme-label">Style</span><kbd class="key" aria-hidden="true">T</kbd></span>
+        <span class="controls-lead"><span id="theme-label">Style</span><kbd class="key" aria-hidden="true">S</kbd></span>
         <div class="theme-select">
-          <button type="button" class="theme-trigger" aria-haspopup="listbox" aria-expanded="false" aria-keyshortcuts="T"
+          <button type="button" class="theme-trigger" aria-haspopup="listbox" aria-expanded="false" aria-keyshortcuts="S"
             aria-controls="theme-list" aria-labelledby="theme-label theme-current">
             <span class="brand-slot" data-current-mark></span>
             <span class="theme-current" id="theme-current"></span>
@@ -64,8 +64,8 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
       </div>
 
       <div class="controls-line">
-        <span class="controls-lead"><span id="focus-label">Emphasis</span><kbd class="key" aria-hidden="true">F</kbd></span>
-        <div class="focus-words" role="radiogroup" aria-labelledby="focus-label" aria-keyshortcuts="F">
+        <span class="controls-lead"><span id="focus-label">Emphasis</span><kbd class="key" aria-hidden="true">E</kbd></span>
+        <div class="focus-words" role="radiogroup" aria-labelledby="focus-label" aria-keyshortcuts="E">
           ${FOCUSES.map(
             (f) => `<button type="button" role="radio" class="focus-word" data-value="${f}">${FOCUS_LABELS[f]}</button>`,
           ).join('<span class="focus-sep" aria-hidden="true">/</span>')}
@@ -161,7 +161,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
   });
 
   list.addEventListener('keydown', (e) => {
-    e.stopPropagation(); // keep T/F/P shortcuts and the sheet's Escape out of the listbox
+    e.stopPropagation(); // keep S/E/P shortcuts and the sheet's Escape out of the listbox
     switch (e.key) {
       case 'ArrowDown': e.preventDefault(); setActive(activeIndex + 1); break;
       case 'ArrowUp': e.preventDefault(); setActive(activeIndex - 1); break;

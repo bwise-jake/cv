@@ -85,7 +85,7 @@
   color: var(--ink-faint);
 }
 
-/* Keycaps for the T / F / P shortcuts, beside the control each one changes. Only shown where a
+/* Keycaps for the S / E / P shortcuts, beside the control each one changes. Only shown where a
    keyboard and pointer are likely (and never in the touch sheet). */
 .key {
   display: inline-grid;
