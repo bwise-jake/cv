@@ -216,3 +216,149 @@
   transform: none;
   image-rendering: pixelated;
 }
+
+/* =====================================================================================
+ * Brand components. Beyond tokens, each theme renders a few elements the way the company's
+ * own design system does. All of it is real text (PDF/ATS-safe); spaces between tags are kept
+ * in the DOM so extracted text still reads "Enterprise SaaS Finance…".
+ * ===================================================================================== */
+
+/* Tag chips shared shape: themes below set the look. */
+:root:is([data-theme="atlassian"], [data-theme="notion"], [data-theme="linear"], [data-theme="canva"]) {
+  .employer-tags { line-height: 1.9; }
+  .tag + .tag::before { content: none; }
+  .tag {
+    display: inline-block;
+    margin-right: 1px;
+    white-space: nowrap;
+  }
+}
+
+/* Atlassian: Lozenges (design-system status labels, as on Jira boards). Neutral by default,
+   the first one "in progress" blue. Section numbers become lozenges too. */
+:root[data-theme="atlassian"] {
+  .tag {
+    padding: 0 4px;
+    border-radius: 3px;
+    background: #dddee1;
+    color: #292a2e;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 16px;
+  }
+  .tag:first-child { background: #cfe1fd; color: #09326c; }
+  .section-num {
+    flex: none;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: #e9f2fe;
+    color: #09326c;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+  }
+}
+
+/* Notion: select-property pills in Notion's pastel palette, a page-style header (cover band,
+   page icon overlapping it, big title), emoji page icons and no section numbers. */
+:root[data-theme="notion"] {
+  .tag {
+    padding: 0 6px;
+    border-radius: 3px;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 18px;
+  }
+  .tag:nth-child(9n + 1) { background: #d3e5ef; color: #183347; }
+  .tag:nth-child(9n + 2) { background: #dbeddb; color: #1c3829; }
+  .tag:nth-child(9n + 3) { background: #fdecc8; color: #402c1b; }
+  .tag:nth-child(9n + 4) { background: #e8deee; color: #412454; }
+  .tag:nth-child(9n + 5) { background: #fadec9; color: #49290e; }
+  .tag:nth-child(9n + 6) { background: #f5e0e9; color: #4c2337; }
+  .tag:nth-child(9n + 7) { background: #eee0da; color: #442a1e; }
+  .tag:nth-child(9n + 8) { background: #ffe2dd; color: #5d1715; }
+  .tag:nth-child(9n + 9) { background: #e3e2e0; color: #32302c; }
+
+  header.identity { padding-top: 70px; }
+  header.identity::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 56px;
+    z-index: 0;
+    /* PDF-safe: linear, opaque, distinct stops. */
+    background: linear-gradient(100deg, #d3e5ef 0%, #e8deee 50%, #f5e0e9 100%);
+  }
+  .avatar-frame { margin-top: -46px; }
+  h1 { font-size: 32px; }
+
+  .section-num { display: none; }
+  .summary-icon { display: none; }
+  .summary-emoji {
+    display: block;
+    flex-shrink: 0;
+    width: 18px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+  }
+}
+
+/* Linear: issue labels (outlined, coloured dot) and issue IDs for section numbers. */
+:root[data-theme="linear"] {
+  .tag {
+    padding: 0 7px 0 6px;
+    border: 1px solid #2e2f34;
+    border-radius: 999px;
+    color: #d0d6e0;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 17px;
+  }
+  .tag::before,
+  .tag + .tag::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 5px;
+    border-radius: 50%;
+    vertical-align: 1px;
+    background: var(--dot);
+  }
+  .tag:nth-child(7n + 1) { --dot: #5e6ad2; }
+  .tag:nth-child(7n + 2) { --dot: #26b5ce; }
+  .tag:nth-child(7n + 3) { --dot: #4cb782; }
+  .tag:nth-child(7n + 4) { --dot: #f2c94c; }
+  .tag:nth-child(7n + 5) { --dot: #f2994a; }
+  .tag:nth-child(7n + 6) { --dot: #eb5757; }
+  .tag:nth-child(7n + 7) { --dot: #bb87fc; }
+
+  .num-std { display: none; }
+  .num-issue { display: inline; }
+  .section-num { flex: none; color: var(--ink-faint); }
+}
+
+/* Canva: soft rounded chips in Canva purple. */
+:root[data-theme="canva"] {
+  .tag {
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #f3ecff;
+    color: #5a32fa;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 18px;
+  }
+}

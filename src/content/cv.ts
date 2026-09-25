@@ -51,7 +51,7 @@ export const person = {
   email: 'jakethorntonbowen@gmail.com',
   linkedin: 'linkedin.com/in/jaketb',
   /** Live interactive CV. Shown in the header (and so in every PDF); swap for a custom domain. */
-  website: 'https://bwise-jake.github.io/jaketb-cv-repo/',
+  website: 'https://bwise-jake.github.io/cv/',
 };
 
 /**
@@ -60,15 +60,19 @@ export const person = {
  * local dev, never in the deployed site or the PDF.
  */
 export const metricNotes: Record<string, string> = {
-  '$5.5m+ in incremental LTV': '{{How LTV was calculated: attribution model, retention window, source (e.g. Amplitude/Optimizely)}}',
-  '60+ web experiments': '{{Period, platforms and what counted as an experiment; win rate}}',
-  '10× traffic': '{{Baseline vs expanded traffic, markets included}}',
-  'triple experimentation velocity': '{{Tests per quarter before vs after}}',
-  '15+ countries': '{{Which markets the winners were rolled out to}}',
-  '3k+ incremental subscriptions': '{{Measurement window and method (holdout, A/B lift)}}',
-  'doubling marketing velocity': '{{What was measured: requests shipped per month before vs after}}',
-  'Lighthouse 90+': '{{Pages, device profile and how it was maintained}}',
-  '25 small businesses': '{{Types of businesses and what was delivered}}',
+  '$5.5m+ in incremental LTV':
+    'Sum of incremental subscriptions measured by A/B test or holdout, multiplied by 36-month LTV, 2022–2026.',
+  '60+ web experiments':
+    'Split and multi-armed bandit tests across key landing pages, scoped with FullStory and measured in Adobe Analytics to statistical significance, 2022–2026.',
+  '10× traffic': 'From ~100k monthly visits (QuickBooks AU) to ~1m across APAC when the role expanded to the region.',
+  'triple experimentation velocity':
+    'Pooling ~10× the traffic let tests reach statistical significance far sooner, so the same team concluded roughly three times as many tests per quarter.',
+  '9+ countries': 'Including AU, NZ, PH, SG, MY, JP, HK, CN and KR.',
+  '3k+ incremental subscriptions':
+    'Incremental subscriptions from winning tests rolled out across APAC, measured by A/B test or holdout, Jun 2025–Aug 2026.',
+  'doubling marketing velocity':
+    'Measured briefed-to-shipped: scored triage plus agency workstreams for content and simple builds halved the time from brief to live page, so twice as much shipped.',
+  'Core Web Vitals passed': 'Google Core Web Vitals passed on 100% of desktop and 90% of mobile page loads.',
 };
 
 export const headlines: Record<Focus, Headline> = {
@@ -81,7 +85,7 @@ export const headlines: Record<Focus, Headline> = {
     role: 'Senior Growth Engineer',
   },
   engineering: {
-    kicker: '10+ yrs · Ex-Intuit · React & TypeScript · Lighthouse 90+',
+    kicker: '10+ yrs · Ex-Intuit · React & TypeScript · Core Web Vitals',
     role: 'Senior Front-End Engineer',
   },
 };
@@ -90,12 +94,12 @@ export const summary: SummaryItem[] = [
   {
     id: 'growth',
     label: 'Growth',
-    text: 'Technical growth leader, most recently accountable owner of QuickBooks websites across APAC for **Intuit**, personally driving [[$5.5m+ in incremental LTV|b,g]] through [[60+ web experiments|b,g]] across the funnel: merchandising, UX/UI, components, content, [[page speed and technical SEO|e]].',
+    text: 'Technical growth builder who most recently led QuickBooks web across APAC for **Intuit**, personally driving [[$5.5m+ in incremental LTV|b,g]] through [[60+ web experiments|b,g]] across the funnel: merchandising, UX/UI, components, content, [[page speed and technical SEO|e]].',
   },
   {
     id: 'engineering',
     label: 'Engineering',
-    text: 'Hands-on [[front-end engineer with 10+ years|b,e]] shipping enterprise production code in [[TypeScript/JavaScript, React, HTML and CSS|b,e]]: [[component architecture|e]], [[web performance|e]] and [[experimentation-ready UI|g]] on [[high-traffic, revenue-critical sites|g]]. Fluent in [[agentic engineering|b,e]], orchestrating autonomous agent workflows with human-in-the-loop review.',
+    text: 'Hands-on [[front-end engineer with 10+ years|b,e]] shipping enterprise production code in [[TypeScript/JavaScript, React, HTML and CSS|b,e]]: [[component architecture|e]], [[web performance|e]] and [[experimentation-ready UI|g]] on [[high-traffic, revenue-critical sites|g]]. Fluent in [[agentic engineering|b,e]], orchestrating agent workflows with human-in-the-loop review.',
   },
   {
     id: 'founder',
@@ -113,25 +117,25 @@ export const experience: Employer[] = [
   {
     logo: 'assets/logos/intuit.jpeg',
     logoAlt: 'Intuit logo',
-    tags: 'Enterprise · SaaS · Finance · Tech · B2C · B2B · AI',
-    name: 'Intuit – [QuickBooks](https://quickbooks.intuit.com/au/) & [Mailchimp](https://mailchimp.com/?currency=AUD)',
+    tags: 'Enterprise · SaaS · Finance · B2C · B2B · AI',
+    name: 'Intuit – [QuickBooks](https://quickbooks.intuit.com/au/) & [Mailchimp](https://mailchimp.com/)',
     span: 'Mar 2020 – Aug 2026 · 6 yrs 6 months',
-    intro: 'Promoted 3× from Senior Web Development Manager (M1) to Senior Staff Growth Engineer (P6), starting on QuickBooks Australia and expanding to Mailchimp and 15+ countries across APAC, owning web development, authoring, experimentation and growth delivery.',
+    intro: 'Promoted 3× from Senior Web Development Manager (M1) to Senior Staff Growth Engineer (P6), starting on QuickBooks Australia and expanding to Mailchimp and 9+ countries across APAC, owning web development, authoring, experimentation and growth delivery.',
     long: true,
     jobs: [
       {
         title: 'Senior Staff Growth Engineer, APAC',
         dates: 'Jun 2025 – Aug 2026',
         bullets: [
-          'Owned [[growth engineering and experimentation strategy|g]] for QuickBooks and Mailchimp across APAC, using the [[10× traffic|b,g]] from my expanded scope to [[triple experimentation velocity|b,g]] and roll proven A/B winners out to [[15+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]].',
-          '[[Technical lead|e]] for regional GTM launches, including 3 global AI rebrands, balancing rich experiences with page performance ([[Lighthouse 90+|e]]).',
+          'Owned [[growth engineering and experimentation strategy|g]] for QuickBooks and Mailchimp across APAC, using the [[10× traffic|b,g]] from my expanded scope to [[triple experimentation velocity|b,g]] and roll proven A/B winners out to [[9+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]].',
+          '[[Technical lead|e]] for regional GTM launches, including 3 global AI rebrands, balancing rich experiences with page performance ([[Core Web Vitals passed|e]]).',
         ],
       },
       {
         title: 'Head of Web, Australia',
         dates: 'Aug 2023 – Jun 2025',
         bullets: [
-          'Joined the marketing leadership team and took on [[technical direction|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels, shaping shared web strategy across tier-2 markets (AU, UK, CA).',
+          'Joined the marketing leadership team and took on [[technical direction|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels, shaping shared web strategy across AU, UK and CA.',
           'Triaged hundreds of cross-functional requests with an Airtable impact/effort scoring system, and secured budget for parallel agency workstreams on content and simple builds, freeing the core team for complex work and [[doubling marketing velocity|b,g]].',
         ],
       },
@@ -139,7 +143,7 @@ export const experience: Employer[] = [
         title: 'Senior Web Development & CRO Manager',
         dates: 'Jan 2022 – Aug 2023',
         bullets: [
-          'Added [[CRO experimentation|g]] and [[performance|e]] to the remit, turning the website into a measurable sales channel with a larger budget. Ran {{XX}} experiments, delivering {{XX% lift in XX}}.',
+          'Added [[CRO experimentation|g]] and [[performance|e]] to the remit, turning the website into a measurable sales channel with a larger budget. Ran numerous full-funnel personalisation experiments, delivering a [[28% increase in traffic to sign-up|b,g]].',
         ],
       },
       {
@@ -157,7 +161,7 @@ export const experience: Employer[] = [
     logoAlt: 'VML logo',
     tags: 'Agency · Marketing · Tech',
     name: 'VML',
-    span: 'Nov 2015 – Mar 2020 · 4 yrs 4 months',
+    span: 'Nov 2015 – Mar 2020 · 4 yrs 5 months',
     intro: "One of the world's largest marketing, communications and creative agency networks.",
     jobs: [
       {
@@ -210,14 +214,14 @@ export const skills: SkillGroup[] = [
   {
     id: 'frontend',
     title: 'Front-End Engineering',
-    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], [[Web Performance (Core Web Vitals)|e,g]], Internationalisation (i18n), CMS & Content Authoring, Unit, E2E & Visual Regression Testing, Code Review, Technical Design Docs, CI/CD',
+    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], [[Web Performance (Core Web Vitals)|e,g]], Internationalisation (i18n), CMS & Content Authoring (AEM), Unit, E2E & Visual Regression Testing, Code Review, Technical Design Docs, CI/CD',
     logos: ['React', 'Next.js', 'TypeScript', 'HTML5', 'CSS', 'Tailwind CSS', 'Storybook', 'Node.js', 'Git'],
     logosLabel: 'Front-End Engineering platforms',
   },
   {
     id: 'growth',
     title: 'Growth & Experimentation',
-    skills: '[[A/B Testing|g]], [[CRO|g]], UX Design & Wireframing, [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]], Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
+    skills: '[[A/B Testing|g]], [[CRO|g]], UX Design & Wireframing, [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]] (Adobe Analytics), Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
     logos: ['Optimizely', 'Google Analytics', 'FullStory', 'Google Ads', 'Semrush', 'Ahrefs', 'Figma', 'Hotjar', 'Amplitude'],
     logosLabel: 'Growth and Experimentation platforms',
   },
