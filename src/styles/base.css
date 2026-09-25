@@ -49,7 +49,7 @@ html {
 body {
   margin: 0;
   /* Normalise x-height across theme fonts to Geist's (0.53), so switching theme keeps the same
-     apparent text size. Geist itself is unchanged. */
+     apparent text size. Geist itself is unchanged. Mono metadata opts out (below). */
   font-size-adjust: 0.53;
   background: var(--canvas);
   font-family: var(--sans);
@@ -272,11 +272,30 @@ section:last-child { margin-bottom: 0; }
 }
 
 .section-num {
+  /* Fixed width (= summary icon) so every section title starts on the summary text column. */
+  flex: 0 0 16px;
   font-family: var(--mono);
   font-size: 11px;
   color: var(--accent);
   font-weight: 500;
 }
+
+/* Mono metadata keeps its designed sizes: mono fonts' x-heights vary more, and normalising them
+   made the wider ones (DM Mono, Source Code Pro) wrap. */
+.kicker,
+.contact,
+.section-num,
+.section-cont,
+.job-meta,
+.employer-span,
+.employer-tags,
+.skill-group h3 {
+  font-size-adjust: none;
+}
+
+/* Linear shows issue IDs instead (themes.css); every other theme shows the number. */
+.num-issue { display: none; }
+.summary-emoji { display: none; }
 
 h2 {
   font-family: var(--display);
@@ -497,7 +516,7 @@ header.identity,
   font-family: var(--mono);
   font-size: 11px;
   color: var(--ink-faint);
-  margin: 3px 0 4px 46px;
+  margin: 5px 0 4px;
   break-after: avoid;
   page-break-after: avoid;
 }
@@ -506,7 +525,7 @@ header.identity,
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--ink-soft);
-  margin: 0 0 10px 46px;
+  margin: 0 0 10px;
   break-after: avoid;
   page-break-after: avoid;
 }
@@ -519,6 +538,12 @@ header.identity,
   letter-spacing: 0.06em;
   margin: 0;
   line-height: 1.2;
+}
+
+/* Tags are separate elements so themes can render them as brand components (themes.css).
+   Default keeps the original interpunct-separated text. */
+.tag + .tag::before {
+  content: "· ";
 }
 
 .grid-two {

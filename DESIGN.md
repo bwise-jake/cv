@@ -45,9 +45,13 @@ accent-on-paper 7.3:1. All clear WCAG AAA for normal text.
 - Numbered section markers (`01 Summary`, `02 Experience`...) in mono +
   accent, replacing the generic tiny-uppercase-tracked-label pattern with a
   deliberate system.
-- Hanging-indent for role entries under an employer: `.job` padding-left
-  (38px) matches logo-width + gap so sub-roles align under the employer name
-  with no drawn rule. No side-stripe borders anywhere (banned pattern).
+- Two text columns only: everything starts on the page's left edge, except section titles and
+  summary text, which share one column 26px in (section numbers are fixed 16px wide, the same as
+  the summary icons). Employer logo + tags + name form one media unit; the date line, intro,
+  roles and bullets below it return to the left edge. Bullets hang their dash. No side-stripe
+  borders anywhere (banned pattern).
+- Every page uses the same fit scale (the smallest any page needs), so type size and margins are
+  identical from page to page.
 - One small accent-colored mark (34x4px bar) as the page's only graphic
   flourish. No icons, no stock imagery — a CV is a text-evidence document,
   not an imagery-led brand surface.
@@ -100,3 +104,16 @@ Under 1200px an ink "Version" button opens the same content on a paper sheet.
 Emphasis is data, not markup: `[[phrase|b,g,e]]` in `src/content/cv.ts` renders a `b.kw` that is
 only bold when `html[data-focus]` matches. Switching focus re-renders, FLIP-animates the reordered
 Summary/Skills items, and briefly washes newly emphasised phrases in the accent tint.
+
+## Brand components per theme
+
+Beyond tokens, some themes render elements as the company's own design-system components (all
+real text, so PDFs and ATS parsing are unaffected):
+
+| Theme | Industry tags | Section numbers | Other |
+|---|---|---|---|
+| Atlassian | Lozenges (neutral; first "in progress" blue) | Lozenge | |
+| Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons |
+| Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
+| Canva | Rounded purple chips | Default | |
+| Default, Stripe, Relevance AI | Interpunct-separated mono text | Default | |

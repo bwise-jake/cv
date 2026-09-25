@@ -3,8 +3,15 @@ import { stackLogos, summaryIcons } from '../content/icons';
 import { escapeHtml, rich } from '../content/rich';
 import type { Focus } from '../types';
 
+/** Notion-theme page icons for the summary items (shown instead of the line icons). */
+const SUMMARY_EMOJI: Record<string, string> = { growth: '📈', engineering: '💻', founder: '🚀', customer: '🤝' };
+
+/**
+ * Section number, plus a Linear-style issue ID ("JTB-1") that the Linear theme shows instead.
+ * Both are real text; themes hide one with display:none so PDFs only carry the visible one.
+ */
 const sectionHead = (num: string, title: string, cont = false) =>
-  `<div class="section-head"><span class="section-num">${num}</span><h2>${title}${
+  `<div class="section-head"><span class="section-num"><span class="num-std">${num}</span><span class="num-issue">JTB-${Number(num)}</span></span><h2>${title}${
     cont ? ' <span class="section-cont">continued</span>' : ''
   }</h2></div>`;
 
@@ -42,6 +49,7 @@ function summarySection(focus: Focus) {
       (item) => `
       <li data-flip="summary-${item.id}">
         <span class="summary-icon" aria-hidden="true">${summaryIcons[item.id]}</span>
+        <span class="summary-emoji" aria-hidden="true">${SUMMARY_EMOJI[item.id]}</span>
         <span><b class="summary-label">${escapeHtml(item.label)}</b> • ${rich(item.text)}</span>
       </li>`,
     )
@@ -75,7 +83,10 @@ function employerBlock(e: Employer) {
       <div class="employer-head">
         <img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}">
         <div class="employer-copy">
-          <div class="employer-tags">${escapeHtml(e.tags)}</div>
+          <div class="employer-tags">${e.tags
+            .split(' · ')
+            .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
+            .join(' ')}</div>
           <div class="employer-name">${rich(e.name)}</div>
         </div>
       </div>
