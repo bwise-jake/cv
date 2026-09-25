@@ -99,7 +99,7 @@ export const summary: SummaryItem[] = [
   {
     id: 'engineering',
     label: 'Engineering',
-    text: 'Hands-on [[front-end engineer with 10+ years|b,e]] shipping enterprise production code in [[TypeScript/JavaScript, React, HTML and CSS|b,e]]: [[component architecture|e]], [[web performance|e]] and [[experimentation-ready UI|g]] on [[high-traffic, revenue-critical sites|g]]. Fluent in [[agentic engineering|b,e]], orchestrating autonomous agent workflows with human-in-the-loop review.',
+    text: 'Hands-on [[front-end engineer with 10+ years|b,e]] shipping enterprise production code in [[TypeScript/JavaScript, React, HTML and CSS|b,e]]: [[component architecture|e]], [[web performance|e]] and [[experimentation-ready UI|g]] on [[high-traffic, revenue-critical sites|g]]. Fluent in [[agentic engineering|b,e]], orchestrating agent workflows with human-in-the-loop review.',
   },
   {
     id: 'founder',
@@ -117,8 +117,8 @@ export const experience: Employer[] = [
   {
     logo: 'assets/logos/intuit.jpeg',
     logoAlt: 'Intuit logo',
-    tags: 'Enterprise · SaaS · Finance · Tech · B2C · B2B · AI',
-    name: 'Intuit – [QuickBooks](https://quickbooks.intuit.com/au/) & [Mailchimp](https://mailchimp.com/?currency=AUD)',
+    tags: 'Enterprise · SaaS · Finance · B2C · B2B · AI',
+    name: 'Intuit – [QuickBooks](https://quickbooks.intuit.com/au/) & [Mailchimp](https://mailchimp.com/)',
     span: 'Mar 2020 – Aug 2026 · 6 yrs 6 months',
     intro: 'Promoted 3× from Senior Web Development Manager (M1) to Senior Staff Growth Engineer (P6), starting on QuickBooks Australia and expanding to Mailchimp and 9+ countries across APAC, owning web development, authoring, experimentation and growth delivery.',
     long: true,
@@ -135,7 +135,7 @@ export const experience: Employer[] = [
         title: 'Head of Web, Australia',
         dates: 'Aug 2023 – Jun 2025',
         bullets: [
-          'Joined the marketing leadership team and took on [[technical direction|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels, shaping shared web strategy across tier-2 markets (AU, UK, CA).',
+          'Joined the marketing leadership team and took on [[technical direction|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels, shaping shared web strategy across AU, UK and CA.',
           'Triaged hundreds of cross-functional requests with an Airtable impact/effort scoring system, and secured budget for parallel agency workstreams on content and simple builds, freeing the core team for complex work and [[doubling marketing velocity|b,g]].',
         ],
       },
@@ -161,7 +161,7 @@ export const experience: Employer[] = [
     logoAlt: 'VML logo',
     tags: 'Agency · Marketing · Tech',
     name: 'VML',
-    span: 'Nov 2015 – Mar 2020 · 4 yrs 4 months',
+    span: 'Nov 2015 – Mar 2020 · 4 yrs 5 months',
     intro: "One of the world's largest marketing, communications and creative agency networks.",
     jobs: [
       {
@@ -214,14 +214,14 @@ export const skills: SkillGroup[] = [
   {
     id: 'frontend',
     title: 'Front-End Engineering',
-    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], [[Web Performance (Core Web Vitals)|e,g]], Internationalisation (i18n), CMS & Content Authoring, Unit, E2E & Visual Regression Testing, Code Review, Technical Design Docs, CI/CD',
+    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], [[Web Performance (Core Web Vitals)|e,g]], Internationalisation (i18n), CMS & Content Authoring (AEM), Unit, E2E & Visual Regression Testing, Code Review, Technical Design Docs, CI/CD',
     logos: ['React', 'Next.js', 'TypeScript', 'HTML5', 'CSS', 'Tailwind CSS', 'Storybook', 'Node.js', 'Git'],
     logosLabel: 'Front-End Engineering platforms',
   },
   {
     id: 'growth',
     title: 'Growth & Experimentation',
-    skills: '[[A/B Testing|g]], [[CRO|g]], UX Design & Wireframing, [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]], Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
+    skills: '[[A/B Testing|g]], [[CRO|g]], UX Design & Wireframing, [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]] (Adobe Analytics), Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
     logos: ['Optimizely', 'Google Analytics', 'FullStory', 'Google Ads', 'Semrush', 'Ahrefs', 'Figma', 'Hotjar', 'Amplitude'],
     logosLabel: 'Growth and Experimentation platforms',
   },

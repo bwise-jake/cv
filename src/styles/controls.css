@@ -10,7 +10,7 @@
   --c-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --c-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --c-hover: color-mix(in oklab, var(--ink) 6%, transparent);
-  --lead-w: 64px;
+  --lead-w: 80px;
 
   font-family: var(--c-sans);
   font-size: 13px;
@@ -78,8 +78,39 @@
 }
 
 .controls-lead {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-size: 12.5px;
   color: var(--ink-faint);
+}
+
+/* Keycaps for the T / F / P shortcuts, beside the control each one changes. Only shown where a
+   keyboard and pointer are likely (and never in the touch sheet). */
+.key {
+  display: inline-grid;
+  place-items: center;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  font-family: var(--c-mono);
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ink-faint);
+}
+
+.controls-pdf .key {
+  border-color: color-mix(in oklab, var(--paper) 35%, transparent);
+  color: inherit;
+  opacity: 0.75;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .key { display: none; }
 }
 
 /* ---------- Style: company mark + name, like a filled-in form field ---------- */
@@ -177,12 +208,6 @@
   color: var(--ink);
 }
 
-.theme-option-note {
-  font-size: 11px;
-  line-height: 1.35;
-  color: var(--ink-faint);
-}
-
 .theme-option-check {
   display: flex;
   color: var(--accent);
@@ -196,12 +221,12 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: baseline;
-  column-gap: 6px;
+  column-gap: 5px;
   white-space: nowrap;
 }
 
 .focus-word {
-  font-size: 13.5px !important;
+  font-size: 13px !important;
   font-weight: 500 !important;
   color: var(--ink-faint) !important;
   text-decoration: underline;
@@ -262,18 +287,6 @@
   font-size: 10px;
   color: var(--ink-faint);
   overflow-wrap: anywhere;
-}
-
-.controls-keys {
-  margin: 18px 0 0;
-  font-size: 11.5px;
-  color: var(--ink-faint);
-}
-
-.controls-keys kbd {
-  font-family: var(--c-mono);
-  font-size: 10.5px;
-  color: var(--ink-soft);
 }
 
 .controls-toggle { display: none; }
@@ -357,7 +370,7 @@
   .theme-option { min-height: 44px; }
   .focus-word { padding: 6px 0 !important; }
   .controls-pdf { height: 46px; }
-  .controls-keys { display: none; }
+  .key { display: none; }
 }
 
 @media screen and (max-width: 640px) {
