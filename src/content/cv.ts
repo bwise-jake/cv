@@ -94,7 +94,7 @@ export const summary: SummaryItem[] = [
   {
     id: 'growth',
     label: 'Growth',
-    text: 'Technical growth leader, most recently accountable owner of QuickBooks websites across APAC for **Intuit**, personally driving [[$5.5m+ in incremental LTV|b,g]] through [[60+ web experiments|b,g]] across the funnel: merchandising, UX/UI, components, content, [[page speed and technical SEO|e]].',
+    text: 'Technical growth builder who most recently led QuickBooks web across APAC for **Intuit**, personally driving [[$5.5m+ in incremental LTV|b,g]] through [[60+ web experiments|b,g]] across the funnel: merchandising, UX/UI, components, content, [[page speed and technical SEO|e]].',
   },
   {
     id: 'engineering',
