@@ -18,12 +18,13 @@ deliberately, not everywhere. OKLCH throughout, no pure `#000`/`#fff`.
 | `--canvas` | `oklch(94% 0.006 40)` | body background behind the page |
 | `--ink` | `oklch(20% 0.015 40)` | headings, primary text |
 | `--ink-soft` | `oklch(39% 0.014 40)` | body copy |
-| `--ink-faint` | `oklch(58% 0.012 40)` | metadata, dates |
+| `--ink-faint` | `oklch(52% 0.012 40)` | metadata, dates |
 | `--line` | `oklch(88% 0.012 40)` | hairline rules |
 | `--accent` | `oklch(46% 0.15 38)` | kicker, section numbers, links, skill labels, brand mark |
 
 Contrast verified: ink-on-paper 17.2:1, ink-soft-on-paper 9.1:1,
 accent-on-paper 7.3:1. All clear WCAG AAA for normal text.
+Every theme's small text is checked for WCAG AA (4.5:1) in a real browser by `npm run check:contrast`.
 
 ## Typography
 
