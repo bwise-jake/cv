@@ -51,7 +51,7 @@ export const person = {
   email: 'jakethorntonbowen@gmail.com',
   linkedin: 'linkedin.com/in/jaketb',
   /** Live interactive CV. Shown in the header (and so in every PDF); swap for a custom domain. */
-  website: 'https://bwise-jake.github.io/jaketb-cv-repo/',
+  website: 'https://bwise-jake.github.io/cv/',
 };
 
 /**
