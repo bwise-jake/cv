@@ -262,7 +262,7 @@
     padding: 0 6px;
     border-radius: 3px;
     font-family: var(--sans);
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 400;
     text-transform: none;
     letter-spacing: 0;
@@ -311,7 +311,7 @@
     border-radius: 999px;
     color: #d0d6e0;
     font-family: var(--sans);
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 500;
     text-transform: none;
     letter-spacing: 0;
@@ -349,7 +349,7 @@
     background: #f3ecff;
     color: #5a32fa;
     font-family: var(--sans);
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 600;
     text-transform: none;
     letter-spacing: 0;
