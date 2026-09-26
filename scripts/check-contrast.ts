@@ -19,7 +19,6 @@ const CHECKS: [string, string][] = [
   ['header kicker', '.kicker'],
   ['controls label', '.controls-lead'],
   ['emphasis (unselected)', '.focus-word[aria-checked="false"]'],
-  ['pdf filename', '.controls-file'],
 ];
 
 const HIDE_CSS = `

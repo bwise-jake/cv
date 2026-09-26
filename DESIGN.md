@@ -96,7 +96,7 @@ margin beside the centred page, sticky so only the pages scroll. No card, blur o
 head styled like "01 Summary", then ruled lines of lead word + value. *Style* is a listbox showing each
 company's app icon (`src/themes/logos.ts`) with names set in the theme's own typeface; *Emphasis* is
 three words (Balanced / Growth / Engineering) with the chosen one underlined in the accent; then an
-ink Download PDF button with the filename in mono beneath. Colours come from the active theme's
+*Export* is an ink Download PDF button. Keycaps for S / E / P sit in one column at the end of each label. Colours come from the active theme's
 tokens so it belongs on light and dark pages; type stays Geist so it doesn't shift while switching.
 Under 1200px an ink "Version" button opens the same content on a paper sheet.
 

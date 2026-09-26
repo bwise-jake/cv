@@ -10,7 +10,10 @@
   --c-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --c-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --c-hover: color-mix(in oklab, var(--ink) 6%, transparent);
-  --lead-w: 80px;
+  /* Sized so the S / E / P keycaps sit --lead-gap from the longest label ("Emphasis") and the same
+     --lead-gap from the value, i.e. balanced on both sides. */
+  --lead-w: 81px;
+  --lead-gap: 10px;
 
   font-family: var(--c-sans);
   font-size: 13px;
@@ -53,8 +56,7 @@
   display: flex;
   align-items: baseline;
   gap: 10px;
-  padding-bottom: 6px;
-  margin-bottom: 4px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -71,9 +73,10 @@
   display: grid;
   grid-template-columns: var(--lead-w) 1fr;
   align-items: center;
-  column-gap: 8px;
-  min-height: 44px;
-  padding: 11px 0;
+  column-gap: var(--lead-gap);
+  /* Every line is the same height (32px of content + 10px above and below), the Export button included. */
+  min-height: 52px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -81,6 +84,8 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  /* Keycaps sit at the end of the lead column so S / E / P line up in one column. */
+  justify-content: space-between;
   font-size: 12.5px;
   color: var(--ink-faint);
 }
@@ -101,12 +106,6 @@
   font-weight: 500;
   line-height: 1;
   color: var(--ink-faint);
-}
-
-.controls-pdf .key {
-  border-color: color-mix(in oklab, var(--paper) 35%, transparent);
-  color: inherit;
-  opacity: 0.75;
 }
 
 @media (hover: none), (pointer: coarse) {
@@ -133,7 +132,7 @@
   align-items: center;
   gap: 8px;
   width: 100%;
-  font-size: 14px !important;
+  font-size: 13px !important;
   font-weight: 600 !important;
   color: var(--ink) !important;
   text-align: left;
@@ -158,7 +157,7 @@
   position: absolute;
   z-index: 10;
   top: calc(100% + 12px);
-  left: calc(-1 * (var(--lead-w) + 8px));
+  left: calc(-1 * (var(--lead-w) + var(--lead-gap)));
   right: 0;
   margin: 0;
   padding: 4px;
@@ -221,7 +220,7 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: baseline;
-  column-gap: 5px;
+  column-gap: 4px;
   white-space: nowrap;
 }
 
@@ -251,18 +250,16 @@
 }
 
 /* ---------- Download ---------- */
-.controls-download {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-top: 16px;
-}
+/* Same lead + value grid as the other lines. */
+.controls-download { border-bottom: 0; }
 
 .controls-pdf {
   display: flex;
+  /* Fills the value column so its right edge meets the Style chevron and the Emphasis words. */
+  justify-content: center;
   align-items: center;
   gap: 8px;
-  height: 40px;
+  height: 32px;
   padding: 0 14px !important;
   border-radius: 4px;
   background: var(--ink) !important;
@@ -274,21 +271,6 @@
 .controls-pdf:hover { background: color-mix(in oklab, var(--ink) 86%, var(--accent)) !important; }
 .controls-pdf:active { transform: translateY(1px); }
 
-.controls-pdf-meta {
-  margin-left: auto;
-  font-family: var(--c-mono);
-  font-size: 10.5px;
-  font-weight: 400;
-  opacity: 0.7;
-}
-
-.controls-file {
-  font-family: var(--c-mono);
-  font-size: 10px;
-  color: var(--ink-faint);
-  overflow-wrap: anywhere;
-}
-
 .controls-toggle { display: none; }
 
 /* ---------- Wide screens: sticky in the gutter beside the centred CV ---------- */
@@ -298,9 +280,8 @@
     justify-self: start;
     width: var(--panel-w);
     margin-left: var(--panel-gap);
-    position: sticky;
-    top: 40px;
-    margin-top: 40px;
+    /* The layout is one viewport tall and only #cv scrolls, so centring in the cell centres on screen. */
+    align-self: center;
   }
 }
 
@@ -366,10 +347,10 @@
     animation: none;
   }
 
-  .controls-line { padding: 12px 0; }
+  .controls-line { min-height: 68px; padding: 12px 0; }
   .theme-option { min-height: 44px; }
   .focus-word { padding: 6px 0 !important; }
-  .controls-pdf { height: 46px; }
+  .controls-pdf { height: 44px; }
   .key { display: none; }
 }
 

@@ -1,5 +1,4 @@
 import { escapeHtml } from '../content/rich';
-import { pdfFileName } from '../pdf';
 import { getState, setState, subscribe } from '../state';
 import { themeLogos } from '../themes/logos';
 import { ensureThemeFonts, themes, type Theme } from '../themes/registry';
@@ -72,11 +71,9 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
         </div>
       </div>
 
-      <div class="controls-download">
-        <button type="button" class="controls-pdf" aria-keyshortcuts="P">
-          ${ICON_DOWNLOAD}<span>Download PDF</span><kbd class="key" aria-hidden="true">P</kbd><span class="controls-pdf-meta">A4 · 2 pages</span>
-        </button>
-        <span class="controls-file" data-file-name></span>
+      <div class="controls-line controls-download">
+        <span class="controls-lead"><span>Export</span><kbd class="key" aria-hidden="true">P</kbd></span>
+        <button type="button" class="controls-pdf" aria-keyshortcuts="P">${ICON_DOWNLOAD}<span>Download PDF</span></button>
       </div>
 
     </div>`;
@@ -88,7 +85,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
   const focusGroup = root.querySelector<HTMLElement>('.focus-words')!;
   const radios = [...focusGroup.querySelectorAll<HTMLButtonElement>('.focus-word')];
 
-  // ---- Sync UI from state (dropdown, radios, filename) ----
+  // ---- Sync UI from state (dropdown, radios) ----
   const sync = (state: CvState) => {
     const theme = themes.find((t) => t.id === state.theme) ?? themes[0];
     root.querySelectorAll<HTMLElement>('[data-current-mark]').forEach((el) => (el.innerHTML = brandMark(theme)));
@@ -100,7 +97,6 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
       radio.setAttribute('aria-checked', String(checked));
       radio.tabIndex = checked ? 0 : -1;
     }
-    root.querySelector('[data-file-name]')!.textContent = `${pdfFileName(state)}.pdf`;
   };
 
   // ---- Emphasis: three words acting as a radiogroup ----
