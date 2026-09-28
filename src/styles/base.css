@@ -85,14 +85,16 @@ body {
  */
 @media screen and (min-width: 1200px) {
   .layout {
-    /* Sized so a 1440px window still centres the CV exactly: (1440 − 210mm) / 2 ≥ 296 + 20 + 6. */
     --panel-w: 296px;
     --panel-gap: 20px;
+    /* Space kept between the panel and the window edge: matches the panel's distance from the page
+       (--panel-gap + #cv's 12px inline padding), so the panel never hugs the edge on tight windows. */
+    --panel-edge: 32px;
     display: grid;
     grid-template-columns:
       minmax(0, 1fr)
       auto
-      minmax(calc(var(--panel-w) + var(--panel-gap) + 6px), 1fr);
+      minmax(calc(var(--panel-w) + var(--panel-gap) + var(--panel-edge)), 1fr);
     align-items: start;
     height: 100vh;
     overflow: hidden;
