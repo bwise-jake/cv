@@ -24,7 +24,7 @@ function header(focus: Focus, recipient: string | null) {
     <div class="identity-row">
       <div class="identity-main">
         <span class="avatar-frame">
-          <img class="avatar" src="${person.photo}" alt="${escapeHtml(person.name)}">
+          <img class="avatar" src="${person.photo}" alt="${escapeHtml(person.name)}" width="80" height="80">
         </span>
         <div>
           <p class="kicker">${escapeHtml(kicker)}</p>
@@ -81,7 +81,7 @@ function employerBlock(e: Employer) {
   return `
     <div class="employer-block${e.long ? ' employer-long' : ''}">
       <div class="employer-head">
-        <img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}">
+        <img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}" width="36" height="36">
         <div class="employer-copy">
           <div class="employer-tags">${e.tags
             .split(' · ')
@@ -116,9 +116,10 @@ function skillsSection(focus: Focus) {
   </section>`;
 }
 
-export function renderCv(root: HTMLElement, focus: Focus, recipient: string | null = null) {
+/** The whole CV (both A4 pages) as an HTML string. Pure: also used to pre-render index.html at build. */
+export function cvMarkup(focus: Focus, recipient: string | null = null): string {
   const [intuit, ...earlier] = experience;
-  root.innerHTML = `
+  return `
 <div class="page">
   ${header(focus, recipient)}
   ${summarySection(focus)}
@@ -139,4 +140,8 @@ export function renderCv(root: HTMLElement, focus: Focus, recipient: string | nu
   </section>
   ${skillsSection(focus)}
 </div>`;
+}
+
+export function renderCv(root: HTMLElement, focus: Focus, recipient: string | null = null) {
+  root.innerHTML = cvMarkup(focus, recipient);
 }

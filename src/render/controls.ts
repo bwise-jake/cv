@@ -1,5 +1,4 @@
 import { escapeHtml } from '../content/rich';
-import { pdfFileName } from '../pdf';
 import { getState, setState, subscribe } from '../state';
 import { themeLogos } from '../themes/logos';
 import { ensureThemeFonts, themes, type Theme } from '../themes/registry';
@@ -38,9 +37,9 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
       </div>
 
       <div class="controls-line">
-        <span class="controls-lead"><span id="theme-label">Style</span><kbd class="key" aria-hidden="true">T</kbd></span>
+        <span class="controls-lead"><span id="theme-label">Style</span><kbd class="key" aria-hidden="true">S</kbd></span>
         <div class="theme-select">
-          <button type="button" class="theme-trigger" aria-haspopup="listbox" aria-expanded="false" aria-keyshortcuts="T"
+          <button type="button" class="theme-trigger" aria-haspopup="listbox" aria-expanded="false" aria-keyshortcuts="S"
             aria-controls="theme-list" aria-labelledby="theme-label theme-current">
             <span class="brand-slot" data-current-mark></span>
             <span class="theme-current" id="theme-current"></span>
@@ -64,19 +63,17 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
       </div>
 
       <div class="controls-line">
-        <span class="controls-lead"><span id="focus-label">Emphasis</span><kbd class="key" aria-hidden="true">F</kbd></span>
-        <div class="focus-words" role="radiogroup" aria-labelledby="focus-label" aria-keyshortcuts="F">
+        <span class="controls-lead"><span id="focus-label">Emphasis</span><kbd class="key" aria-hidden="true">E</kbd></span>
+        <div class="focus-words" role="radiogroup" aria-labelledby="focus-label" aria-keyshortcuts="E">
           ${FOCUSES.map(
             (f) => `<button type="button" role="radio" class="focus-word" data-value="${f}">${FOCUS_LABELS[f]}</button>`,
           ).join('<span class="focus-sep" aria-hidden="true">/</span>')}
         </div>
       </div>
 
-      <div class="controls-download">
-        <button type="button" class="controls-pdf" aria-keyshortcuts="P">
-          ${ICON_DOWNLOAD}<span>Download PDF</span><kbd class="key" aria-hidden="true">P</kbd><span class="controls-pdf-meta">A4 · 2 pages</span>
-        </button>
-        <span class="controls-file" data-file-name></span>
+      <div class="controls-line controls-download">
+        <span class="controls-lead"><span>Export</span><kbd class="key" aria-hidden="true">P</kbd></span>
+        <button type="button" class="controls-pdf" aria-keyshortcuts="P">${ICON_DOWNLOAD}<span>Download PDF</span></button>
       </div>
 
     </div>`;
@@ -88,7 +85,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
   const focusGroup = root.querySelector<HTMLElement>('.focus-words')!;
   const radios = [...focusGroup.querySelectorAll<HTMLButtonElement>('.focus-word')];
 
-  // ---- Sync UI from state (dropdown, radios, filename) ----
+  // ---- Sync UI from state (dropdown, radios) ----
   const sync = (state: CvState) => {
     const theme = themes.find((t) => t.id === state.theme) ?? themes[0];
     root.querySelectorAll<HTMLElement>('[data-current-mark]').forEach((el) => (el.innerHTML = brandMark(theme)));
@@ -100,7 +97,6 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
       radio.setAttribute('aria-checked', String(checked));
       radio.tabIndex = checked ? 0 : -1;
     }
-    root.querySelector('[data-file-name]')!.textContent = `${pdfFileName(state)}.pdf`;
   };
 
   // ---- Emphasis: three words acting as a radiogroup ----
@@ -161,7 +157,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
   });
 
   list.addEventListener('keydown', (e) => {
-    e.stopPropagation(); // keep T/F/P shortcuts and the sheet's Escape out of the listbox
+    e.stopPropagation(); // keep S/E/P shortcuts and the sheet's Escape out of the listbox
     switch (e.key) {
       case 'ArrowDown': e.preventDefault(); setActive(activeIndex + 1); break;
       case 'ArrowUp': e.preventDefault(); setActive(activeIndex - 1); break;
@@ -207,13 +203,25 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
     toggle.setAttribute('aria-expanded', String(open));
     if (!open) closeList(false);
   };
-  toggle.addEventListener('click', () => setSheetOpen(!root.classList.contains('is-open')));
+  toggle.addEventListener('click', () => {
+    const open = !root.classList.contains('is-open');
+    setSheetOpen(open);
+    if (open) trigger.focus();
+  });
   document.addEventListener('keydown', (e) => e.key === 'Escape' && setSheetOpen(false));
   document.addEventListener('click', (e) => {
     if (!root.contains(e.target as Node)) {
       setSheetOpen(false);
       closeList(false);
     }
+  });
+
+  // ---- Skip link: straight to the first control, opening the sheet on small screens ----
+  document.querySelector<HTMLAnchorElement>('.skip-link')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // the outside-click handler above would close the sheet again
+    if (getComputedStyle(toggle).display !== 'none') setSheetOpen(true);
+    trigger.focus();
   });
 
   subscribe(sync);

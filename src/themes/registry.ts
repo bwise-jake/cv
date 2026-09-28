@@ -3,8 +3,6 @@ import type { ThemeId } from '../types';
 export interface Theme {
   id: ThemeId;
   label: string;
-  /** CSS background for colour swatches. */
-  swatch: string;
   /** Google Fonts css2 query (without the base URL). Null when the fonts are already loaded. */
   fonts: string | null;
   /** Font families that must be ready before printing. */
@@ -17,7 +15,6 @@ export const themes: Theme[] = [
   {
     id: 'default',
     label: 'Default',
-    swatch: 'linear-gradient(135deg, oklch(46% 0.15 38), oklch(20% 0.015 40))',
     fonts: null,
     families: ['Geist', 'Geist Mono'],
     note: 'Geist · Jake’s own design',
@@ -25,7 +22,6 @@ export const themes: Theme[] = [
   {
     id: 'atlassian',
     label: 'Atlassian',
-    swatch: '#1868db',
     fonts: 'family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500',
     families: ['Inter', 'JetBrains Mono'],
     note: 'Inter + JetBrains Mono, standing in for Charlie & Atlassian Mono',
@@ -33,7 +29,6 @@ export const themes: Theme[] = [
   {
     id: 'notion',
     label: 'Notion',
-    swatch: '#191918',
     fonts: 'family=Inter:wght@400..700',
     families: ['Inter'],
     note: 'Inter, the open base of NotionInter',
@@ -41,7 +36,6 @@ export const themes: Theme[] = [
   {
     id: 'canva',
     label: 'Canva',
-    swatch: 'linear-gradient(98deg, #00c4cc, #5a32fa 70%, #7630d7)',
     fonts: 'family=Plus+Jakarta+Sans:wght@400..800&family=DM+Mono:wght@400;500',
     families: ['Plus Jakarta Sans', 'DM Mono'],
     note: 'Plus Jakarta Sans, standing in for Canva Sans',
@@ -49,7 +43,6 @@ export const themes: Theme[] = [
   {
     id: 'stripe',
     label: 'Stripe',
-    swatch: '#533afd',
     fonts: 'family=Inter+Tight:wght@300..700&family=Source+Code+Pro:wght@400;500',
     families: ['Inter Tight', 'Source Code Pro'],
     note: 'Inter Tight, standing in for Söhne',
@@ -57,7 +50,6 @@ export const themes: Theme[] = [
   {
     id: 'linear',
     label: 'Linear',
-    swatch: '#5e6ad2',
     fonts: 'family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500',
     families: ['Inter', 'JetBrains Mono'],
     note: 'Inter + JetBrains Mono, standing in for Berkeley Mono',
@@ -65,7 +57,6 @@ export const themes: Theme[] = [
   {
     id: 'relevance',
     label: 'Relevance AI',
-    swatch: 'linear-gradient(135deg, #6056ff, #3b32f9)',
     fonts: 'family=Sora:wght@400;600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500',
     families: ['Sora', 'Inter', 'JetBrains Mono'],
     note: 'Sora + Inter, Relevance AI’s own open-source typefaces',

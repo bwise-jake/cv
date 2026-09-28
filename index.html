@@ -3,6 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  // Apply the linked or saved theme/emphasis before first paint so tailored links don't flash the
+  // Default colours. Mirrors resolveState() in src/state.ts (URL > saved > default).
+  // Keep these lists and the storage key in sync with src/types.ts and src/state.ts
+  // (tests/prepaint.test.ts checks this).
+  (function () {
+    var themes = ['default', 'atlassian', 'notion', 'canva', 'stripe', 'linear', 'relevance'];
+    var focuses = ['balanced', 'growth', 'engineering'];
+    var query = new URLSearchParams(location.search);
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem('jaketb-cv:state') || '{}') || {}; } catch (e) {}
+    function pick(key, list) {
+      var fromUrl = (query.get(key) || '').toLowerCase();
+      if (list.indexOf(fromUrl) > -1) return fromUrl;
+      return list.indexOf(saved[key]) > -1 ? saved[key] : null;
+    }
+    var theme = pick('theme', themes), focus = pick('focus', focuses), root = document.documentElement;
+    if (theme) root.dataset.theme = theme;
+    if (focus) root.dataset.focus = focus;
+  })();
+</script>
 <title>Jake Thornton-Bowen — CV</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23231a17'/%3E%3Ctext x='16' y='21.5' text-anchor='middle' font-family='system-ui,sans-serif' font-size='14' font-weight='700' fill='%23f6efe9'%3EJT%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Jake Thornton-Bowen: front-end growth engineer. 10+ years, ex-Intuit, 60+ experiments, $5.5m+ incremental LTV.">
@@ -12,6 +33,7 @@
 <script type="module" src="/src/main.ts"></script>
 </head>
 <body>
+<a class="skip-link" href="#controls">Skip to CV options</a>
 <div class="layout">
   <main id="cv"></main>
   <aside id="controls"></aside>

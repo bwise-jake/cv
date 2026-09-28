@@ -18,7 +18,7 @@ Minimal, confident, editorial-typographic. Closer to Linear / Stripe / Vercel ma
 
 ## Anti-references
 
-- Generic resume-builder templates (Canva-style): pill-shaped skill tags, rounded card-in-card boxes, stock icons, drop shadows on every element.
+- Generic resume-builder templates (Canva-style): pill-shaped skill tags, rounded card-in-card boxes, stock icons, drop shadows on every element. (Company brand themes may use that company's own tag component on purpose; the Default theme never does.)
 - Dense corporate-report look: heavy borders, boxed-in sections, grey-on-grey monotony.
 - Anything that reads as "AI made this template."
 

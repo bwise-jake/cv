@@ -64,6 +64,13 @@ PDF-safe styling notes (Chrome → Preview/Quick Look): header gradients must be
 distinct stops, and nothing on the page may use `mix-blend-mode` in print — either makes Apple's
 renderer flatten the gradient.
 
+## Works without JavaScript
+
+The build pre-renders the Default CV into `index.html` (the `prerender-cv` plugin in `vite.config.ts`),
+so crawlers, link previews and no-JS readers see the full CV. A small inline script in `<head>` applies
+the theme/emphasis from the link or saved preference before first paint; its theme/focus lists are
+checked against `src/types.ts` by `tests/prepaint.test.ts`.
+
 ## Deploy
 
 `.github/workflows/deploy.yml` builds and publishes `dist/` to GitHub Pages on every push to `main`
