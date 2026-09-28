@@ -84,7 +84,7 @@ the two-page layout hold everywhere.
 
 | Theme | Type (open stand-in) | Accent | Header |
 |---|---|---|---|
-| Atlassian | Inter + JetBrains Mono (for Charlie / Atlassian Mono) | #1868DB | solid brand blue |
+| Atlassian | Inter + JetBrains Mono (for Charlie / Atlassian Mono) | #1868DB | Confluence page: blue cover band, white title block |
 | Notion | Inter (NotionInter) | #0075DE | light, page-title style |
 | Canva | Plus Jakarta Sans (Canva Sans) + DM Mono | #8B3DFF | teal → violet gradient |
 | Stripe | Inter Tight (Söhne) + Source Code Pro | #533AFD | navy → blurple sweep |
@@ -113,7 +113,7 @@ real text, so PDFs and ATS parsing are unaffected):
 
 | Theme | Industry tags | Section numbers | Other |
 |---|---|---|---|
-| Atlassian | Lozenges (neutral; first "in progress" blue) | Lozenge | |
+| Atlassian | ADS lozenges: sentence case, bordered (neutral gray; first "in progress" blue) | Blue lozenge | Confluence page: blue cover band over a white title block, kicker as the byline, Summary as a blue info panel, unruled headings, sans skill sub-headings |
 | Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons |
 | Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
 | Canva | Rounded purple chips | Default | |

@@ -23,17 +23,20 @@
   --tag: #1558bc;
   --link: #1868db;
 
-  --header-bg: #1868db;
+  /* Confluence page header: white, under a brand-blue cover band (see the components below). */
+  --header-bg: #ffffff;
   --header-noise-opacity: 0;
-  --paper-on-ink: #ffffff;
-  --muted-on-ink: #e9f2fe;
-  --line-on-ink: rgb(255 255 255 / 0.4);
-  --accent-on-ink: #e9f2fe;
+  --paper-on-ink: #101214;
+  --muted-on-ink: #505258;
+  --line-on-ink: #dddee1;
+  --accent-on-ink: #1868db;
 
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Charlie Display 500 at -0.02em (64px / -1.28px on atlassian.com); Inter needs 600 to match
+     its colour on the page. */
   --name-weight: 600;
-  --name-tracking: -0.015em;
+  --name-tracking: -0.02em;
   --radius-avatar: 50%;
   --radius-logo: 4px;
 }
@@ -228,30 +231,82 @@
   }
 }
 
-/* Atlassian: Lozenges (design-system status labels, as on Jira boards). Neutral by default,
-   the first one "in progress" blue. Section numbers become lozenges too. */
+/* Atlassian: Lozenges, as the current Atlassian Design System draws them (atlassian.design,
+   Sept 2026): sentence case, regular weight, 1px border, 4px radius. Neutral "gray" by default,
+   the first one "in progress" blue. Section numbers become blue lozenges too. Scaled from the
+   12px/16px spec to the CV's metadata size; colours are the spec's opaque tokens (PDF-safe). */
 :root[data-theme="atlassian"] {
-  .tag {
+  .tag,
+  .section-num {
     padding: 0 4px;
-    border-radius: 3px;
-    background: #dddee1;
+    border: 1px solid #dddee1;
+    border-radius: 4px;
+    background: #f0f1f2;
     color: #292a2e;
     font-family: var(--sans);
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    line-height: 16px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 14px;
   }
-  .tag:first-child { background: #cfe1fd; color: #09326c; }
+  .tag:first-child,
+  .section-num {
+    border-color: #8fb8f6;
+    background: #cfe1fd;
+    color: #123263;
+  }
   .section-num {
     flex: none;
-    padding: 1px 4px;
-    border-radius: 3px;
-    background: #e9f2fe;
-    color: #09326c;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Atlassian: Confluence page anatomy. A cover band over the page title, the kicker as the
+   page byline, the summary as an info panel and plain (unruled) headings, all in Confluence's
+   own colours (panel values from the ADS section message, Sept 2026). */
+:root[data-theme="atlassian"] {
+  header.identity { padding-top: 52px; padding-bottom: 22px; }
+  header.identity::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 32px;
+    z-index: 0;
+    background: #1868db;
+  }
+
+  .kicker {
     font-family: var(--sans);
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--muted-on-ink);
+  }
+
+  ul.summary-list {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #e9f2fe;
+  }
+  ul.summary-list li { margin-bottom: 6px; }
+  ul.summary-list li:last-child { margin-bottom: 0; }
+
+  .section-head {
+    padding-bottom: 0;
+    border-bottom: 0;
+    margin-bottom: 10px;
+  }
+
+  /* Sub-headings read like a Confluence h4: the sans, bold, in the heading colour. */
+  .skill-group h3 {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
   }
 }
 
