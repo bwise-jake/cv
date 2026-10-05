@@ -245,7 +245,8 @@
   --name-weight: 400;
   --name-tracking: -0.01em;
   --heading-weight: 500;
-  --radius-avatar: 16px;
+  /* A circle, like most themes: the photo's lime ring shows in the corners of a rounded square. */
+  --radius-avatar: 50%;
   --radius-logo: 8px;
 }
 
@@ -498,12 +499,22 @@
     background: #ff6a1a;
   }
 
-  /* The card bleeds into the margin so the summary keeps its text width (and line breaks). */
   ul.summary-list {
-    margin-inline: -12px;
     padding: 10px 12px;
     border-radius: 12px;
     background: #f4efed;
   }
   ul.summary-list li:last-child { margin-bottom: 0; }
+
+  /* Skill sub-headings are the feature cards' label: black mono after an orange square. */
+  .skill-group h3 { color: var(--ink); }
+  .skill-group h3::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    vertical-align: 1px;
+    background: #ff6a1a;
+  }
 }

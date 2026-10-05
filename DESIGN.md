@@ -118,5 +118,5 @@ real text, so PDFs and ATS parsing are unaffected):
 | Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons |
 | Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
 | Canva | Rounded purple chips | Default | |
-| Everlab | Uppercase mono, each after an orange square | Outlined mono "subhead" tag with a black square | Serif name only (headings stay sans), summary in a linen card |
+| Everlab | Uppercase mono, each after an orange square | Outlined mono "subhead" tag with a black square | Serif name only (headings stay sans), summary in a linen card, skill sub-headings as black mono labels after an orange square |
 | Default, Stripe, Relevance AI | Interpunct-separated mono text | Default | |
