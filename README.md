@@ -2,7 +2,7 @@
 
 A two-page A4 CV that restyles itself for the company reading it.
 
-- **Company themes**: Default, Atlassian, Notion, Canva, Stripe, Linear, Relevance AI. Colours were
+- **Company themes**: Default, Atlassian, Notion, Canva, Stripe, Linear, Relevance AI, Everlab. Colours were
   sampled from each company's live site; proprietary typefaces are swapped for the closest open
   font (see the header of `src/styles/themes.css`).
 - **Focus modes**: Balanced, Growth, Engineering. Each changes which phrases are bold, the order
@@ -36,7 +36,7 @@ Keyboard: `T` / `Shift+T` cycle themes, `F` / `Shift+F` cycle focus, `P` downloa
 npm install
 npm run dev        # http://localhost:5173
 npm test           # content/state unit tests
-npm run pdf        # builds, renders all 21 theme × focus PDFs to exports/, asserts each is 2 pages
+npm run pdf        # builds, renders all 24 theme × focus PDFs to exports/, asserts each is 2 pages
 ```
 
 ## Editing the CV

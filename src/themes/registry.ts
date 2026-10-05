@@ -61,6 +61,13 @@ export const themes: Theme[] = [
     families: ['Sora', 'Inter', 'JetBrains Mono'],
     note: 'Sora + Inter, Relevance AI’s own open-source typefaces',
   },
+  {
+    id: 'everlab',
+    label: 'Everlab',
+    fonts: 'family=Newsreader:opsz,wght@6..72,400&family=Schibsted+Grotesk:wght@400..700&family=DM+Mono:wght@400;500',
+    families: ['Newsreader', 'Schibsted Grotesk', 'DM Mono'],
+    note: 'Newsreader + Schibsted Grotesk + DM Mono, standing in for Tobias, Saans & Saans Mono',
+  },
 ];
 
 export const getTheme = (id: ThemeId): Theme => themes.find((t) => t.id === id) ?? themes[0];

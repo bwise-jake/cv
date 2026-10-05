@@ -1,6 +1,7 @@
 import atlassian from '../assets/brands/atlassian.svg';
 import canva from '../assets/brands/canva.png';
 import defaultMark from '../assets/brands/default.svg';
+import everlab from '../assets/brands/everlab.png';
 import linear from '../assets/brands/linear.png';
 import notion from '../assets/brands/notion.png';
 import relevance from '../assets/brands/relevance.png';
@@ -19,4 +20,5 @@ export const themeLogos: Record<ThemeId, string> = {
   stripe,
   linear,
   relevance,
+  everlab,
 };

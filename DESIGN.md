@@ -78,18 +78,19 @@ uses a blend mode that makes Apple's PDF renderer flatten gradients).
 
 ## Company themes (interactive version)
 
-The default design above is one of seven themes. The others re-skin the same layout by overriding
+The default design above is one of eight themes. The others re-skin the same layout by overriding
 tokens only (`src/styles/themes.css`); no theme changes the structure, so ATS text order and
 the two-page layout hold everywhere.
 
 | Theme | Type (open stand-in) | Accent | Header |
 |---|---|---|---|
-| Atlassian | Inter + JetBrains Mono (for Charlie / Atlassian Mono) | #1868DB | solid brand blue |
+| Atlassian | Inter + JetBrains Mono (for Charlie / Atlassian Mono) | #1868DB | Confluence page: blue cover band, white title block |
 | Notion | Inter (NotionInter) | #0075DE | light, page-title style |
 | Canva | Plus Jakarta Sans (Canva Sans) + DM Mono | #8B3DFF | teal → violet gradient |
 | Stripe | Inter Tight (Söhne) + Source Code Pro | #533AFD | navy → blurple sweep |
 | Linear | Inter + JetBrains Mono (Berkeley Mono) | #7170FF | dark page, violet haze |
 | Relevance AI | Sora + Inter (both open) | #6056FF, teal #0E9384 tags | light lavender → pink wash |
+| Everlab | Newsreader + Schibsted Grotesk + DM Mono (for Tobias, Saans, Saans Mono) | black and grey; #FF6A1A squares only | near-black, serif name, muted-white mono kicker |
 
 The controls (`src/render/controls.ts`) are typeset as a CV section headed **Version** in the
 margin beside the centred page, sticky so only the pages scroll. No card, blur or pills: a section
@@ -113,8 +114,9 @@ real text, so PDFs and ATS parsing are unaffected):
 
 | Theme | Industry tags | Section numbers | Other |
 |---|---|---|---|
-| Atlassian | Lozenges (neutral; first "in progress" blue) | Lozenge | |
+| Atlassian | ADS lozenges: sentence case, bordered (neutral gray; first "in progress" blue) | Blue lozenge | Confluence page: blue cover band over a white title block, kicker as the byline, Summary as a blue info panel, unruled headings, sans skill sub-headings |
 | Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons |
 | Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
 | Canva | Rounded purple chips | Default | |
+| Everlab | Uppercase mono, each after an orange square | Outlined mono "subhead" tag with a black square | Serif name only (headings stay sans, "continued" in two-tone grey), monochrome summary in a linen card, skill sub-headings as black mono labels after an orange square |
 | Default, Stripe, Relevance AI | Interpunct-separated mono text | Default | |
