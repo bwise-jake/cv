@@ -78,7 +78,7 @@ uses a blend mode that makes Apple's PDF renderer flatten gradients).
 
 ## Company themes (interactive version)
 
-The default design above is one of seven themes. The others re-skin the same layout by overriding
+The default design above is one of eight themes. The others re-skin the same layout by overriding
 tokens only (`src/styles/themes.css`); no theme changes the structure, so ATS text order and
 the two-page layout hold everywhere.
 
@@ -90,6 +90,7 @@ the two-page layout hold everywhere.
 | Stripe | Inter Tight (Söhne) + Source Code Pro | #533AFD | navy → blurple sweep |
 | Linear | Inter + JetBrains Mono (Berkeley Mono) | #7170FF | dark page, violet haze |
 | Relevance AI | Sora + Inter (both open) | #6056FF, teal #0E9384 tags | light lavender → pink wash |
+| Everlab | Newsreader + Schibsted Grotesk + DM Mono (for Tobias, Saans, Saans Mono) | #C2421C text, #FF6A1A squares | dark warm hero, serif name |
 
 The controls (`src/render/controls.ts`) are typeset as a CV section headed **Version** in the
 margin beside the centred page, sticky so only the pages scroll. No card, blur or pills: a section
@@ -117,4 +118,5 @@ real text, so PDFs and ATS parsing are unaffected):
 | Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons |
 | Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
 | Canva | Rounded purple chips | Default | |
+| Everlab | Uppercase mono, each after an orange square | Outlined mono "subhead" tag with a black square | Serif name only (headings stay sans), summary in a linen card |
 | Default, Stripe, Relevance AI | Interpunct-separated mono text | Default | |

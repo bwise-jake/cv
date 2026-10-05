@@ -8,6 +8,7 @@
  *   Stripe     Söhne                                → Inter Tight, Source Code Pro
  *   Linear     Inter Variable, Berkeley Mono        → Inter, JetBrains Mono
  *   Relevance  Sora + Inter                         → same (open source)
+ *   Everlab    Tobias, Saans, Saans Mono            → Newsreader, Schibsted Grotesk, DM Mono
  */
 
 /* ---------- Atlassian ---------- */
@@ -214,6 +215,40 @@
   image-rendering: pixelated;
 }
 
+/* ---------- Everlab ---------- */
+:root[data-theme="everlab"] {
+  --paper: #ffffff;
+  --canvas: #faf7f4;
+  --ink: #000000;
+  --ink-soft: #3f3e3b;
+  --ink-faint: #6a6964;
+  --line: #e2dcd4;
+  /* Everlab’s orange (#ff6a1a) is too light for small text on white; its brand red, deepened a
+     touch, carries text. The bright orange stays for the square bullets (decorative). */
+  --accent: #c2421c;
+  --accent-wash: #f4efed;
+  --tag: #3f3e3b;
+  --link: #c2421c;
+
+  /* The dark, warm photographic hero, as a PDF-safe linear gradient. */
+  --header-bg: linear-gradient(160deg, #3b3633 0%, #2a2624 45%, #1d1b1a 75%, #121111 100%);
+  --header-noise-opacity: 0;
+  --paper-on-ink: #f4f4f3;
+  --muted-on-ink: #bab7b2;
+  --line-on-ink: #57524e;
+  --accent-on-ink: #ff6a1a;
+
+  --sans: 'Schibsted Grotesk', Arial, sans-serif;
+  --display: 'Newsreader', Georgia, serif;
+  --mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Tobias headlines are set regular; section headings are Saans 500 (below). */
+  --name-weight: 400;
+  --name-tracking: -0.01em;
+  --heading-weight: 500;
+  --radius-avatar: 16px;
+  --radius-logo: 8px;
+}
+
 /* =====================================================================================
  * Brand components. Beyond tokens, each theme renders a few elements the way the company's
  * own design system does. All of it is real text (PDF/ATS-safe); spaces between tags are kept
@@ -410,4 +445,65 @@
     letter-spacing: 0;
     line-height: 18px;
   }
+}
+
+/* Everlab: the site's mono labels. Section numbers become its outlined "subhead" tag (black
+   square, uppercase mono, 8px radius); industry tags take the orange square bullet the feature
+   cards use; the summary sits in a linen card; headings are Saans (sans), only the name is the
+   Tobias serif. Bright orange is decorative only. */
+:root[data-theme="everlab"] {
+  h1 { font-size: 31px; }
+  h2 { font-family: var(--sans); letter-spacing: -0.015em; }
+
+  .role-title::before {
+    width: 7px;
+    height: 7px;
+  }
+
+  .section-head { align-items: center; }
+  .section-num {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 6px;
+    border: 1px solid #c2c2c2;
+    border-radius: 6px;
+    color: var(--ink);
+    font-size: 9px;
+    line-height: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .section-num::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background: #000000;
+  }
+
+  .employer-tags { letter-spacing: 0.04em; }
+  .tag {
+    display: inline-block;
+    margin-right: 8px;
+    white-space: nowrap;
+  }
+  .tag::before,
+  .tag + .tag::before {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-right: 4px;
+    vertical-align: 1px;
+    background: #ff6a1a;
+  }
+
+  /* The card bleeds into the margin so the summary keeps its text width (and line breaks). */
+  ul.summary-list {
+    margin-inline: -12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #f4efed;
+  }
+  ul.summary-list li:last-child { margin-bottom: 0; }
 }
