@@ -32,3 +32,12 @@ export function rich(src: string): string {
     .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
       '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 }
+
+/** The visible text of a content string: strips **bold**, [[text|keys]], {{fill}} and [text](url) markup, the same grammar rich() turns into HTML. */
+export function plainText(src: string): string {
+  return src
+    .replace(/\[\[(.+?)\|([a-z,\s]+)\]\]/g, '$1')
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/\{\{(.+?)\}\}/g, '$1')
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '$1');
+}

@@ -1,6 +1,7 @@
 import type { Focus, ThemeId } from '../types';
 import type { summaryIcons } from './icons';
 import type { LogoMark } from './logo-marks';
+import { plainText } from './rich';
 
 /*
  * All CV copy lives here. Strings use the inline markup documented in rich.ts:
@@ -46,9 +47,12 @@ export interface Employer {
 export interface SkillGroup {
   id: 'frontend' | 'growth' | 'ai';
   title: string;
-  skills: string;
+  /** One entry per visually separated set of keywords. */
+  skills: string[];
   logos: string[];
   logosLabel: string;
+  /** Extra keywords shown under one theme only (the other themes hide them), appended to the set at the same index; '' for none. They cost the other themes page space, so only the Atlassian theme, which has the room, has any. */
+  extra?: Partial<Record<ThemeId, string[]>>;
   /** Skills and logos (by their plain text) left out under a focus. */
   omit?: Partial<Record<Focus, string[]>>;
 }
@@ -203,7 +207,7 @@ export const ventures: Employer[] = [
     jobs: [
       {
         bullets: [
-          'Designed and built the front end in [[React 19, TypeScript and Tailwind|b,e]] on a Radix/shadcn design system in [[Storybook|b,e]] ([finguide-storybook.vercel.app](https://finguide-storybook.vercel.app/)), backed by a [[typed GraphQL API|e]] over Django and Celery, hosted on [[Railway and Vercel|e]].',
+          'Designed and built the front end in [[React 19, TypeScript and Tailwind|b,e]] on a Radix/shadcn design system in [[[Storybook](https://finguide-storybook.vercel.app/)|b,e]], backed by a [[typed GraphQL API|e]] over Django and Celery, hosted on [[Railway and Vercel|e]].',
           'Tested at every layer: 800+ [[Jest and Testing Library|b,e]] specs, 300+ Storybook stories run as [[Vitest browser tests|e]] that fail CI on axe violations, [[Chromatic visual regression|e]] with MSW-mocked GraphQL, and pytest on the backend.',
           'Built an [[agent-driven delivery pipeline|b,e]] where every change starts with a plan and is gated by automated tests, compliance checks and my code review.',
         ],
@@ -233,24 +237,56 @@ export const skills: SkillGroup[] = [
   {
     id: 'frontend',
     title: 'Front-end engineering',
-    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), CMS & Content Authoring (AEM), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], Internationalisation (i18n), [[Web Performance (Core Web Vitals)|e,g]], Testing (Jest, Testing Library, Vitest, Chromatic, MSW, pytest), Code Review, Technical Design, CI/CD, Cloud Hosting (Railway, Vercel)',
+    skills: [
+      '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), CMS & Content Authoring (AEM)',
+      'Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], Internationalisation (i18n), [[Web Performance (Core Web Vitals)|e,g]]',
+      'Testing (Jest, Testing Library, Vitest, Chromatic, MSW, pytest), Code Review, Technical Design, CI/CD, Cloud Hosting (Railway, Vercel)',
+    ],
     logos: ['React', 'Next.js', 'TypeScript', 'HTML5', 'CSS', 'Tailwind CSS', 'Storybook', 'Node.js', 'Git'],
     logosLabel: 'Front-End Engineering platforms',
   },
   {
     id: 'growth',
-    title: 'Growth & experimentation',
-    skills: '[[A/B Testing|g]], [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[CRO|g]], UX Design & Wireframing, [[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]] (Adobe Analytics), Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
-    logos: ['Optimizely', 'Google Analytics', 'FullStory', 'Google Ads', 'Semrush', 'Ahrefs', 'Figma', 'Hotjar', 'Amplitude'],
-    logosLabel: 'Growth and Experimentation platforms',
-    omit: { engineering: ['SEO', 'Google Ads', 'Semrush', 'Ahrefs'] },
+    title: 'Analytics & experimentation',
+    skills: [
+      '[[A/B Testing|g]], [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[CRO|g]], UX Design & Wireframing',
+      '[[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]] (Adobe Analytics)',
+      'Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
+    ],
+    logos: ['Optimizely', 'Google Analytics', 'Google Tag Manager', 'Looker', 'FullStory', 'Google Ads', 'Semrush', 'Ahrefs', 'Figma', 'Hotjar', 'Amplitude', 'Google Search Console'],
+    logosLabel: 'Analytics and Experimentation platforms',
+    extra: {
+      atlassian: [
+        '[[Multi-Armed Bandit Testing|g]], Personalisation',
+        'Behavioural Analytics (FullStory), [[Incrementality & LTV Measurement|g]]',
+        '',
+      ],
+    },
+    omit: {
+      engineering: ['SEO', 'Google Ads', 'Semrush', 'Ahrefs'],
+      growth: ['Google Tag Manager', 'Looker', 'Google Search Console'],
+      balanced: ['Google Tag Manager', 'Looker', 'Google Search Console'],
+    },
   },
   {
     id: 'ai',
     title: 'AI-native workflows',
-    skills: 'Context Engineering, Plan-First Delivery, [[Agentic Development|e]], [[Multi-Agent Orchestration|e]], [[MCP Integrations|e]], [[Automated Quality Gates|e]], AI Compliance Guardrails, Human-in-the-Loop Review, Knowledge Capture & Reuse',
+    skills: [
+      'Context Engineering, Plan-First Delivery',
+      '[[Agentic Development|e]], [[Multi-Agent Orchestration|e]], [[MCP Integrations|e]]',
+      '[[Automated Quality Gates|e]], AI Compliance Guardrails, Human-in-the-Loop Review',
+      'Knowledge Capture & Reuse',
+    ],
     logos: ['Claude', 'OpenAI Codex', 'Cursor', 'Model Context Protocol', 'GitHub', 'Airtable', 'Notion', 'Jira', 'Confluence'],
     logosLabel: 'AI-Native Workflows platforms',
+    extra: {
+      atlassian: [
+        'AI Coding Assistants (Claude, Codex, Cursor)',
+        '[[Agent-Driven Delivery Pipelines|e]]',
+        'Automated Compliance Checks',
+        'Shared Knowledge Bases (Coda)',
+      ],
+    },
   },
 ];
 
@@ -276,4 +312,26 @@ export function byOrder<T extends { id: string }>(items: T[], ids: readonly stri
     if (!item) throw new Error(`No content item with id "${id}"`);
     return item;
   });
+}
+
+/**
+ * The keyword sets a card shows under a focus: keywords named in `omit` are removed (matched by their plain text),
+ * and so are sets left empty. Each set carries the per-theme `extra` keywords for the same index, filtered the same
+ * way. The renderer and the PDF reading-order check both use this, so they cannot disagree about what a card shows.
+ */
+export function visibleSkillSets(group: SkillGroup, focus: Focus): { text: string; extras: [ThemeId, string][] }[] {
+  const omitted = new Set(group.omit?.[focus]);
+  const keep = (list: string) =>
+    list
+      .split(', ')
+      .filter((s) => !omitted.has(plainText(s)))
+      .join(', ');
+  return group.skills
+    .map((set, i) => ({
+      text: keep(set),
+      extras: Object.entries(group.extra ?? {})
+        .map(([theme, lists]) => [theme as ThemeId, keep(lists?.[i] ?? '')] as [ThemeId, string])
+        .filter(([, text]) => text),
+    }))
+    .filter(({ text }) => text);
 }

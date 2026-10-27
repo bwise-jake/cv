@@ -57,6 +57,11 @@ All copy lives in `src/content/cv.ts`. Inline markup:
 Section order per focus is the `order` object in the same file; headline role/kicker per focus is
 `headlines`.
 
+Skill groups are `SkillGroup` entries: `skills` is a list of sets (each set a comma list, shown as its
+own block in the Atlassian theme), `omit` hides keywords and logos under a focus, and `extra` adds
+keywords to the set at the same index for one theme only (hidden in the others); logos are
+`stackLogos` entries in `src/content/icons.ts`.
+
 ## How pages stay on A4
 
 Each `.page` is a fixed 210 × 297mm sheet. `src/fit.ts` measures the content in the desktop

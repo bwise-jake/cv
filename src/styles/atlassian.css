@@ -285,30 +285,40 @@
 
 /* Atlassian: Skills & stacks as three flat accent cards, after atlassian.com's customer-story cards: a large
    radius, an ADS accent-subtler fill, generous padding, the title first and the stack logos pinned to the
-   bottom so the three footers line up. Colour follows the group (data-flip), not its position, because the
-   focus changes the order. Subtler fills with the default text token are 10:1 or better. The markup is
+   bottom so the three footers line up. Colour follows the group (data-skill), not its position, because the
+   focus changes the order; every group needs its own rule (tests/skill-cards.test.ts checks). Subtler fills with the default text token are 10:1 or better. The markup is
    unchanged, so reading order in the PDF is too. */
 :root[data-theme="atlassian"] {
-  .grid-three {
+  .skill-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--ds-space-150, 0.75rem);
   }
   .skill-group {
-    --card-bg: var(--ds-background-accent-blue-subtler, #cfe1fd);
     display: flex;
     flex-direction: column;
     padding: var(--ds-space-150, 0.75rem);
     border-radius: var(--ds-radius-xlarge, 0.75rem);
-    background: var(--card-bg);
   }
-  .skill-group[data-flip="skills-growth"] { --card-bg: var(--ds-background-accent-green-subtler, #baf3db); }
-  .skill-group[data-flip="skills-ai"] { --card-bg: var(--ds-background-accent-purple-subtler, #eed7fc); }
+  .skill-group[data-skill="frontend"] { background: var(--ds-background-accent-blue-subtler, #cfe1fd); }
+  .skill-group[data-skill="growth"] { background: var(--ds-background-accent-green-subtler, #baf3db); }
+  .skill-group[data-skill="ai"] { background: var(--ds-background-accent-purple-subtler, #eed7fc); }
   .skill-list {
     order: 2;
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
     font-size-adjust: none;
     color: var(--ds-text, #292a2e);
   }
+  /* Each keyword set is its own block, divided from the one above by a hairline (border token), so the
+     groups read as groups. The 4px above and below the rule are what a 12px-text card can spend: 8px each
+     cost the Atlassian PDF 2.5 points of scale, 4px cost about 1.2. The ", " the other themes put between sets is dropped. */
+  .skill-set { display: block; }
+  .skill-set + .skill-set {
+    margin-top: var(--ds-space-050, 0.25rem);
+    padding-top: var(--ds-space-050, 0.25rem);
+    border-top: var(--ds-border-width, 0.0625rem) solid var(--ds-border, #0b120e24);
+  }
+  .skill-set + .skill-set::before { content: none; }
+  .skill-extra[data-theme-extra="atlassian"] { display: inline; }
   /* The stack logos sit under the card title, above the keywords. The markup keeps title, keywords, logos
      (the other themes show the logos last), so this is CSS `order` only. The logos are the card's only focusable
      elements, so keyboard order is unchanged; screen readers still read the keywords before the logos. */
@@ -328,7 +338,7 @@
 /* On a phone the page is one scrolling column (base.css), so the cards stack. This needs the same
    :root:not([data-measure]) guard as base.css, which keeps the A4 fit measured on the desktop layout. */
 @media screen and (max-width: 640px) {
-  :root[data-theme="atlassian"]:not([data-measure]) .grid-three { grid-template-columns: 1fr; }
+  :root[data-theme="atlassian"]:not([data-measure]) .skill-grid { grid-template-columns: 1fr; }
 }
 
 /* Atlassian: the badges in the brand band across the top of the sheet, right-aligned, saying what the theme

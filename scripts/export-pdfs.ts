@@ -14,7 +14,7 @@ import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { preview } from 'vite';
 import { pdfFileName } from '../src/pdf';
 import { themes } from '../src/themes/registry';
-import { FOCUSES } from '../src/types';
+import { FOCUSES, type Focus } from '../src/types';
 import { expectedOrder, readingOrderProblems } from './pdf-reading-order';
 
 const EXPECTED_PAGES = 2;
@@ -41,7 +41,7 @@ async function pdfText(pdf: Buffer): Promise<string> {
 }
 
 async function main() {
-  const needles = expectedOrder();
+  const needlesByFocus = Object.fromEntries(FOCUSES.map((focus) => [focus, expectedOrder(focus)])) as Record<Focus, string[]>;
   const server = await preview({ preview: { port: 4174, strictPort: true, open: false } });
   const base = server.resolvedUrls?.local[0] ?? 'http://localhost:4174/';
   const browser = await launch();
@@ -73,7 +73,7 @@ async function main() {
         const name = `${pdfFileName({ theme: theme.id, focus })}.pdf`;
         await writeFile(new URL(name, OUT_DIR), pdf);
 
-        const order = readingOrderProblems(await pdfText(pdf), needles);
+        const order = readingOrderProblems(await pdfText(pdf), needlesByFocus[focus]);
 
         const ok = pages === EXPECTED_PAGES && clipped.length === 0 && order.length === 0;
         if (!ok) {

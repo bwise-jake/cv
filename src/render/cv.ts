@@ -1,4 +1,4 @@
-import { byOrder, experience, headlines, order, person, skills, summary, ventures, type Employer, type Headline } from '../content/cv';
+import { byOrder, experience, headlines, order, person, skills, summary, ventures, visibleSkillSets, type Employer, type Headline } from '../content/cv';
 import { adsBadgeIcons, adsSummaryIcons, stackLogos, summaryIcons } from '../content/icons';
 import { logoMarks } from '../content/logo-marks';
 import { escapeHtml, rich } from '../content/rich';
@@ -57,10 +57,6 @@ const roleTitle = ({ role, roleByTheme = {} }: Headline) =>
   `<span class="role-std">${escapeHtml(role)}</span>${Object.entries(roleByTheme)
     .map(([theme, title]) => `<span class="role-alt" data-theme-role="${theme}">${escapeHtml(title)}</span>`)
     .join('')}`;
-
-/** Plain text of a rich-text fragment, for matching it against `omit` lists. */
-const plain = (src: string) => src.replace(/\[\[(.+?)\|[a-z,\s]+\]\]/g, '$1').replace(/\*\*/g, '');
-
 
 function header(focus: Focus, recipient: string | null) {
   const headline = headlines[focus];
@@ -154,12 +150,12 @@ function skillsSection(focus: Focus) {
   const groups = byOrder(skills, order[focus].skills)
     .map((g) => {
       const omitted = new Set(g.omit?.[focus]);
-      const list = g.skills.split(', ').filter((s) => !omitted.has(plain(s))).join(', ');
+      const sets = visibleSkillSets(g, focus);
       const logos = g.logos.filter((name) => !omitted.has(name));
       return `
-      <div class="skill-group" data-flip="skills-${g.id}">
+      <div class="skill-group" data-skill="${g.id}" data-flip="skills-${g.id}">
         <h3>${escapeHtml(g.title)}</h3>
-        <div class="skill-list">${rich(list)}</div>
+        <div class="skill-list">${sets.map(({ text, extras }) => `<p class="skill-set">${rich(text)}${extras.map(([theme, extra]) => `<span class="skill-extra" data-theme-extra="${theme}">, ${rich(extra)}</span>`).join('')}</p>`).join('')}</div>
         <div class="logo-wrapper" role="group" aria-label="${escapeHtml(g.logosLabel)}">
           ${logos.map((name) => `<div class="stack-logo" role="img" tabindex="0" aria-label="${escapeHtml(name)}" data-tooltip="${escapeHtml(name)}">${stackLogos[name]}</div>`).join('')}
         </div>
@@ -169,7 +165,7 @@ function skillsSection(focus: Focus) {
   return `
   <section>
     ${sectionHead('04', 'Skills &amp; stacks')}
-    <div class="grid-three">${groups}</div>
+    <div class="skill-grid">${groups}</div>
   </section>`;
 }
 

@@ -64,26 +64,93 @@ describe('cvMarkup', () => {
     expect(html).not.toContain('Unit, E2E');
   });
 
-  it('keeps related skills together in each card', () => {
+  it("keeps each card's keywords in separated sets", () => {
     const html = cvMarkup('balanced');
-    const card = (id: string): string => {
+    const sets = (id: string): string[] => {
       const start = html.indexOf(`data-flip="skills-${id}">`);
       const end = html.indexOf('class="logo-wrapper"', start);
-      return html.slice(start, end).replace(/<[^>]*>/g, '');
+      return [...html.slice(start, end).matchAll(/<p class="skill-set">(.*?)<\/p>/gs)].map((m) =>
+        m[1].replace(/<span class="skill-extra".*?<\/span>/gs, '').replace(/<[^>]*>/g, ''),
+      );
     };
-    const items = (id: string): string[] => card(id).split(/, (?![^()]*\))/);
+    const items = (id: string): string[] => sets(id).join(', ').split(/, (?![^()]*\))/);
+
+    expect(sets('frontend')).toHaveLength(3);
+    expect(sets('growth')).toHaveLength(3);
+    expect(sets('ai')).toHaveLength(4);
     expect(items('frontend')).toHaveLength(16);
     expect(items('growth')).toHaveLength(11);
     expect(items('ai')).toHaveLength(9);
 
-    const frontend = card('frontend');
-    expect(frontend.indexOf('Responsive UI')).toBeGreaterThan(frontend.indexOf('CMS & Content Authoring (AEM)'));
-    expect(frontend.indexOf('Responsive UI')).toBeLessThan(frontend.indexOf('Testing ('));
-    const growth = card('growth');
-    expect(growth.indexOf('Analytics Instrumentation')).toBeGreaterThan(growth.indexOf('Experimentation Infrastructure'));
-    expect(growth.indexOf('Analytics Instrumentation')).toBeLessThan(growth.indexOf('Paid Performance Measurement'));
-    const ai = card('ai');
-    expect(ai.indexOf('MCP Integrations')).toBeLessThan(ai.indexOf('Automated Quality Gates'));
+    const starts = (id: string): string[] => sets(id).map((set) => set.slice(0, 40));
+    const expected: Record<string, string[]> = {
+      frontend: ['Component Architecture', 'Responsive UI', 'Testing ('],
+      growth: ['A/B Testing', 'Analytics Instrumentation', 'Paid Performance Measurement'],
+      ai: ['Context Engineering', 'Agentic Development', 'Automated Quality Gates', 'Knowledge Capture'],
+    };
+    for (const [id, prefixes] of Object.entries(expected)) {
+      prefixes.forEach((prefix, n) => expect(starts(id)[n].startsWith(prefix)).toBe(true));
+    }
+  });
+
+  it('shows nine logos in every card under every focus', () => {
+    for (const focus of ['engineering', 'growth', 'balanced'] as const) {
+      const cards = cvMarkup(focus).split('<div class="skill-group"').slice(1);
+      expect(cards).toHaveLength(3);
+      for (const card of cards) expect(card.match(/class="stack-logo"/g)).toHaveLength(9);
+    }
+  });
+
+  it('fills the Analytics & experimentation logos with analytics tools under Engineering', () => {
+    const growthCard = (focus: 'engineering' | 'growth' | 'balanced'): string =>
+      cvMarkup(focus).match(/data-flip="skills-growth">.*?<\/div>\s*<\/div>/s)?.[0] ?? '';
+    const added = ['Google Tag Manager', 'Looker', 'Google Search Console'];
+    for (const name of added) {
+      expect(growthCard('engineering')).toContain(`aria-label="${name}"`);
+      expect(growthCard('growth')).not.toContain(`aria-label="${name}"`);
+      expect(growthCard('balanced')).not.toContain(`aria-label="${name}"`);
+    }
+    expect(growthCard('engineering')).not.toContain('aria-label="Semrush"');
+    expect(growthCard('growth')).toContain('aria-label="Semrush"');
+    expect(growthCard('balanced')).toContain('aria-label="Semrush"');
+    expect(cvMarkup('engineering')).toContain('Analytics &amp; experimentation');
+    expect(cvMarkup('engineering')).not.toContain('Growth &amp; experimentation');
+  });
+
+  it('adds Atlassian-only keywords that balance the shorter cards', () => {
+    const html = cvMarkup('balanced');
+    const spans = [...html.matchAll(/<span class="skill-extra"[^>]*>.*?<\/span>/gs)].map((m) => m[0]);
+    expect(spans).toHaveLength(6);
+    expect(html.match(/class="skill-extra"/g)).toHaveLength(6);
+    for (const span of spans) expect(span).toContain('data-theme-extra="atlassian"');
+    const extraText = spans.join(' ').replace(/<[^>]*>/g, '');
+    const phrases = [
+      'Multi-Armed Bandit Testing',
+      'Personalisation',
+      'Behavioural Analytics (FullStory)',
+      'Incrementality &amp; LTV Measurement',
+      'AI Coding Assistants (Claude, Codex, Cursor)',
+      'Agent-Driven Delivery Pipelines',
+      'Automated Compliance Checks',
+      'Shared Knowledge Bases (Coda)',
+    ];
+    for (const phrase of phrases) {
+      expect(extraText).toContain(phrase);
+      // every occurrence in the page sits inside a skill-extra span
+      expect(html.split(phrase).length).toBe(extraText.split(phrase).length);
+    }
+
+    const total = (id: string): number => {
+      const start = html.indexOf(`data-flip="skills-${id}">`);
+      const end = html.indexOf('class="logo-wrapper"', start);
+      const sets = [...html.slice(start, end).matchAll(/<p class="skill-set">(.*?)<\/p>/gs)].map((m) =>
+        m[1].replace(/<span class="skill-extra"[^>]*>, /g, ', ').replace(/<[^>]*>/g, ''),
+      );
+      return sets.join(', ').split(/, (?![^()]*\))/).length;
+    };
+    expect(total('frontend')).toBe(16);
+    expect(total('growth')).toBe(15);
+    expect(total('ai')).toBe(13);
   });
 
   it('marks the invented Intuit figures as placeholders', () => {

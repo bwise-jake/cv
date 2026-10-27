@@ -120,7 +120,7 @@ real text, so PDFs and ATS parsing are unaffected):
 
 | Theme | Industry tags | Section numbers | Other |
 |---|---|---|---|
-| Atlassian | ADS Tags: transparent, grey border, sentence case | Hidden (Confluence headings are unnumbered) | Confluence page: blue cover band over a white title block, kicker as the byline, Summary as a full-bleed brand-bold band with inverse text and an ADS icon per item (angle-brackets, chart-trend-up, people-group, lightbulb; placeholders turn light yellow there), unruled headings, Skills & stacks as three flat ADS accent cards (blue, green, purple by group, `radius.xlarge`, stack logos under the title), three ADS Tags with check icons under the role title |
+| Atlassian | ADS Tags: transparent, grey border, sentence case | Hidden (Confluence headings are unnumbered) | Confluence page: blue cover band over a white title block, kicker as the byline, Summary as a full-bleed brand-bold band with inverse text and an ADS icon per item (angle-brackets, chart-trend-up, people-group, lightbulb; placeholders turn light yellow there), unruled headings, Skills & stacks as three flat ADS accent cards (blue, green, purple by group, `radius.xlarge`, stack logos under the title, keywords in hairline-divided sets, plus Atlassian-only extra keywords that balance the card heights), three ADS Tags with check icons under the role title |
 | Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons |
 | Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
 | Canva | Rounded purple chips | Default | |
