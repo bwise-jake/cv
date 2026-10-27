@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="default" data-focus="balanced">
+<html lang="en" data-theme="default" data-focus="engineering">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
   // (tests/prepaint.test.ts checks this).
   (function () {
     var themes = ['default', 'atlassian', 'notion', 'canva', 'stripe', 'linear', 'relevance', 'everlab'];
-    var focuses = ['balanced', 'growth', 'engineering'];
+    var focuses = ['engineering', 'growth', 'balanced'];
     var query = new URLSearchParams(location.search);
     var saved = {};
     try { saved = JSON.parse(localStorage.getItem('jaketb-cv:state') || '{}') || {}; } catch (e) {}

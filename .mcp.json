@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ads-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@atlaskit/ads-mcp"
+      ],
+      "env": {}
+    }
+  }
+}

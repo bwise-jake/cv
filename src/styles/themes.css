@@ -1,8 +1,8 @@
 /*
- * Company themes. Each one only overrides tokens from base.css.
+ * Company themes. Each one only overrides tokens from base.css. Atlassian lives in atlassian.css.
  * Colours were sampled from each company's live marketing site (computed styles / CSS custom
  * properties, Sept 2026). Proprietary typefaces are swapped for the closest open font:
- *   Atlassian  Charlie Text/Display, Atlassian Mono → Inter, JetBrains Mono
+ *   Atlassian  Atlassian Sans (Charlie is marketing-only)  → Inter
  *   Notion     NotionInter                          → Inter
  *   Canva      Canva Sans                           → Plus Jakarta Sans
  *   Stripe     Söhne                                → Inter Tight, Source Code Pro
@@ -10,37 +10,6 @@
  *   Relevance  Sora + Inter                         → same (open source)
  *   Everlab    Tobias, Saans, Saans Mono            → Newsreader, Schibsted Grotesk, DM Mono
  */
-
-/* ---------- Atlassian ---------- */
-:root[data-theme="atlassian"] {
-  --paper: #ffffff;
-  --canvas: #f8f8f8;
-  --ink: #101214;
-  --ink-soft: #292a2e;
-  --ink-faint: #6b6e76;
-  --line: #dddee1;
-  --accent: #1868db;
-  --accent-wash: #e9f2fe;
-  --tag: #1558bc;
-  --link: #1868db;
-
-  /* Confluence page header: white, under a brand-blue cover band (see the components below). */
-  --header-bg: #ffffff;
-  --header-noise-opacity: 0;
-  --paper-on-ink: #101214;
-  --muted-on-ink: #505258;
-  --line-on-ink: #dddee1;
-  --accent-on-ink: #1868db;
-
-  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-  /* Charlie Display 500 at -0.02em (64px / -1.28px on atlassian.com); Inter needs 600 to match
-     its colour on the page. */
-  --name-weight: 600;
-  --name-tracking: -0.02em;
-  --radius-avatar: 50%;
-  --radius-logo: 4px;
-}
 
 /* ---------- Notion ---------- */
 :root[data-theme="notion"] {
@@ -247,7 +216,7 @@
   --name-weight: 400;
   --name-tracking: -0.01em;
   --heading-weight: 500;
-  /* A circle, like most themes: the photo's lime ring shows in the corners of a rounded square. */
+  /* A circle, like most themes. */
   --radius-avatar: 50%;
   --radius-logo: 8px;
 }
@@ -266,85 +235,6 @@
     display: inline-block;
     margin-right: 1px;
     white-space: nowrap;
-  }
-}
-
-/* Atlassian: Lozenges, as the current Atlassian Design System draws them (atlassian.design,
-   Sept 2026): sentence case, regular weight, 1px border, 4px radius. Neutral "gray" by default,
-   the first one "in progress" blue. Section numbers become blue lozenges too. Scaled from the
-   12px/16px spec to the CV's metadata size; colours are the spec's opaque tokens (PDF-safe). */
-:root[data-theme="atlassian"] {
-  .tag,
-  .section-num {
-    padding: 0 4px;
-    border: 1px solid #dddee1;
-    border-radius: 4px;
-    background: #f0f1f2;
-    color: #292a2e;
-    font-family: var(--sans);
-    font-size: 10px;
-    font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0;
-    line-height: 14px;
-  }
-  .tag:first-child,
-  .section-num {
-    border-color: #8fb8f6;
-    background: #cfe1fd;
-    color: #123263;
-  }
-  .section-num {
-    flex: none;
-    font-variant-numeric: tabular-nums;
-  }
-}
-
-/* Atlassian: Confluence page anatomy. A cover band over the page title, the kicker as the
-   page byline, the summary as an info panel and plain (unruled) headings, all in Confluence's
-   own colours (panel values from the ADS section message, Sept 2026). */
-:root[data-theme="atlassian"] {
-  header.identity { padding-top: 52px; padding-bottom: 22px; }
-  header.identity::after {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto;
-    height: 32px;
-    z-index: 0;
-    background: #1868db;
-  }
-
-  .kicker {
-    font-family: var(--sans);
-    font-size: 11px;
-    font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0;
-    color: var(--muted-on-ink);
-  }
-
-  ul.summary-list {
-    padding: 10px 14px;
-    border-radius: 8px;
-    background: #e9f2fe;
-  }
-  ul.summary-list li { margin-bottom: 6px; }
-  ul.summary-list li:last-child { margin-bottom: 0; }
-
-  .section-head {
-    padding-bottom: 0;
-    border-bottom: 0;
-    margin-bottom: 10px;
-  }
-
-  /* Sub-headings read like a Confluence h4: the sans, bold, in the heading colour. */
-  .skill-group h3 {
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: none;
-    letter-spacing: 0;
-    color: var(--ink);
   }
 }
 
@@ -371,15 +261,13 @@
   .tag:nth-child(9n + 8) { background: #ffe2dd; color: #5d1715; }
   .tag:nth-child(9n + 9) { background: #e3e2e0; color: #32302c; }
 
-  header.identity { padding-top: 70px; }
-  header.identity::after {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto;
-    height: 56px;
-    z-index: 0;
-    /* PDF-safe: linear, opaque, distinct stops. */
-    background: linear-gradient(100deg, #d3e5ef 0%, #e8deee 50%, #f5e0e9 100%);
+  /* Cover band as a background layer, not a positioned ::after, so the header can print
+     unpositioned (print.css). PDF-safe: linear, opaque, distinct stops. */
+  header.identity {
+    padding-top: 70px;
+    background:
+      linear-gradient(100deg, #d3e5ef 0%, #e8deee 50%, #f5e0e9 100%) top / 100% 56px no-repeat,
+      var(--header-bg);
   }
   .avatar-frame { margin-top: -46px; }
   h1 { font-size: 32px; }

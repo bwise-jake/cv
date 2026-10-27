@@ -1,3 +1,4 @@
+import { adsChevronDownIcon, adsDownloadIcon, checkMarkIcon } from '../content/icons';
 import { escapeHtml } from '../content/rich';
 import { getState, setState, subscribe } from '../state';
 import { themeLogos } from '../themes/logos';
@@ -5,14 +6,18 @@ import { ensureThemeFonts, themes, type Theme } from '../themes/registry';
 import { FOCUSES, type CvState, type Focus } from '../types';
 
 const FOCUS_LABELS: Record<Focus, string> = {
-  balanced: 'Balanced',
-  growth: 'Growth',
   engineering: 'Engineering',
+  growth: 'Growth',
+  balanced: 'Balanced',
 };
 
 const ICON_DOWNLOAD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>`;
 const ICON_CHEVRON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`;
 const ICON_CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
+
+/** An icon slot: the default glyph, plus the ADS one the Atlassian theme shows instead (atlassian.css). */
+const iconSlot = (std: string, ads: string) =>
+  `<span class="ico ico-std">${std}</span><span class="ico ico-ads">${ads}</span>`;
 
 /** Company app icon for a theme. */
 const brandMark = (t: Theme) =>
@@ -29,7 +34,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
     <button type="button" class="controls-toggle" aria-expanded="false" aria-controls="controls-panel">
       <span class="brand-slot" data-current-mark></span>
       <span>Version</span>
-      ${ICON_CHEVRON}
+      ${iconSlot(ICON_CHEVRON, adsChevronDownIcon)}
     </button>
     <div class="controls-panel" id="controls-panel">
       <div class="controls-head">
@@ -43,7 +48,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
             aria-controls="theme-list" aria-labelledby="theme-label theme-current">
             <span class="brand-slot" data-current-mark></span>
             <span class="theme-current" id="theme-current"></span>
-            ${ICON_CHEVRON}
+            ${iconSlot(ICON_CHEVRON, adsChevronDownIcon)}
           </button>
           <ul class="theme-list" id="theme-list" role="listbox" tabindex="-1" aria-labelledby="theme-label" hidden>
             ${themes
@@ -54,7 +59,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
               <span class="theme-option-text">
                 <span class="theme-option-name" style="font-family:'${t.families[0]}', system-ui, sans-serif">${escapeHtml(t.label)}</span>
               </span>
-              <span class="theme-option-check">${ICON_CHECK}</span>
+              <span class="theme-option-check">${iconSlot(ICON_CHECK, checkMarkIcon)}</span>
             </li>`,
               )
               .join('')}
@@ -73,7 +78,7 @@ export function mountControls(root: HTMLElement, onDownload: () => void) {
 
       <div class="controls-line controls-download">
         <span class="controls-lead"><span>Export</span><kbd class="key" aria-hidden="true">P</kbd></span>
-        <button type="button" class="controls-pdf" aria-keyshortcuts="P">${ICON_DOWNLOAD}<span>Download PDF</span></button>
+        <button type="button" class="controls-pdf" aria-keyshortcuts="P">${iconSlot(ICON_DOWNLOAD, adsDownloadIcon)}<span>Download PDF</span></button>
       </div>
 
     </div>`;

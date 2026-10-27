@@ -1,0 +1,274 @@
+/*
+ * Atlassian theme: tokens and brand components, kept apart from themes.css so the Atlassian
+ * Design System's Stylelint plugin can check it on its own (npm run lint:css).
+ * Imported after themes.css, so it sits after the shared tag-chip shape there.
+ *
+ * Every colour, space, radius, border width, font family and font weight is an ADS design token
+ * (var(--ds-*)), with the token's light-theme value as the fallback. The page doesn't load
+ * @atlaskit/tokens, so the fallbacks are what renders; names and values were checked with the
+ * ADS MCP server (@atlaskit/ads-mcp, ads_search_tokens).
+ *
+ * Type is set with the ADS font tokens (var(--ds-font-*), the `font` shorthand: heading-xlarge
+ * 28/32, heading-small 16/20, heading-xsmall 14/20, heading-xxsmall 12/16, body-small 12/16),
+ * and Stylelint's typography check enforces it. The shorthand resets font-size-adjust, so each
+ * rule sets it again to match base.css. Four line heights are deliberate exceptions, each with
+ * a disable comment: running prose keeps a 1.5 line height (18px, an optical step looser than
+ * body-small's 16px, so the dense A4 copy stays readable in print), the tag row keeps its 22px
+ * pitch, and the badge chip keeps a 14px line for its 20px height. The section continuation
+ * keeps the 20px line of the h2 it sits in.
+ */
+
+/* ---------- Atlassian ---------- */
+:root[data-theme="atlassian"] {
+  --paper: var(--ds-surface, #ffffff);
+  /* The backdrop is the default surface, not sunken (ADS: sunken is a well inside a page, never the page
+     background); a hairline on screen marks each sheet. */
+  --canvas: var(--ds-surface, #ffffff);
+  /* ADS has one text colour; hierarchy comes from weight, as in Confluence. */
+  --ink: var(--ds-text, #292a2e);
+  --ink-soft: var(--ds-text, #292a2e);
+  --ink-faint: var(--ds-text-subtlest, #6b6e76);
+  --line: var(--ds-border, #0b120e24);
+  --accent: var(--ds-text-brand, #1868db);
+  --accent-wash: var(--ds-background-selected, #e9f2fe);
+  --tag: var(--ds-text, #292a2e);
+  --link: var(--ds-link, #1868db);
+
+  /* Confluence page header: white, under a brand-blue cover band (see the components below). */
+  --header-bg: var(--ds-surface, #ffffff);
+  --header-noise-opacity: 0;
+  --paper-on-ink: var(--ds-text, #292a2e);
+  --muted-on-ink: var(--ds-text-subtle, #505258);
+  --line-on-ink: var(--ds-border, #0b120e24);
+  --accent-on-ink: var(--ds-text-brand, #1868db);
+
+  /* ADS body family, with Inter (Atlassian Sans's open base) standing in where Atlassian Sans
+     isn't installed. Mono is kept for code only, which the CV doesn't have. */
+  --sans: var(--ds-font-family-body, 'Atlassian Sans', 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif);
+  --mono: var(--ds-font-family-code, 'Atlassian Mono', 'JetBrains Mono', ui-monospace, Menlo, 'Segoe UI Mono', 'Ubuntu Mono', monospace);
+  --name-weight: var(--ds-font-weight-bold, 653);
+  --name-tracking: 0;
+  --heading-weight: var(--ds-font-weight-bold, 653);
+  --strong-weight: var(--ds-font-weight-semibold, 600);
+  --radius-avatar: var(--ds-radius-full, 624.9375rem);
+  --radius-logo: var(--ds-radius-small, 0.25rem);
+}
+
+/* ---------- Brand components ---------- */
+
+/* Atlassian: the employer categories are decorative labels, so they are ADS Tags, not Lozenges
+   (Lozenges carry status): transparent, with a grey accent border, body-small text. Inline
+   padding is one optical step up from the recipe's space.025 so 12px text doesn't touch the
+   border. The tags are inline boxes, and 12px Inter plus space.025 padding makes the 20px tag
+   height. Chrome writes no space glyph between padded inline boxes, so PDF parsers split words
+   by the gap between tags; the extra space.050 of word spacing keeps "B2C B2B AI" from
+   reading as "B2CB2BAI" (checked with pypdf and PyMuPDF). */
+:root[data-theme="atlassian"] {
+  .employer-tags {
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: none;
+    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- tag row pitch: 20px tags on a 22px line */
+    line-height: 22px;
+    word-spacing: var(--ds-space-050, 0.25rem);
+  }
+  .tag {
+    display: inline;
+    word-spacing: normal;
+    padding: var(--ds-space-025, 0.125rem) var(--ds-space-050, 0.25rem);
+    border: var(--ds-border-width, 0.0625rem) solid var(--ds-border-accent-gray, #7d818a);
+    border-radius: var(--ds-radius-small, 0.25rem);
+    background: transparent;
+    color: var(--ds-text, #292a2e);
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: none;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* Confluence headings aren't numbered, and a number isn't a status, so no Lozenge here. */
+  .section-num { display: none; }
+}
+
+/* Atlassian: Confluence page anatomy. A cover band over the page title, a byline under it,
+   the summary as an information section message and plain (unruled) headings. Spacing sits on
+   the 8px grid. */
+:root[data-theme="atlassian"] {
+  /* The cover band is a background layer, not a positioned ::after, so the header can print
+     unpositioned and its text comes first in the PDF (print.css). */
+  header.identity {
+    padding-top: var(--ds-space-600, 3rem);
+    padding-bottom: var(--ds-space-300, 1.5rem);
+    background:
+      linear-gradient(var(--ds-background-brand-bold, #1868db), var(--ds-background-brand-bold, #1868db)) top / 100% var(--ds-space-400, 2rem) no-repeat,
+      var(--ds-surface, #ffffff);
+  }
+
+  h1 {
+    font: var(--ds-font-heading-xlarge, normal 653 1.75rem/2rem var(--sans));
+    font-size-adjust: 0.53;
+  }
+  .role-title {
+    margin-top: var(--ds-space-025, 0.125rem);
+    font: var(--ds-font-heading-small, normal 653 1rem/1.25rem var(--sans));
+    font-weight: var(--ds-font-weight-semibold, 600);
+    font-size-adjust: 0.53;
+    letter-spacing: 0;
+  }
+
+  /* The advertised title (REQ-2026-1255), where the focus has one (content/cv.ts). */
+  .role-title:has(.role-alt[data-theme-role="atlassian"]) .role-std { display: none; }
+  .role-alt[data-theme-role="atlassian"] { display: inline; }
+
+  /* Atlassian doesn't use eyebrows above headings: the kicker becomes a byline under the role. */
+  .identity-main > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .kicker {
+    order: 1;
+    margin: var(--ds-space-050, 0.25rem) var(--ds-space-0, 0) var(--ds-space-0, 0);
+    padding-top: var(--ds-space-0, 0);
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: none;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ds-text-subtle, #505258);
+  }
+
+  /* Metadata reads as Confluence bylines: the sans at body-small, in text-subtle. The contact
+     links are 16px tall at a 28px pitch, so each has a 24px target (WCAG 2.2, 2.5.8). */
+  .contact {
+    gap: var(--ds-space-150, 0.75rem);
+    padding-top: var(--ds-space-050, 0.25rem);
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: none;
+  }
+  .job-meta,
+  .employer-span {
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: none;
+    color: var(--ds-text-subtle, #505258);
+  }
+  .employer-name {
+    font: var(--ds-font-heading-small, normal 653 1rem/1.25rem var(--sans));
+    font-size-adjust: 0.53;
+  }
+  .job-title {
+    font: var(--ds-font-heading-xsmall, normal 653 0.875rem/1.25rem var(--sans));
+    font-size-adjust: 0.53;
+  }
+
+  /* SectionMessage, information appearance: one status-information icon beside the content,
+     space.200 padding and gap, neutral body text (the labels aren't tinted blue). */
+  ul.summary-list {
+    display: grid;
+    grid-template-columns: var(--ds-space-200, 1rem) 1fr;
+    column-gap: var(--ds-space-200, 1rem);
+    row-gap: var(--ds-space-075, 0.375rem);
+    padding: var(--ds-space-200, 1rem);
+    border-radius: var(--ds-radius-large, 0.5rem);
+    background: var(--ds-background-information, #e9f2fe);
+  }
+  ul.summary-list::before {
+    content: "";
+    grid-row: 1;
+    grid-column: 1;
+    width: var(--ds-space-200, 1rem);
+    height: var(--ds-space-200, 1rem);
+    margin-top: var(--ds-space-025, 0.125rem);
+    background: var(--ds-icon-information, #357de8);
+    /* ADS StatusInformationIcon (@atlaskit/icon/core/status-information, Apache-2.0). */
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M6.5 6.75v1.5h.75v4.25h1.5v-5A.75.75 0 0 0 8 6.75zM8 3.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  ul.summary-list li {
+    grid-column: 2;
+    margin-bottom: var(--ds-space-0, 0);
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: 0.53;
+    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- dense A4 prose keeps a 1.5 line height, an optical step looser than body-small */
+    line-height: 18px;
+  }
+  ul.summary-list .summary-label { color: var(--ds-text, #292a2e); }
+  .summary-icon { display: none; }
+
+  .section-head {
+    padding-bottom: var(--ds-space-0, 0);
+    border-bottom: 0;
+    margin-bottom: var(--ds-space-100, 0.5rem);
+  }
+  h2 {
+    font: var(--ds-font-heading-small, normal 653 1rem/1.25rem var(--sans));
+    font-size-adjust: 0.53;
+    letter-spacing: 0;
+  }
+  .section-cont {
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: none;
+    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- sits inside the h2, so it keeps the heading's 20px line instead of the shorthand's 16px */
+    line-height: 20px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ds-text-subtle, #505258);
+  }
+
+  /* Sub-headings read like a Confluence h4: heading-xxsmall (12/16, bold). */
+  .skill-group h3 {
+    font: var(--ds-font-heading-xxsmall, normal 653 0.75rem/1rem var(--sans));
+    font-size-adjust: none;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ds-text, #292a2e);
+  }
+}
+
+/* Atlassian: the badges under the role title, saying what the theme is built and checked with.
+   They classify, so they are ADS Tags (transparent, grey accent border and icon), not Lozenges,
+   which carry status. */
+:root[data-theme="atlassian"] {
+  .ads-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-space-050, 0.25rem);
+    margin: var(--ds-space-100, 0.5rem) var(--ds-space-0, 0) var(--ds-space-0, 0);
+    order: 2;
+  }
+  .ads-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-space-050, 0.25rem);
+    padding: var(--ds-space-025, 0.125rem) var(--ds-space-050, 0.25rem);
+    border: var(--ds-border-width, 0.0625rem) solid var(--ds-border-accent-gray, #7d818a);
+    border-radius: var(--ds-radius-small, 0.25rem);
+    background: transparent;
+    color: var(--ds-text, #292a2e);
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: 0.53;
+    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- 14px line plus 2px padding and 1px borders makes the 20px chip */
+    line-height: 14px;
+    white-space: nowrap;
+  }
+  .ads-badge svg {
+    width: 12px;
+    height: 12px;
+    flex: none;
+    color: var(--ds-icon-accent-gray, #7d818a);
+  }
+}
+
+/* Controls: ADS icons instead of the default strokes. 16px is the ADS default; chevrons are 12px. */
+:root[data-theme="atlassian"] {
+  .ico-std { display: none; }
+  .ico-ads { display: contents; }
+  .controls .ico-ads svg { width: 16px; height: 16px; }
+  .controls .theme-trigger .ico-ads svg,
+  .controls .controls-toggle .ico-ads svg { width: 12px; height: 12px; }
+}
+
+/* On screen the sheets sit on the same surface as the backdrop, so a 1px border token outlines them. An
+   outline takes no layout space, so line breaks stay exactly as fit.ts measured them; none of this prints. */
+@media screen {
+  :root[data-theme="atlassian"] .page {
+    outline: var(--ds-border-width, 0.0625rem) solid var(--ds-border, #0b120e24);
+  }
+}

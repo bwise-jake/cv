@@ -22,9 +22,9 @@ export const themes: Theme[] = [
   {
     id: 'atlassian',
     label: 'Atlassian',
-    fonts: 'family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500',
-    families: ['Inter', 'JetBrains Mono'],
-    note: 'Inter + JetBrains Mono, standing in for Charlie & Atlassian Mono',
+    fonts: 'family=Inter:wght@400..700',
+    families: ['Inter'],
+    note: 'Inter, the open stand-in for Atlassian Sans',
   },
   {
     id: 'notion',

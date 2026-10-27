@@ -5,10 +5,10 @@ A two-page A4 CV that restyles itself for the company reading it.
 - **Company themes**: Default, Atlassian, Notion, Canva, Stripe, Linear, Relevance AI, Everlab. Colours were
   sampled from each company's live site; proprietary typefaces are swapped for the closest open
   font (see the header of `src/styles/themes.css`).
-- **Focus modes**: Balanced, Growth, Engineering. Each changes which phrases are bold, the order
+- **Focus modes**: Engineering (the default), Growth, Balanced. Each changes which phrases are bold, the order
   of the Summary and Skills sections, and the headline role/kicker.
 - **Download PDF**: prints exactly what's on screen (vector, selectable text), named
-  `Jake-Thornton-Bowen-CV-<Theme>-<Focus>.pdf`.
+  `Jake-Thornton-Bowen-CV-<Theme>-<Focus>.pdf` (the default Engineering view omits the focus suffix).
 - **Shareable state**: `?theme=atlassian&focus=growth` opens straight into that view.
 
 The CV stays centred and the controls sit in a panel in the right-hand gutter (it stays put while the pages scroll): a Theme
@@ -36,8 +36,12 @@ Keyboard: `T` / `Shift+T` cycle themes, `F` / `Shift+F` cycle focus, `P` downloa
 npm install
 npm run dev        # http://localhost:5173
 npm test           # content/state unit tests
+npm run lint       # Atlassian Design System Stylelint (Atlassian theme) + ESLint plugins
 npm run pdf        # builds, renders all 24 theme × focus PDFs to exports/, asserts each is 2 pages
 ```
+
+The Atlassian theme is built with the Atlassian Design System. Agents get its MCP server from `.mcp.json`
+(Claude Code) and `.codex/config.toml` (Codex); `AGENTS.md` says when to use it.
 
 ## Editing the CV
 
@@ -47,7 +51,7 @@ All copy lives in `src/content/cv.ts`. Inline markup:
 |---|---|
 | `**text**` | always bold |
 | `[[text\|b,g,e]]` | bold only in the listed focuses (b = Balanced, g = Growth, e = Engineering) |
-| `{{text}}` | placeholder still to fill in (dashed accent underline) |
+| `{{text}}` | placeholder still to fill in (orange italic, dashed underline, in every theme) |
 | `[text](https://…)` | link |
 
 Section order per focus is the `order` object in the same file; headline role/kicker per focus is
@@ -66,7 +70,7 @@ renderer flatten the gradient.
 
 ## Works without JavaScript
 
-The build pre-renders the Default CV into `index.html` (the `prerender-cv` plugin in `vite.config.ts`),
+The build pre-renders the default CV (Default theme, Engineering emphasis) into `index.html` (the `prerender-cv` plugin in `vite.config.ts`),
 so crawlers, link previews and no-JS readers see the full CV. A small inline script in `<head>` applies
 the theme/emphasis from the link or saved preference before first paint; its theme/focus lists are
 checked against `src/types.ts` by `tests/prepaint.test.ts`.

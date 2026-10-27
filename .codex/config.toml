@@ -1,0 +1,3 @@
+[mcp_servers.ads-mcp]
+command = "npx"
+args = ["-y", "@atlaskit/ads-mcp"]

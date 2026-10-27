@@ -27,6 +27,16 @@
     display: none;
   }
 
+  /* Without the noise there's nothing to layer, so the header can stay out of the positioned
+     paint phase: Chrome writes PDF text in paint order, and a positioned header would be read
+     after the rest of page 1. z-index goes too: on a flex item it lifts the row on its own. */
+  header.identity,
+  header.identity > * {
+    position: static;
+    z-index: auto;
+    isolation: auto;
+  }
+
   html,
   body,
   .page,
@@ -42,7 +52,7 @@
     height: calc(297mm / var(--fit));
     overflow: hidden;
     margin: 0;
-    padding: var(--page-pad-top) var(--page-pad-x) 56px;
+    padding: var(--page-pad-top) var(--page-pad-x) 48px;
     background: var(--paper);
     box-shadow: none;
     break-after: page;

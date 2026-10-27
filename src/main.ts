@@ -1,5 +1,6 @@
 import './styles/base.css';
 import './styles/themes.css';
+import './styles/atlassian.css';
 import './styles/controls.css';
 import './styles/notes.css';
 import './styles/print.css';

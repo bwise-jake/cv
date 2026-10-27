@@ -1,4 +1,4 @@
-export const FOCUSES = ['balanced', 'growth', 'engineering'] as const;
+export const FOCUSES = ['engineering', 'growth', 'balanced'] as const;
 export type Focus = (typeof FOCUSES)[number];
 
 export const THEME_IDS = ['default', 'atlassian', 'notion', 'canva', 'stripe', 'linear', 'relevance', 'everlab'] as const;

@@ -1,6 +1,8 @@
 /**
  * Renders every theme × focus combination to A4 PDF with headless Chrome and checks that each
- * one fits on exactly two pages (brand fonts have different metrics, so a theme can overflow).
+ * one fits on exactly two pages (brand fonts have different metrics, so a theme can overflow) and
+ * that its extracted text reads in CV order (Chrome writes PDF text in paint order, so a stray
+ * position/z-index can scramble what AI screeners read).
  * Output: exports/Jake-Thornton-Bowen-CV-<Theme>[-<Focus>].pdf — ready to attach to applications.
  *
  * Usage: npm run pdf   (builds first, then serves dist/ with `vite preview`)
@@ -8,10 +10,12 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, type Browser } from 'playwright';
 import { PDFDocument } from 'pdf-lib';
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { preview } from 'vite';
 import { pdfFileName } from '../src/pdf';
 import { themes } from '../src/themes/registry';
 import { FOCUSES } from '../src/types';
+import { expectedOrder, readingOrderProblems } from './pdf-reading-order';
 
 const EXPECTED_PAGES = 2;
 const OUT_DIR = new URL('../exports/', import.meta.url);
@@ -25,7 +29,19 @@ async function launch(): Promise<Browser> {
   }
 }
 
+/** Text layer of a PDF, pages joined by newlines, in the order a parser would read it. */
+async function pdfText(pdf: Buffer): Promise<string> {
+  const doc = await getDocument({ data: new Uint8Array(pdf), useSystemFonts: true, verbosity: 0 }).promise;
+  const pages: string[] = [];
+  for (let n = 1; n <= doc.numPages; n++) {
+    const { items } = await (await doc.getPage(n)).getTextContent();
+    pages.push(items.map((item) => ('str' in item ? item.str : '')).join('\n'));
+  }
+  return pages.join('\n');
+}
+
 async function main() {
+  const needles = expectedOrder();
   const server = await preview({ preview: { port: 4174, strictPort: true, open: false } });
   const base = server.resolvedUrls?.local[0] ?? 'http://localhost:4174/';
   const browser = await launch();
@@ -57,8 +73,14 @@ async function main() {
         const name = `${pdfFileName({ theme: theme.id, focus })}.pdf`;
         await writeFile(new URL(name, OUT_DIR), pdf);
 
-        const ok = pages === EXPECTED_PAGES && clipped.length === 0;
-        if (!ok) failures.push(`${name}: ${pages} pages${clipped.length ? `, clipped by ${clipped.join('/')}px` : ''}`);
+        const order = readingOrderProblems(await pdfText(pdf), needles);
+
+        const ok = pages === EXPECTED_PAGES && clipped.length === 0 && order.length === 0;
+        if (!ok) {
+          failures.push(
+            `${name}: ${pages} pages${clipped.length ? `, clipped by ${clipped.join('/')}px` : ''}${order.length ? `, text out of order: ${order[0]}` : ''}`,
+          );
+        }
         const scale = fits.map((f) => `${Math.round(f * 1000) / 10}%`).join(' / ');
         console.log(`${ok ? '✓' : '✗'} ${name.padEnd(52)} ${pages} pages   scale ${scale}`);
         await page.close();
@@ -70,10 +92,10 @@ async function main() {
   }
 
   if (failures.length) {
-    console.error(`\n${failures.length} export(s) did not fit on ${EXPECTED_PAGES} pages:\n  ${failures.join('\n  ')}`);
+    console.error(`\n${failures.length} export(s) failed (page count, clipping or text order):\n  ${failures.join('\n  ')}`);
     process.exit(1);
   }
-  console.log(`\nAll ${themes.length * FOCUSES.length} PDFs fit on ${EXPECTED_PAGES} pages → exports/`);
+  console.log(`\nAll ${themes.length * FOCUSES.length} PDFs fit on ${EXPECTED_PAGES} pages and read in order → exports/`);
 }
 
 main().catch((err) => {

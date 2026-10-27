@@ -68,7 +68,7 @@ body {
   height: calc(297mm / var(--fit));
   margin: calc(40px / var(--fit)) auto;
   background: var(--paper);
-  padding: var(--page-pad-top) var(--page-pad-x) 56px;
+  padding: var(--page-pad-top) var(--page-pad-x) 48px;
   box-sizing: border-box;
 }
 
@@ -125,8 +125,8 @@ header.identity {
   gap: 0;
   background: var(--header-bg);
   color: var(--paper-on-ink);
-  margin: calc(-1 * var(--page-pad-top)) calc(-1 * var(--page-pad-x)) 22px;
-  padding: 28px var(--page-pad-x) 26px;
+  margin: calc(-1 * var(--page-pad-top)) calc(-1 * var(--page-pad-x)) 14px;
+  padding: 28px var(--page-pad-x) 18px;
   border-bottom: var(--header-border);
   overflow: hidden;
 }
@@ -174,9 +174,7 @@ header.identity > * {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 32%;
-  transform: scale(1.2);
-  transform-origin: center 37%;
+  object-position: center;
 }
 
 .kicker {
@@ -297,6 +295,9 @@ section:last-child { margin-bottom: 0; }
 /* Linear shows issue IDs instead (themes.css); every other theme shows the number. */
 .num-issue { display: none; }
 .summary-emoji { display: none; }
+/* The Atlassian theme's ADS badges and advertised role title (atlassian.css). */
+.ads-badges { display: none; }
+.role-alt { display: none; }
 
 h2 {
   font-family: var(--display);
@@ -394,28 +395,34 @@ ul.bullets li {
   color: var(--ink-soft);
   margin-bottom: 3px;
   padding-left: 14px;
-  position: relative;
+  text-indent: -14px;
 }
 
+/* An inline hanging marker, not an absolutely positioned one: Chrome writes PDF text in paint
+   order, and positioned boxes paint after the rest of the page, so each bullet's text would be
+   pulled away from its job title. */
 ul.bullets li::before {
   content: "–";
-  position: absolute;
-  left: 0;
+  display: inline-block;
+  width: 14px;
+  text-indent: 0;
   color: var(--ink-faint);
 }
 
 ul.bullets li:last-child { margin-bottom: 0; }
 
+/* Placeholder copy still to be replaced ({{…}} in cv.ts). One fixed orange in every theme so it is
+   easy to spot on screen and in PDFs; #C2410C is 5.2:1 on white (WCAG AA). */
 .fill {
-  color: var(--accent);
+  color: #C2410C;
   font-style: italic;
-  border-bottom: 1px dashed var(--accent);
+  border-bottom: 1px dashed #C2410C;
 }
-.employer-block { margin-bottom: 16px; }
+.employer-block { margin-bottom: 10px; }
 .employer-block:last-child { margin-bottom: 0; }
 
 .employer-block:not(:last-child) {
-  padding-bottom: 16px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -428,11 +435,27 @@ ul.bullets li:last-child { margin-bottom: 0; }
   page-break-after: avoid;
 }
 
+/* The name comes first in the source, so PDF text reads "Intuit … / Enterprise · SaaS … / dates";
+   grid rows still show the tags above it. (Not column-reverse: Chrome paints, and so writes PDF
+   text, in a flex container's visual order, but in a grid's source order.) The date line shares
+   the name's row and baseline, right-aligned like the job dates, so each employer takes one line
+   less. Phones stack it under the name (below). */
 .employer-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 16px;
+  row-gap: 3px;
+  align-items: baseline;
+  flex: 1;
   min-width: 0;
+}
+.employer-copy .employer-tags { grid-row: 1; grid-column: 1 / -1; }
+.employer-copy .employer-name { grid-row: 2; grid-column: 1; }
+.employer-copy .employer-span {
+  grid-row: 2;
+  grid-column: 2;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .employer-logo {
@@ -651,5 +674,6 @@ header.identity,
     .grid-three { grid-template-columns: 1fr; }
     .employer-span,
     .employer-intro { margin-left: 0; }
+    .employer-copy .employer-span { grid-row: 3; grid-column: 1 / -1; white-space: normal; }
   }
 }

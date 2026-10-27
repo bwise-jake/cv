@@ -51,6 +51,10 @@
   flex-shrink: 0;
 }
 
+/* Each icon slot holds a default glyph and an ADS one; the Atlassian theme swaps them (atlassian.css). */
+.ico { display: contents; }
+.ico-ads { display: none; }
+
 /* ---------- Section head: mirrors the CV's "01 Summary" heads ---------- */
 .controls-head {
   display: flex;

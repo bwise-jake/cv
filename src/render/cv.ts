@@ -1,5 +1,5 @@
-import { byOrder, experience, headlines, order, person, skills, summary, ventures, type Employer } from '../content/cv';
-import { stackLogos, summaryIcons } from '../content/icons';
+import { byOrder, experience, headlines, order, person, skills, summary, ventures, type Employer, type Headline } from '../content/cv';
+import { checkMarkIcon, stackLogos, summaryIcons } from '../content/icons';
 import { escapeHtml, rich } from '../content/rich';
 import type { Focus } from '../types';
 
@@ -15,10 +15,37 @@ const sectionHead = (num: string, title: string, cont = false) =>
     cont ? ' <span class="section-cont">continued</span>' : ''
   }</h2></div>`;
 
+/**
+ * Atlassian-theme badges: what this theme is built and checked with (see src/styles/atlassian.css).
+ * Every other theme hides them with display:none, so their PDFs don't carry the text.
+ */
+const ADS_BADGES = [
+  { label: 'ADS tokens', title: 'Every colour and space in this theme is an Atlassian Design System token' },
+  { label: 'ADS Stylelint', title: 'Checked by @atlaskit/stylelint-design-system' },
+  { label: 'ADS ESLint', title: 'Checked by @atlaskit/eslint-plugin-design-system' },
+];
+
+const adsBadges = () =>
+  `<p class="ads-badges">${ADS_BADGES.map(
+    (b) => `<span class="ads-badge" title="${b.title}">${checkMarkIcon}${b.label}</span>`,
+  ).join(' ')}</p>`;
+
+/**
+ * The role title, plus any company's advertised title for it. Themes show the one that applies
+ * (atlassian.css) and hide the rest with display:none, so PDFs only carry the visible one.
+ */
+const roleTitle = ({ role, roleByTheme = {} }: Headline) =>
+  `<span class="role-std">${escapeHtml(role)}</span>${Object.entries(roleByTheme)
+    .map(([theme, title]) => `<span class="role-alt" data-theme-role="${theme}">${escapeHtml(title)}</span>`)
+    .join('')}`;
+
+/** Plain text of a rich-text fragment, for matching it against `omit` lists. */
+const plain = (src: string) => src.replace(/\[\[(.+?)\|[a-z,\s]+\]\]/g, '$1').replace(/\*\*/g, '');
+
 const displayUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
 function header(focus: Focus, recipient: string | null) {
-  const { kicker, role } = headlines[focus];
+  const headline = headlines[focus];
   return `
   <header class="identity">
     <div class="identity-row">
@@ -27,9 +54,10 @@ function header(focus: Focus, recipient: string | null) {
           <img class="avatar" src="${person.photo}" alt="${escapeHtml(person.name)}" width="80" height="80">
         </span>
         <div>
-          <p class="kicker">${escapeHtml(kicker)}</p>
+          <p class="kicker">${escapeHtml(headline.kicker)}</p>
           <h1>${escapeHtml(person.name)}</h1>
-          <p class="role-title">${escapeHtml(role)}</p>
+          <p class="role-title">${roleTitle(headline)}</p>
+          ${adsBadges()}
         </div>
       </div>
       <div class="contact">
@@ -83,14 +111,18 @@ function employerBlock(e: Employer) {
       <div class="employer-head">
         <img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}" width="36" height="36">
         <div class="employer-copy">
-          <div class="employer-tags">${e.tags
-            .split(' · ')
-            .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
-            .join(' ')}</div>
           <div class="employer-name">${rich(e.name)}</div>
+          ${
+            e.tags
+              ? `<div class="employer-tags">${e.tags
+                  .split(' · ')
+                  .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
+                  .join(' ')}</div>`
+              : ''
+          }
+          <div class="employer-span">${escapeHtml(e.span)}</div>
         </div>
       </div>
-      <div class="employer-span">${escapeHtml(e.span)}</div>
       ${e.intro ? `<p class="employer-intro">${rich(e.intro)}</p>` : ''}
       ${jobs}
     </div>`;
@@ -98,20 +130,23 @@ function employerBlock(e: Employer) {
 
 function skillsSection(focus: Focus) {
   const groups = byOrder(skills, order[focus].skills)
-    .map(
-      (g) => `
+    .map((g) => {
+      const omitted = new Set(g.omit?.[focus]);
+      const list = g.skills.split(', ').filter((s) => !omitted.has(plain(s))).join(', ');
+      const logos = g.logos.filter((name) => !omitted.has(name));
+      return `
       <div class="skill-group" data-flip="skills-${g.id}">
         <h3>${escapeHtml(g.title)}</h3>
-        <div class="skill-list">${rich(g.skills)}</div>
-        <div class="logo-wrapper" aria-label="${escapeHtml(g.logosLabel)}">
-          ${g.logos.map((name) => `<div class="stack-logo" role="img" tabindex="0" aria-label="${escapeHtml(name)}" data-tooltip="${escapeHtml(name)}">${stackLogos[name]}</div>`).join('')}
+        <div class="skill-list">${rich(list)}</div>
+        <div class="logo-wrapper" role="group" aria-label="${escapeHtml(g.logosLabel)}">
+          ${logos.map((name) => `<div class="stack-logo" role="img" tabindex="0" aria-label="${escapeHtml(name)}" data-tooltip="${escapeHtml(name)}">${stackLogos[name]}</div>`).join('')}
         </div>
-      </div>`,
-    )
+      </div>`;
+    })
     .join('');
   return `
   <section>
-    ${sectionHead('04', 'Skills &amp; Stacks')}
+    ${sectionHead('04', 'Skills &amp; stacks')}
     <div class="grid-three">${groups}</div>
   </section>`;
 }

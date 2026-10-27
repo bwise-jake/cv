@@ -62,7 +62,8 @@ Every theme's small text is checked for WCAG AA (4.5:1) in a real browser by `np
   interpunct-separated text in mono. Pill tags read as "generic resume template." Brand themes
   are the deliberate exception: they render tags as that company's own component (see
   "Brand components per theme" below).
-- **Placeholder callouts** (`.fill`): accent-colored italic text with a
+- **Placeholder callouts** (`.fill`): orange (#C2410C) italic text, the same in
+  every theme so placeholders stand out from real copy, with a
   dashed underline, not a yellow highlighter block — reads as a considered
   annotation rather than a Word tracked-change leftover.
 - **Company logos**: 36px squares (corner radius from the `--radius-logo` token) with a hairline
@@ -84,7 +85,7 @@ the two-page layout hold everywhere.
 
 | Theme | Type (open stand-in) | Accent | Header |
 |---|---|---|---|
-| Atlassian | Inter + JetBrains Mono (for Charlie / Atlassian Mono) | #1868DB | Confluence page: blue cover band, white title block |
+| Atlassian | Inter (for Atlassian Sans) | #1868DB | Confluence page: blue cover band, white title block |
 | Notion | Inter (NotionInter) | #0075DE | light, page-title style |
 | Canva | Plus Jakarta Sans (Canva Sans) + DM Mono | #8B3DFF | teal → violet gradient |
 | Stripe | Inter Tight (Söhne) + Source Code Pro | #533AFD | navy → blurple sweep |
@@ -96,7 +97,7 @@ The controls (`src/render/controls.ts`) are typeset as a CV section headed **Ver
 margin beside the centred page, sticky so only the pages scroll. No card, blur or pills: a section
 head styled like "01 Summary", then ruled lines of lead word + value. *Style* is a listbox showing each
 company's app icon (`src/themes/logos.ts`) with names set in the theme's own typeface; *Emphasis* is
-three words (Balanced / Growth / Engineering) with the chosen one underlined in the accent; then an
+three words (Engineering / Growth / Balanced, Engineering by default) with the chosen one underlined in the accent; then an
 *Export* is an ink Download PDF button. Keycaps for S / E / P sit in one column at the end of each label. Colours come from the active theme's
 tokens so it belongs on light and dark pages; type stays Geist so it doesn't shift while switching.
 Under 1200px an ink "Version" button opens the same content on a paper sheet.
@@ -114,7 +115,7 @@ real text, so PDFs and ATS parsing are unaffected):
 
 | Theme | Industry tags | Section numbers | Other |
 |---|---|---|---|
-| Atlassian | ADS lozenges: sentence case, bordered (neutral gray; first "in progress" blue) | Blue lozenge | Confluence page: blue cover band over a white title block, kicker as the byline, Summary as a blue info panel, unruled headings, sans skill sub-headings |
+| Atlassian | ADS Tags: transparent, grey border, sentence case | Hidden (Confluence headings are unnumbered) | Confluence page: blue cover band over a white title block, kicker as the byline, Summary as an ADS information section message with the status-information icon, unruled headings, sans skill sub-headings, three ADS Tags with check icons under the role title |
 | Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons |
 | Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
 | Canva | Rounded purple chips | Default | |

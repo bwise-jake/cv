@@ -1,7 +1,7 @@
 import { FOCUSES, THEME_IDS, type CvState, type Focus, type ThemeId } from './types';
 
 const STORAGE_KEY = 'jaketb-cv:state';
-export const DEFAULT_STATE: CvState = { theme: 'default', focus: 'balanced' };
+export const DEFAULT_STATE: CvState = { theme: 'default', focus: 'engineering' };
 
 const isTheme = (v: unknown): v is ThemeId => THEME_IDS.includes(v as ThemeId);
 const isFocus = (v: unknown): v is Focus => FOCUSES.includes(v as Focus);

@@ -1,4 +1,4 @@
-import type { Focus } from '../types';
+import type { Focus, ThemeId } from '../types';
 import type { summaryIcons } from './icons';
 
 /*
@@ -10,6 +10,8 @@ import type { summaryIcons } from './icons';
 export interface Headline {
   kicker: string;
   role: string;
+  /** A company's advertised title, shown in that company's theme instead of `role`. */
+  roleByTheme?: Partial<Record<ThemeId, string>>;
 }
 
 export interface SummaryItem {
@@ -27,7 +29,8 @@ export interface Job {
 export interface Employer {
   logo: string;
   logoAlt: string;
-  tags: string;
+  /** Industry tags, " · "-separated. Omitted for entries that fold them into `span`. */
+  tags?: string;
   name: string;
   span: string;
   intro?: string;
@@ -42,6 +45,8 @@ export interface SkillGroup {
   skills: string;
   logos: string[];
   logosLabel: string;
+  /** Skills and logos (by their plain text) left out under a focus. */
+  omit?: Partial<Record<Focus, string[]>>;
 }
 
 export const person = {
@@ -87,6 +92,7 @@ export const headlines: Record<Focus, Headline> = {
   engineering: {
     kicker: '10+ yrs · Ex-Intuit · React & TypeScript · Core Web Vitals',
     role: 'Senior Front-End Engineer',
+    roleByTheme: { atlassian: 'Senior Frontend Software Engineer' },
   },
 };
 
@@ -94,7 +100,7 @@ export const summary: SummaryItem[] = [
   {
     id: 'growth',
     label: 'Growth',
-    text: 'Technical growth builder who most recently led QuickBooks web across APAC for **Intuit**, personally driving [[$5.5m+ in incremental LTV|b,g]] through [[60+ web experiments|b,g]] across the funnel: merchandising, UX/UI, components, content, [[page speed and technical SEO|e]].',
+    text: 'Technical growth builder who most recently led QuickBooks web across APAC for **Intuit**, validating assumptions about users with [[60+ web experiments|b,g]] across the funnel (merchandising, UX/UI, components, content, [[page speed and technical SEO|e]]) and personally driving [[$5.5m+ in incremental LTV|b,g]].',
   },
   {
     id: 'engineering',
@@ -109,7 +115,7 @@ export const summary: SummaryItem[] = [
   {
     id: 'customer',
     label: 'Customer-focused',
-    text: 'Crafting [[user experiences|b,g]] from [[quantitative and qualitative data|g]], working closely with designers, engineers, marketing and product, and keeping myself and the team accountable for [[measurable impact|g]], while able to [[influence above and motivate below|b]].',
+    text: 'Shapes UI from [[user evidence|b,g,e]]: {{FullStory showed mobile users abandoning a 3-step plan picker, and a single-screen comparison lifted mobile sign-ups 14%}}. Puts users before quick wins, {{holding a launch to fix keyboard and screen-reader gaps}}.',
   },
 ];
 
@@ -119,7 +125,7 @@ export const experience: Employer[] = [
     logoAlt: 'Intuit logo',
     tags: 'Enterprise · SaaS · Finance · B2C · B2B · AI',
     name: 'Intuit – [QuickBooks](https://quickbooks.intuit.com/au/) & [Mailchimp](https://mailchimp.com/)',
-    span: 'Mar 2020 – Aug 2026 · 6 yrs 6 months',
+    span: '(6 yrs 6 months) Mar 2020 – Aug 2026',
     intro: 'Promoted 3× from Senior Web Development Manager (M1) to Senior Staff Growth Engineer (P6), starting on QuickBooks Australia and expanding to Mailchimp and 9+ countries across APAC, owning web development, authoring, experimentation and growth delivery.',
     long: true,
     jobs: [
@@ -128,7 +134,8 @@ export const experience: Employer[] = [
         dates: 'Jun 2025 – Aug 2026',
         bullets: [
           'Owned [[growth engineering and experimentation strategy|g]] for QuickBooks and Mailchimp across APAC, using the [[10× traffic|b,g]] from my expanded scope to [[triple experimentation velocity|b,g]] and roll proven A/B winners out to [[9+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]].',
-          '[[Technical lead|e]] for regional GTM launches, including 3 global AI rebrands, balancing rich experiences with page performance ([[Core Web Vitals passed|e]]).',
+          '[[Technical lead|e]] for regional GTM launches, including 3 global AI rebrands: {{owned the front-end architecture and CI performance budgets for 6 engineers across 3 teams}}, cutting LCP from {{3.4s to 1.9s}} with [[Core Web Vitals passed|e]].',
+          "Set up [[Coda.io as the APAC teams' shared knowledge base|b,e]], a hive mind where engineers, marketers and agencies could find and reuse each other's work.",
         ],
       },
       {
@@ -136,7 +143,7 @@ export const experience: Employer[] = [
         dates: 'Aug 2023 – Jun 2025',
         bullets: [
           'Joined the marketing leadership team and took on [[technical direction|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels, shaping shared web strategy across AU, UK and CA.',
-          'Triaged hundreds of cross-functional requests with an Airtable impact/effort scoring system, and secured budget for parallel agency workstreams on content and simple builds, freeing the core team for complex work and [[doubling marketing velocity|b,g]].',
+          'Introduced impact/effort triage and parallel agency workstreams, freeing engineers for complex builds and [[doubling marketing velocity|b,g]].',
         ],
       },
       {
@@ -144,6 +151,7 @@ export const experience: Employer[] = [
         dates: 'Jan 2022 – Aug 2023',
         bullets: [
           'Added [[CRO experimentation|g]] and [[performance|e]] to the remit, turning the website into a measurable sales channel with a larger budget. Ran numerous full-funnel personalisation experiments, delivering a [[28% increase in traffic to sign-up|b,g]].',
+          'Built the [[experimentation infrastructure|e]]: {{a React variant framework on Adobe Target with feature-flagged components and typed analytics events}}, cutting the build time per test from {{5 days to 1}}.',
         ],
       },
       {
@@ -151,7 +159,7 @@ export const experience: Employer[] = [
         dates: 'Mar 2020 – Jan 2022',
         bullets: [
           'Ran front-end development and web project delivery, leading a [[team of 4 engineers|e]] alongside agency partners to support marketing and drive technical KPIs.',
-          'Built a [[shared component library|e]] on [[Atomic Design|b,e]] principles in [[AEM, React and Next.js|b,e]], and partnered with design to deliver multiple site migrations and full rebrands on it.',
+          'Built a [[shared component library|e]] on [[Atomic Design|b,e]] principles in [[AEM, React and Next.js|b,e]] ({{120+ components in Storybook with Jest tests, used by 4 teams across 3 sites}}), and partnered with design to deliver multiple site migrations and full rebrands on it.',
         ],
       },
     ],
@@ -161,7 +169,7 @@ export const experience: Employer[] = [
     logoAlt: 'VML logo',
     tags: 'Agency · Marketing · Tech',
     name: 'VML',
-    span: 'Nov 2015 – Mar 2020 · 4 yrs 5 months',
+    span: '(4 yrs 5 months) Nov 2015 – Mar 2020',
     intro: "One of the world's largest marketing, communications and creative agency networks.",
     jobs: [
       {
@@ -193,7 +201,8 @@ export const ventures: Employer[] = [
     jobs: [
       {
         bullets: [
-          'Designed and built the front end in [[React 19, TypeScript and Tailwind|b,e]] on a Radix/shadcn design system in [[Storybook|b,e]], with [[Chromatic visual regression|e]] and [[axe accessibility testing|e]], backed by a [[typed GraphQL API|e]] over Django and Celery.',
+          'Designed and built the front end in [[React 19, TypeScript and Tailwind|b,e]] on a Radix/shadcn design system in [[Storybook|b,e]] ([finguide-storybook.vercel.app](https://finguide-storybook.vercel.app/)), backed by a [[typed GraphQL API|e]] over Django and Celery, hosted on [[Railway and Vercel|e]].',
+          'Tested at every layer: 800+ [[Jest and Testing Library|b,e]] specs, 300+ Storybook stories run as [[Vitest browser tests|e]] that fail CI on axe violations, [[Chromatic visual regression|e]] with MSW-mocked GraphQL, and pytest on the backend.',
           'Built an [[agent-driven delivery pipeline|b,e]] where every change starts with a written technical plan and is gated by automated tests, compliance checks and my code review.',
         ],
       },
@@ -208,26 +217,35 @@ export const ventures: Employer[] = [
     intro: 'Web consultancy [[building and growing sites|g]] for 25 Australian sole traders and small businesses without in-house teams, run alongside full-time roles.',
     jobs: [],
   },
+  {
+    logo: 'assets/logos/cv-knight.png',
+    logoAlt: 'Pixel-art knight avatar',
+    name: '[github.com/bwise-jake/cv](https://github.com/bwise-jake/cv)',
+    span: 'Open source · 2026',
+    intro: 'This CV as a [[pre-rendered TypeScript/Vite|b,e]] app (no JavaScript needed), themed for 7 companies. [[Vitest unit tests and CI|e]] keep all 24 PDFs at 2 pages and [[WCAG AA contrast|e]]; the Atlassian theme uses [[ADS tokens|e]], Stylelint and ESLint.',
+    jobs: [],
+  },
 ];
 
 export const skills: SkillGroup[] = [
   {
     id: 'frontend',
-    title: 'Front-End Engineering',
-    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], [[Web Performance (Core Web Vitals)|e,g]], Internationalisation (i18n), CMS & Content Authoring (AEM), Unit, E2E & Visual Regression Testing, Code Review, Technical Design Docs, CI/CD',
+    title: 'Front-end engineering',
+    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], [[Web Performance (Core Web Vitals)|e,g]], Internationalisation (i18n), CMS & Content Authoring (AEM), Testing (Jest, Testing Library, Vitest, Chromatic, MSW, pytest), Code Review, Technical Design Docs, CI/CD, Cloud Hosting (Railway, Vercel)',
     logos: ['React', 'Next.js', 'TypeScript', 'HTML5', 'CSS', 'Tailwind CSS', 'Storybook', 'Node.js', 'Git'],
     logosLabel: 'Front-End Engineering platforms',
   },
   {
     id: 'growth',
-    title: 'Growth & Experimentation',
+    title: 'Growth & experimentation',
     skills: '[[A/B Testing|g]], [[CRO|g]], UX Design & Wireframing, [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]] (Adobe Analytics), Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
     logos: ['Optimizely', 'Google Analytics', 'FullStory', 'Google Ads', 'Semrush', 'Ahrefs', 'Figma', 'Hotjar', 'Amplitude'],
     logosLabel: 'Growth and Experimentation platforms',
+    omit: { engineering: ['SEO', 'Google Ads', 'Semrush', 'Ahrefs'] },
   },
   {
     id: 'ai',
-    title: 'AI-Native Workflows',
+    title: 'AI-native workflows',
     skills: 'Context Engineering, [[Agentic Development|e]], [[Multi-Agent Orchestration|e]], Plan-Driven Delivery, [[Automated Quality Gates|e]], AI Compliance Guardrails, [[MCP Integrations|e]], Human-in-the-Loop Review, Knowledge Capture & Reuse',
     logos: ['Claude', 'OpenAI Codex', 'Cursor', 'Model Context Protocol', 'GitHub', 'Airtable', 'Notion', 'Jira', 'Confluence'],
     logosLabel: 'AI-Native Workflows platforms',
@@ -245,7 +263,7 @@ export const order: Record<Focus, { summary: SummaryItem['id'][]; skills: SkillG
     skills: ['growth', 'frontend', 'ai'],
   },
   engineering: {
-    summary: ['engineering', 'founder', 'growth', 'customer'],
+    summary: ['engineering', 'growth', 'customer', 'founder'],
     skills: ['frontend', 'ai', 'growth'],
   },
 };
