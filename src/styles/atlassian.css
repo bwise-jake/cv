@@ -4,9 +4,10 @@
  * Imported after themes.css, so it sits after the shared tag-chip shape there.
  *
  * Every colour, space, radius, border width, font family and font weight is an ADS design token
- * (var(--ds-*)), with the token's light-theme value as the fallback. The page doesn't load
- * @atlaskit/tokens, so the fallbacks are what renders; names and values were checked with the
- * ADS MCP server (@atlaskit/ads-mcp, ads_search_tokens).
+ * (var(--ds-*)), with the token's light-theme value as the fallback. The tokens are defined in
+ * ads-tokens.css (generated from @atlaskit/tokens by `npm run ads:tokens`, Atlassian theme only);
+ * the fallbacks are the same light-theme values, and tests/ads-tokens.test.ts keeps them equal.
+ * Font tokens stay fallback-only, because ADS's families would replace the Inter/Outfit stand-ins.
  *
  * Type is set with the ADS font tokens (var(--ds-font-*), the `font` shorthand: heading-xlarge
  * 28/32, heading-small 16/20, heading-xsmall 14/20, heading-xxsmall 12/16, body-small 12/16),
@@ -21,9 +22,9 @@
 /* ---------- Atlassian ---------- */
 :root[data-theme="atlassian"] {
   --paper: var(--ds-surface, #ffffff);
-  /* The backdrop is the default surface, not sunken (ADS: sunken is a well inside a page, never the page
-     background); a hairline on screen marks each sheet. */
-  --canvas: var(--ds-surface, #ffffff);
+  /* The grey backdrop behind the white sheets is ADS's sunken surface. Atlassian's DESIGN.md says not to use
+     it as a page background; the owner chose it here, since this is a sheet of paper on a desk. */
+  --canvas: var(--ds-surface-sunken, #f8f8f8);
   /* ADS has one text colour; hierarchy comes from weight, as in Confluence. */
   --ink: var(--ds-text, #292a2e);
   --ink-soft: var(--ds-text, #292a2e);
@@ -46,6 +47,12 @@
      isn't installed. Mono is kept for code only, which the CV doesn't have. */
   --sans: var(--ds-font-family-body, 'Atlassian Sans', 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif);
   --mono: var(--ds-font-family-code, 'Atlassian Mono', 'JetBrains Mono', ui-monospace, Menlo, 'Segoe UI Mono', 'Ubuntu Mono', monospace);
+  /* atlassian.com sets headings in Charlie Display (the ADS brand heading family), bold, in a
+     darker ink than body copy. Charlie is proprietary, so Outfit, the closest open match at
+     bold, stands in. Sampled from atlassian.com and /company/careers, 2026-10-27. */
+  --display: var(--ds-font-family-brand-heading, 'Charlie Display', 'Outfit', var(--sans));
+  /* stylelint-disable-next-line design-system/ensure-design-token-usage -- atlassian.com's heading ink; ADS text tokens stop at #292a2e */
+  --heading-ink: #101214;
   --name-weight: var(--ds-font-weight-bold, 653);
   --name-tracking: 0;
   --heading-weight: var(--ds-font-weight-bold, 653);
@@ -96,16 +103,31 @@
   /* The cover band is a background layer, not a positioned ::after, so the header can print
      unpositioned and its text comes first in the PDF (print.css). */
   header.identity {
-    padding-top: var(--ds-space-600, 3rem);
-    padding-bottom: var(--ds-space-300, 1.5rem);
+    /* The band's 32px (space.400) is the badge row, which comes after the identity row in the source (so PDF
+       text reads the name first) and is placed above it by the grid. Grid placement doesn't change paint
+       order, unlike flex `order`. There is no top padding of its own. */
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    padding-top: var(--ds-space-0, 0);
+    padding-bottom: var(--ds-space-0, 0);
+    /* The header's content sits 24px (space.300) from the sheet edge, closer than the 48px of the body. */
+    padding-inline: var(--ds-space-300, 1.5rem);
     background:
       linear-gradient(var(--ds-background-brand-bold, #1868db), var(--ds-background-brand-bold, #1868db)) top / 100% var(--ds-space-400, 2rem) no-repeat,
       var(--ds-surface, #ffffff);
   }
 
+  /* Marketing-site headings: brand display face, bold, heading ink. */
+  h1,
+  h2,
+  .employer-name,
+  .job-title {
+    color: var(--heading-ink);
+  }
   h1 {
-    font: var(--ds-font-heading-xlarge, normal 653 1.75rem/2rem var(--sans));
-    font-size-adjust: 0.53;
+    font: var(--ds-font-heading-xlarge, normal 700 1.75rem/2rem var(--display));
+    font-size-adjust: none;
   }
   .role-title {
     margin-top: var(--ds-space-025, 0.125rem);
@@ -131,6 +153,7 @@
     padding-top: var(--ds-space-0, 0);
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
     font-size-adjust: none;
+    font-weight: var(--ds-font-weight-medium, 500);
     text-transform: none;
     letter-spacing: 0;
     color: var(--ds-text-subtle, #505258);
@@ -139,11 +162,25 @@
   /* Metadata reads as Confluence bylines: the sans at body-small, in text-subtle. The contact
      links are 16px tall at a 28px pitch, so each has a 24px target (WCAG 2.2, 2.5.8). */
   .contact {
-    gap: var(--ds-space-150, 0.75rem);
+    gap: var(--ds-space-100, 0.5rem);
     padding-top: var(--ds-space-050, 0.25rem);
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
     font-size-adjust: none;
+    font-weight: var(--ds-font-weight-medium, 500);
   }
+  /* The contact details are links, so they take the ADS link: link colour, underlined; hover drops the
+     underline, pressed darkens, visited turns purple. The hairline border the other themes use goes. */
+  .contact a {
+    border-bottom: 0;
+    color: var(--ds-link, #1868db);
+    text-decoration: underline;
+  }
+  .contact a:visited { color: var(--ds-link-visited, #803fa5); }
+  .contact a:hover {
+    color: var(--ds-link, #1868db);
+    text-decoration: none;
+  }
+  .contact a:active { color: var(--ds-link-pressed, #1558bc); }
   .job-meta,
   .employer-span {
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
@@ -151,45 +188,68 @@
     color: var(--ds-text-subtle, #505258);
   }
   .employer-name {
-    font: var(--ds-font-heading-small, normal 653 1rem/1.25rem var(--sans));
-    font-size-adjust: 0.53;
+    font: var(--ds-font-heading-small, normal 700 1rem/1.25rem var(--display));
+    font-size-adjust: none;
   }
   .job-title {
-    font: var(--ds-font-heading-xsmall, normal 653 0.875rem/1.25rem var(--sans));
-    font-size-adjust: 0.53;
+    font: var(--ds-font-heading-xsmall, normal 700 0.875rem/1.25rem var(--display));
+    font-size-adjust: none;
   }
 
-  /* SectionMessage, information appearance: one status-information icon beside the content,
-     space.200 padding and gap, neutral body text (the labels aren't tinted blue). */
-  ul.summary-list {
-    display: grid;
-    grid-template-columns: var(--ds-space-200, 1rem) 1fr;
-    column-gap: var(--ds-space-200, 1rem);
-    row-gap: var(--ds-space-075, 0.375rem);
-    padding: var(--ds-space-200, 1rem);
-    border-radius: var(--ds-radius-large, 0.5rem);
-    background: var(--ds-background-information, #e9f2fe);
+  /* Summary as a full-bleed brand band (like atlassian.com's blue banners): brand-bold background
+     edge to edge across the sheet, inverse text, heading and icons, one ADS icon per item. */
+  section:has(> ul.summary-list) {
+    /* The band cancels the page's side padding exactly. That padding is --page-pad-x: 48px (space.600),
+       or 24px on a phone (base.css), so the band reads the variable rather than a fixed token. */
+    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- ADS has no space.negative.600; this is -1 × the page's side padding */
+    margin-inline: calc(-1 * var(--page-pad-x));
+    padding-block: var(--ds-space-300, 1.5rem);
+    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- the page's side padding again, so the text stays where it was */
+    padding-inline: var(--page-pad-x);
+    background: var(--ds-background-brand-bold, #1868db);
+    color: var(--ds-text-inverse, #ffffff);
   }
-  ul.summary-list::before {
-    content: "";
-    grid-row: 1;
-    grid-column: 1;
+  section:has(> ul.summary-list) h2 { color: var(--ds-text-inverse, #ffffff); }
+  ul.summary-list {
+    --strong-color: var(--ds-text-inverse, #ffffff);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-075, 0.375rem);
+  }
+  ul.summary-list li,
+  ul.summary-list b { color: var(--ds-text-inverse, #ffffff); }
+  /* Placeholders: the page-wide orange is unreadable on brand blue. The text is inverse (5.2:1 on
+     brand-bold; the light yellow it had was 4.2:1, under AA for 12px) and the italics plus the
+     dashed yellow underline, which is not text and so needs only 3:1, still mark it. */
+  ul.summary-list .fill {
+    color: var(--ds-text-inverse, #ffffff);
+    border-bottom-color: var(--ds-background-accent-yellow-subtler, #f5e989);
+  }
+  ul.summary-list .has-note { text-decoration-color: var(--ds-text-inverse, #ffffff); }
+  ul.summary-list .has-note:hover,
+  ul.summary-list .has-note:focus-visible { background: var(--ds-background-brand-bold-hovered, #1558bc); }
+  .summary-ads-icon {
+    display: block;
+    flex-shrink: 0;
     width: var(--ds-space-200, 1rem);
     height: var(--ds-space-200, 1rem);
     margin-top: var(--ds-space-025, 0.125rem);
-    background: var(--ds-icon-information, #357de8);
-    /* ADS StatusInformationIcon (@atlaskit/icon/core/status-information, Apache-2.0). */
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M6.5 6.75v1.5h.75v4.25h1.5v-5A.75.75 0 0 0 8 6.75zM8 3.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2'/%3E%3C/svg%3E") center / contain no-repeat;
+    color: var(--ds-icon-inverse, #ffffff);
+  }
+  .summary-ads-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
   ul.summary-list li {
-    grid-column: 2;
+    gap: var(--ds-space-150, 0.75rem);
     margin-bottom: var(--ds-space-0, 0);
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
     font-size-adjust: 0.53;
     /* stylelint-disable-next-line design-system/ensure-design-token-usage -- dense A4 prose keeps a 1.5 line height, an optical step looser than body-small */
     line-height: 18px;
   }
-  ul.summary-list .summary-label { color: var(--ds-text, #292a2e); }
+  ul.summary-list .summary-label { color: var(--ds-text-inverse, #ffffff); }
   .summary-icon { display: none; }
 
   .section-head {
@@ -198,8 +258,8 @@
     margin-bottom: var(--ds-space-100, 0.5rem);
   }
   h2 {
-    font: var(--ds-font-heading-small, normal 653 1rem/1.25rem var(--sans));
-    font-size-adjust: 0.53;
+    font: var(--ds-font-heading-small, normal 700 1rem/1.25rem var(--display));
+    font-size-adjust: none;
     letter-spacing: 0;
   }
   .section-cont {
@@ -212,47 +272,123 @@
     color: var(--ds-text-subtle, #505258);
   }
 
-  /* Sub-headings read like a Confluence h4: heading-xxsmall (12/16, bold). */
+  /* Skill group headings are the card titles: ADS heading-xsmall (14/20), bold, in the display face, like .job-title. */
   .skill-group h3 {
-    font: var(--ds-font-heading-xxsmall, normal 653 0.75rem/1rem var(--sans));
+    margin: var(--ds-space-0, 0) var(--ds-space-0, 0) var(--ds-space-100, 0.5rem);
+    font: var(--ds-font-heading-xsmall, normal 700 0.875rem/1.25rem var(--display));
     font-size-adjust: none;
     text-transform: none;
     letter-spacing: 0;
+    color: var(--heading-ink);
+  }
+}
+
+/* Atlassian: Skills & stacks as three flat accent cards, after atlassian.com's customer-story cards: a large
+   radius, an ADS accent-subtler fill, generous padding, the title first and the stack logos pinned to the
+   bottom so the three footers line up. Colour follows the group (data-flip), not its position, because the
+   focus changes the order. Subtler fills with the default text token are 10:1 or better. The markup is
+   unchanged, so reading order in the PDF is too. */
+:root[data-theme="atlassian"] {
+  .grid-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ds-space-150, 0.75rem);
+  }
+  .skill-group {
+    --card-bg: var(--ds-background-accent-blue-subtler, #cfe1fd);
+    display: flex;
+    flex-direction: column;
+    padding: var(--ds-space-150, 0.75rem);
+    border-radius: var(--ds-radius-xlarge, 0.75rem);
+    background: var(--card-bg);
+  }
+  .skill-group[data-flip="skills-growth"] { --card-bg: var(--ds-background-accent-green-subtler, #baf3db); }
+  .skill-group[data-flip="skills-ai"] { --card-bg: var(--ds-background-accent-purple-subtler, #eed7fc); }
+  .skill-list {
+    order: 2;
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: none;
+    color: var(--ds-text, #292a2e);
+  }
+  /* The stack logos sit under the card title, above the keywords. The markup keeps title, keywords, logos
+     (the other themes show the logos last), so this is CSS `order` only. The logos are the card's only focusable
+     elements, so keyboard order is unchanged; screen readers still read the keywords before the logos. */
+  .skill-group .logo-wrapper {
+    order: 1;
+    margin: var(--ds-space-0, 0);
+    padding-block: var(--ds-space-0, 0) var(--ds-space-150, 0.75rem);
+    gap: var(--ds-space-100, 0.5rem);
+  }
+  .stack-logo {
+    width: var(--ds-space-200, 1rem);
+    height: var(--ds-space-200, 1rem);
     color: var(--ds-text, #292a2e);
   }
 }
 
-/* Atlassian: the badges under the role title, saying what the theme is built and checked with.
-   They classify, so they are ADS Tags (transparent, grey accent border and icon), not Lozenges,
-   which carry status. */
+/* On a phone the page is one scrolling column (base.css), so the cards stack. This needs the same
+   :root:not([data-measure]) guard as base.css, which keeps the A4 fit measured on the desktop layout. */
+@media screen and (max-width: 640px) {
+  :root[data-theme="atlassian"]:not([data-measure]) .grid-three { grid-template-columns: 1fr; }
+}
+
+/* Atlassian: the badges in the brand band across the top of the sheet, right-aligned, saying what the theme
+   is built and checked with. They sit on brand-bold, so they use the inverse set: a translucent dark
+   chip (background.inverse.subtle) with inverse text and icon, which darkens the blue under white text
+   instead of lightening it. The row is exactly the band's height (space.400); the margin below it
+   restores the header's old 48px top padding, so the sheet's layout is unchanged. */
 :root[data-theme="atlassian"] {
+  .identity-row { grid-row: 2; }
   .ads-badges {
+    grid-row: 1;
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--ds-space-050, 0.25rem);
-    margin: var(--ds-space-100, 0.5rem) var(--ds-space-0, 0) var(--ds-space-0, 0);
-    order: 2;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--ds-space-100, 0.5rem);
+    height: var(--ds-space-400, 2rem);
+    margin: var(--ds-space-0, 0) var(--ds-space-0, 0) var(--ds-space-200, 1rem);
+  }
+  .ads-badges-label {
+    margin-right: var(--ds-space-050, 0.25rem);
+    color: var(--ds-text-inverse, #ffffff);
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-size-adjust: 0.53;
+    white-space: nowrap;
   }
   .ads-badge {
     display: inline-flex;
     align-items: center;
     gap: var(--ds-space-050, 0.25rem);
-    padding: var(--ds-space-025, 0.125rem) var(--ds-space-050, 0.25rem);
-    border: var(--ds-border-width, 0.0625rem) solid var(--ds-border-accent-gray, #7d818a);
+    padding: var(--ds-space-025, 0.125rem) var(--ds-space-100, 0.5rem) var(--ds-space-025, 0.125rem) var(--ds-space-075, 0.375rem);
     border-radius: var(--ds-radius-small, 0.25rem);
-    background: transparent;
-    color: var(--ds-text, #292a2e);
+    background: var(--ds-background-inverse-subtle, #00000029);
+    color: var(--ds-text-inverse, #ffffff);
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-weight: var(--ds-font-weight-semibold, 600);
     font-size-adjust: 0.53;
-    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- 14px line plus 2px padding and 1px borders makes the 20px chip */
-    line-height: 14px;
     white-space: nowrap;
+    text-decoration: none;
+    border-bottom: 0;
+  }
+  /* The chips link to the ADS docs for what they name. Inverse text stays in every link state; hover and
+     pressed deepen the chip fill, and the focus ring is the inverse (white) border, since the blue focus
+     ring would vanish on the brand band. */
+  .ads-badge:visited { color: var(--ds-text-inverse, #ffffff); }
+  .ads-badge:hover { background: var(--ds-background-inverse-subtle-hovered, #0000003d); }
+  .ads-badge:active { background: var(--ds-background-inverse-subtle-pressed, #00000052); }
+  .ads-badge:focus-visible {
+    outline: var(--ds-border-width-focused, 0.125rem) solid var(--ds-border-inverse, #ffffff);
+    outline-offset: var(--ds-space-025, 0.125rem);
   }
   .ads-badge svg {
-    width: 12px;
-    height: 12px;
+    width: var(--ds-space-150, 0.75rem);
+    height: var(--ds-space-150, 0.75rem);
     flex: none;
-    color: var(--ds-icon-accent-gray, #7d818a);
+    color: var(--ds-icon-inverse, #ffffff);
+  }
+  /* On a phone the label and the three chips don't fit one band; the chips stay. */
+  @media screen and (max-width: 560px) {
+    .ads-badges-label { display: none; }
   }
 }
 
@@ -265,10 +401,25 @@
   .controls .controls-toggle .ico-ads svg { width: 12px; height: 12px; }
 }
 
-/* On screen the sheets sit on the same surface as the backdrop, so a 1px border token outlines them. An
-   outline takes no layout space, so line breaks stay exactly as fit.ts measured them; none of this prints. */
-@media screen {
-  :root[data-theme="atlassian"] .page {
-    outline: var(--ds-border-width, 0.0625rem) solid var(--ds-border, #0b120e24);
+/* Focus ring as ADS draws it: a 2px border.focused outline, 2px clear of the element. The controls
+   and the skip link had a brand-blue ring 3px (or 2px) out; the stack logos had a box-shadow. */
+:root[data-theme="atlassian"] {
+  .controls button:focus-visible,
+  .skip-link:focus,
+  .stack-logo:focus-visible {
+    outline: var(--ds-border-width-focused, 0.125rem) solid var(--ds-border-focused, #4688ec);
+    outline-offset: var(--ds-space-025, 0.125rem);
+    box-shadow: none;
   }
+}
+
+/* The stack-logo tooltip as an ADS Tooltip: neutral-bold fill, inverse body-small text, small radius,
+   space.050 by space.100 padding. It was 11px with a 5px radius and 4px by 8px padding. */
+:root[data-theme="atlassian"] .stack-logo::after {
+  padding: var(--ds-space-050, 0.25rem) var(--ds-space-100, 0.5rem);
+  border-radius: var(--ds-radius-small, 0.25rem);
+  background: var(--ds-background-neutral-bold, #292a2e);
+  color: var(--ds-text-inverse, #ffffff);
+  font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+  font-size-adjust: none;
 }

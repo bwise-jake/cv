@@ -1,5 +1,6 @@
 import { byOrder, experience, headlines, order, person, skills, summary, ventures, type Employer, type Headline } from '../content/cv';
-import { checkMarkIcon, stackLogos, summaryIcons } from '../content/icons';
+import { adsBadgeIcons, adsSummaryIcons, stackLogos, summaryIcons } from '../content/icons';
+import { logoMarks } from '../content/logo-marks';
 import { escapeHtml, rich } from '../content/rich';
 import type { Focus } from '../types';
 
@@ -16,18 +17,36 @@ const sectionHead = (num: string, title: string, cont = false) =>
   }</h2></div>`;
 
 /**
- * Atlassian-theme badges: what this theme is built and checked with (see src/styles/atlassian.css).
+ * Atlassian-theme badges, shown in the brand band across the top of the sheet: what this theme is
+ * built and checked with (see src/styles/atlassian.css). They come after the identity row in the
+ * source, so the PDF text reads the name first; the theme's grid puts them in the band above it.
  * Every other theme hides them with display:none, so their PDFs don't carry the text.
  */
 const ADS_BADGES = [
-  { label: 'ADS tokens', title: 'Every colour and space in this theme is an Atlassian Design System token' },
-  { label: 'ADS Stylelint', title: 'Checked by @atlaskit/stylelint-design-system' },
-  { label: 'ADS ESLint', title: 'Checked by @atlaskit/eslint-plugin-design-system' },
-];
+  {
+    icon: 'tokens',
+    label: 'Tokens',
+    href: 'https://atlassian.design/foundations/tokens/design-tokens',
+    title: 'Every colour and space in this theme is an Atlassian Design System token',
+  },
+  {
+    icon: 'stylelint',
+    label: 'Stylelint',
+    href: 'https://atlassian.design/components/stylelint-design-system/usage',
+    title: 'Checked by @atlaskit/stylelint-design-system',
+  },
+  {
+    icon: 'eslint',
+    label: 'ESLint',
+    href: 'https://atlassian.design/components/eslint-plugin-design-system/usage',
+    title: 'The repo\'s TypeScript is linted with @atlaskit/eslint-plugin-design-system (recommended config)',
+  },
+] as const;
 
 const adsBadges = () =>
-  `<p class="ads-badges">${ADS_BADGES.map(
-    (b) => `<span class="ads-badge" title="${b.title}">${checkMarkIcon}${b.label}</span>`,
+  `<p class="ads-badges"><span class="ads-badges-label">Built with Atlassian Design System</span>${ADS_BADGES.map(
+    (b) =>
+      `<a class="ads-badge" href="${b.href}" title="${b.title}" target="_blank" rel="noopener noreferrer">${adsBadgeIcons[b.icon]}${b.label}</a>`,
   ).join(' ')}</p>`;
 
 /**
@@ -42,7 +61,6 @@ const roleTitle = ({ role, roleByTheme = {} }: Headline) =>
 /** Plain text of a rich-text fragment, for matching it against `omit` lists. */
 const plain = (src: string) => src.replace(/\[\[(.+?)\|[a-z,\s]+\]\]/g, '$1').replace(/\*\*/g, '');
 
-const displayUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
 function header(focus: Focus, recipient: string | null) {
   const headline = headlines[focus];
@@ -57,7 +75,6 @@ function header(focus: Focus, recipient: string | null) {
           <p class="kicker">${escapeHtml(headline.kicker)}</p>
           <h1>${escapeHtml(person.name)}</h1>
           <p class="role-title">${roleTitle(headline)}</p>
-          ${adsBadges()}
         </div>
       </div>
       <div class="contact">
@@ -65,9 +82,9 @@ function header(focus: Focus, recipient: string | null) {
         <span>${escapeHtml(person.location)}</span>
         <a href="mailto:${person.email}">${person.email}</a>
         <a href="https://${person.linkedin}">${person.linkedin}</a>
-        <a href="${person.website}" data-live-link>${displayUrl(person.website)}</a>
       </div>
     </div>
+    ${adsBadges()}
   </header>`;
 }
 
@@ -78,6 +95,7 @@ function summarySection(focus: Focus) {
       <li data-flip="summary-${item.id}">
         <span class="summary-icon" aria-hidden="true">${summaryIcons[item.id]}</span>
         <span class="summary-emoji" aria-hidden="true">${SUMMARY_EMOJI[item.id]}</span>
+        <span class="summary-ads-icon" aria-hidden="true">${adsSummaryIcons[item.id]}</span>
         <span><b class="summary-label">${escapeHtml(item.label)}</b> • ${rich(item.text)}</span>
       </li>`,
     )
@@ -109,7 +127,11 @@ function employerBlock(e: Employer) {
   return `
     <div class="employer-block${e.long ? ' employer-long' : ''}">
       <div class="employer-head">
-        <img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}" width="36" height="36">
+        ${
+          e.logoMark
+            ? `<span class="employer-logo employer-logo-mark" role="img" aria-label="${escapeHtml(e.logoAlt)}">${logoMarks[e.logoMark]}</span>`
+            : `<img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}" width="36" height="36">`
+        }
         <div class="employer-copy">
           <div class="employer-name">${rich(e.name)}</div>
           ${

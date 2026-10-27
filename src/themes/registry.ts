@@ -22,9 +22,9 @@ export const themes: Theme[] = [
   {
     id: 'atlassian',
     label: 'Atlassian',
-    fonts: 'family=Inter:wght@400..700',
-    families: ['Inter'],
-    note: 'Inter, the open stand-in for Atlassian Sans',
+    fonts: 'family=Inter:wght@400..700&family=Outfit:wght@700',
+    families: ['Inter', 'Outfit'],
+    note: 'Outfit for Charlie Display headings, Inter for Atlassian Sans body',
   },
   {
     id: 'notion',

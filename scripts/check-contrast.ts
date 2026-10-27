@@ -19,6 +19,7 @@ const CHECKS: [string, string][] = [
   ['header kicker', '.kicker'],
   ['controls label', '.controls-lead'],
   ['emphasis (unselected)', '.focus-word[aria-checked="false"]'],
+  ['skill card text', '.skill-list'],
 ];
 
 const HIDE_CSS = `

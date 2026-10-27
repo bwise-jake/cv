@@ -37,6 +37,17 @@ export const stackLogos: Record<string, string> = {
   "Confluence": "<svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" fill=\"currentColor\"> <title>Confluence</title> <path d=\"M.87 18.257c-.248.382-.53.875-.763 1.245a.764.764 0 0 0 .255 1.04l4.965 3.054a.764.764 0 0 0 1.058-.26c.199-.332.454-.763.733-1.221 1.967-3.247 3.945-2.853 7.508-1.146l4.957 2.337a.764.764 0 0 0 1.028-.382l2.364-5.346a.764.764 0 0 0-.382-1 599.851 599.851 0 0 1-4.965-2.361C10.911 10.97 5.224 11.185.87 18.257zM23.131 5.743c.249-.405.531-.875.764-1.25a.764.764 0 0 0-.256-1.034L18.675.404a.764.764 0 0 0-1.058.26c-.195.335-.451.763-.734 1.225-1.966 3.246-3.945 2.85-7.508 1.146L4.437.694a.764.764 0 0 0-1.027.382L1.046 6.422a.764.764 0 0 0 .382 1c1.039.49 3.105 1.467 4.965 2.361 6.698 3.246 12.392 3.029 16.738-4.04z\"/> </svg>"
 };
 
+/**
+ * ADS icons for the summary items in the Atlassian theme (shown instead of the line icons), from
+ * @atlaskit/icon/core (Apache-2.0): angle-brackets, chart-trend-up, lightbulb, people-group.
+ */
+export const adsSummaryIcons: Record<keyof typeof summaryIcons, string> = {
+  engineering: "<svg viewBox=\"0 0 16 16\" fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"m4.315 14.445 6-13.5 1.37.61-6 13.5zM13.982 10l-2.925 2.145.886 1.21 3.75-2.75a.75.75 0 0 0 0-1.21l-3.75-2.75-.886 1.21zM2.018 6l2.926 2.145-.888 1.21-3.75-2.75a.75.75 0 0 1 0-1.21l3.75-2.75.888 1.21z\"/></svg>",
+  growth: "<svg viewBox=\"0 0 16 16\" fill=\"none\"><path fill=\"currentColor\" d=\"M1 13V1h1.5v12a.5.5 0 0 0 .5.5h12V15H3a2 2 0 0 1-2-2\"/><path fill=\"currentColor\" d=\"M15 7.5h-1.5V5.56L9.78 9.28a.75.75 0 0 1-1.06 0L7.25 7.81l-2.22 2.22-1.06-1.06 2.75-2.75.056-.052a.75.75 0 0 1 1.004.052l1.47 1.47 3.19-3.19H10.5V3h3.75a.75.75 0 0 1 .75.75z\"/></svg>",
+  founder: "<svg viewBox=\"0 0 16 16\" fill=\"none\"><path fill=\"currentColor\" d=\"M10 12.5H6V14a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zm-2-11c-3.022 0-4.935 3.243-3.473 5.888L5.535 9.21c.303.548.463 1.164.465 1.79h4a3.7 3.7 0 0 1 .465-1.79l1.008-1.822C12.935 4.743 11.022 1.5 8 1.5M11.5 14a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-2.988a2.2 2.2 0 0 0-.277-1.075L3.215 8.114C1.2 4.47 3.835 0 8 0c4.164 0 6.8 4.47 4.785 8.114l-1.008 1.823a2.2 2.2 0 0 0-.277 1.075z\"/></svg>",
+  customer: "<svg viewBox=\"0 0 16 16\" fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M9 4.5a2 2 0 1 1 4 0 2 2 0 0 1-4 0M11 1a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7M3 5.5a1 1 0 1 1 2 0 1 1 0 0 1-2 0M4 3a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M2.625 9A2.625 2.625 0 0 0 0 11.625V13h1.5v-1.375c0-.621.504-1.125 1.125-1.125H5V9zM6 12.5A3.5 3.5 0 0 1 9.5 9h3a3.5 3.5 0 0 1 3.5 3.5V14h-1.5v-1.5a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2V14H6z\"/></svg>",
+};
+
 /** ADS CheckMarkIcon (@atlaskit/icon/core/check-mark, Apache-2.0), for the Atlassian theme's badges. */
 export const checkMarkIcon = "<svg viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"m13.959 3.97-7.25 9a.75.75 0 0 1-1.163.007l-3.5-4.25 1.158-.954 2.914 3.539 6.673-8.283z\"/></svg>";
 
@@ -45,3 +56,13 @@ export const adsDownloadIcon = "<svg viewBox=\"0 0 16 16\" fill=\"none\" aria-hi
 
 /** ADS ChevronDownIcon (@atlaskit/icon/core/chevron-down, Apache-2.0), for the Atlassian theme's controls. */
 export const adsChevronDownIcon = "<svg viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"m14.53 6.03-6 6a.75.75 0 0 1-1.004.052l-.056-.052-6-6 1.06-1.06L8 10.44l5.47-5.47z\"/></svg>";
+
+/**
+ * ADS icons for the Atlassian theme's header badges, from @atlaskit/icon/core (Apache-2.0):
+ * paint-palette (tokens), angle-brackets (Stylelint) and list-checklist (ESLint).
+ */
+export const adsBadgeIcons = {
+  tokens: "<svg viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M5.932.274a8 8 0 0 1 4.14 15.455 1 1 0 0 1-.097.02c-.908.118-1.72.055-2.29-.438-.573-.498-.672-1.24-.682-1.85-.011-.672-.309-1.152-.72-1.426-.42-.279-1.016-.384-1.682-.169-1.006.325-1.93.458-2.717.158-.837-.32-1.308-1.042-1.597-1.909l-.012-.043A8 8 0 0 1 5.932.274M14.28 6.32A6.5 6.5 0 0 0 1.718 9.66c.218.647.464.871.701.962.29.11.796.116 1.72-.182 1.061-.344 2.14-.209 2.974.346.84.56 1.371 1.507 1.39 2.65.009.546.112.695.166.742.058.05.291.181 1.064.088a6.5 6.5 0 0 0 4.547-7.947\"/><path fill=\"currentColor\" d=\"M10.87 5.68a1.13 1.13 0 1 1 .58 2.17 1.13 1.13 0 0 1-.58-2.17m-6.49-.07a1.13 1.13 0 1 1 .58 2.17 1.13 1.13 0 0 1-.58-2.17m3.3-2.18a1.13 1.13 0 1 1 .58 2.17 1.13 1.13 0 0 1-.58-2.17\"/></svg>",
+  stylelint: "<svg viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path fill=\"currentColor\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"m4.315 14.445 6-13.5 1.37.61-6 13.5zM13.982 10l-2.925 2.145.886 1.21 3.75-2.75a.75.75 0 0 0 0-1.21l-3.75-2.75-.886 1.21zM2.018 6l2.926 2.145-.888 1.21-3.75-2.75a.75.75 0 0 1 0-1.21l3.75-2.75.888 1.21z\"/></svg>",
+  eslint: "<svg viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"m5.59 9.97-3 3.75a.75.75 0 0 1-1.16.01l-.05-.07L0 11.53l1.26-.81.81 1.25 2.35-2.94zm0-7.5-3 3.75a.75.75 0 0 1-1.16.01l-.05-.07L0 4.03l1.26-.81.81 1.25 2.35-2.94zM16.01 11v1.5h-9V11zm0-7.5V5h-9V3.5z\"/></svg>",
+} as const;

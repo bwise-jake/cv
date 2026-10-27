@@ -13,11 +13,13 @@
     "check:contrast": "vite build && tsx scripts/check-contrast.ts",
     "lint": "npm run lint:css && npm run lint:ts",
     "lint:css": "stylelint src/styles/atlassian.css",
-    "lint:ts": "eslint src scripts tests"
+    "lint:ts": "eslint src scripts tests",
+    "ads:tokens": "tsx scripts/generate-ads-tokens.ts"
   },
   "devDependencies": {
     "@atlaskit/eslint-plugin-design-system": "^16.14.0",
     "@atlaskit/stylelint-design-system": "^5.1.4",
+    "@atlaskit/tokens": "^20.8.2",
     "@babel/core": "^8.0.9",
     "@babel/eslint-parser": "^8.0.7",
     "@babel/preset-typescript": "^8.0.7",

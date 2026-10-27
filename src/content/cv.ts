@@ -1,5 +1,6 @@
 import type { Focus, ThemeId } from '../types';
 import type { summaryIcons } from './icons';
+import type { LogoMark } from './logo-marks';
 
 /*
  * All CV copy lives here. Strings use the inline markup documented in rich.ts:
@@ -27,7 +28,10 @@ export interface Job {
 }
 
 export interface Employer {
-  logo: string;
+  /** Image path. Omitted when `logoMark` supplies an inline mark instead. */
+  logo?: string;
+  /** Inline animated mark (see `src/content/logo-marks.ts`), drawn in place of the image. */
+  logoMark?: LogoMark;
   logoAlt: string;
   /** Industry tags, " · "-separated. Omitted for entries that fold them into `span`. */
   tags?: string;
@@ -55,8 +59,6 @@ export const person = {
   location: 'Sydney, NSW, Australia',
   email: 'jakethorntonbowen@gmail.com',
   linkedin: 'linkedin.com/in/jaketb',
-  /** Live interactive CV. Shown in the header (and so in every PDF); swap for a custom domain. */
-  website: 'https://bwise-jake.github.io/cv/',
 };
 
 /**
@@ -90,7 +92,7 @@ export const headlines: Record<Focus, Headline> = {
     role: 'Senior Growth Engineer',
   },
   engineering: {
-    kicker: '10+ yrs · Ex-Intuit · React & TypeScript · Core Web Vitals',
+    kicker: '10+ Years Experience · React & TypeScript · Design Systems',
     role: 'Senior Front-End Engineer',
     roleByTheme: { atlassian: 'Senior Frontend Software Engineer' },
   },
@@ -192,7 +194,7 @@ export const experience: Employer[] = [
 
 export const ventures: Employer[] = [
   {
-    logo: 'assets/logos/finguide.jpeg',
+    logoMark: 'finguide',
     logoAlt: 'finguide.money logo',
     tags: 'Start-up · Tech · Finance · AI',
     name: '[finguide.money](https://finguide.money)',
@@ -203,7 +205,7 @@ export const ventures: Employer[] = [
         bullets: [
           'Designed and built the front end in [[React 19, TypeScript and Tailwind|b,e]] on a Radix/shadcn design system in [[Storybook|b,e]] ([finguide-storybook.vercel.app](https://finguide-storybook.vercel.app/)), backed by a [[typed GraphQL API|e]] over Django and Celery, hosted on [[Railway and Vercel|e]].',
           'Tested at every layer: 800+ [[Jest and Testing Library|b,e]] specs, 300+ Storybook stories run as [[Vitest browser tests|e]] that fail CI on axe violations, [[Chromatic visual regression|e]] with MSW-mocked GraphQL, and pytest on the backend.',
-          'Built an [[agent-driven delivery pipeline|b,e]] where every change starts with a written technical plan and is gated by automated tests, compliance checks and my code review.',
+          'Built an [[agent-driven delivery pipeline|b,e]] where every change starts with a plan and is gated by automated tests, compliance checks and my code review.',
         ],
       },
     ],
@@ -222,7 +224,7 @@ export const ventures: Employer[] = [
     logoAlt: 'Pixel-art knight avatar',
     name: '[github.com/bwise-jake/cv](https://github.com/bwise-jake/cv)',
     span: 'Open source · 2026',
-    intro: 'This CV as a [[pre-rendered TypeScript/Vite|b,e]] app (no JavaScript needed), themed for 7 companies. [[Vitest unit tests and CI|e]] keep all 24 PDFs at 2 pages and [[WCAG AA contrast|e]]; the Atlassian theme uses [[ADS tokens|e]], Stylelint and ESLint.',
+    intro: 'This CV as a [[pre-rendered TypeScript/Vite|b,e]] app (no JavaScript needed), themed for 7 companies. [[Vitest unit tests and CI|e]] keep all 24 PDFs at 2 pages and [[WCAG AA contrast|e]]; the Atlassian theme uses [[ADS tokens|e]] checked by ADS Stylelint, with the ADS ESLint plugin on the TypeScript.',
     jobs: [],
   },
 ];
@@ -231,14 +233,14 @@ export const skills: SkillGroup[] = [
   {
     id: 'frontend',
     title: 'Front-end engineering',
-    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], [[Web Performance (Core Web Vitals)|e,g]], Internationalisation (i18n), CMS & Content Authoring (AEM), Testing (Jest, Testing Library, Vitest, Chromatic, MSW, pytest), Code Review, Technical Design Docs, CI/CD, Cloud Hosting (Railway, Vercel)',
+    skills: '[[Component Architecture|e]], [[Design Systems|e]], Design Patterns, State & Data Management, API Integration (GraphQL, REST), CMS & Content Authoring (AEM), Responsive UI, Cross-Browser Compatibility, [[Accessibility (WCAG)|e]], Internationalisation (i18n), [[Web Performance (Core Web Vitals)|e,g]], Testing (Jest, Testing Library, Vitest, Chromatic, MSW, pytest), Code Review, Technical Design, CI/CD, Cloud Hosting (Railway, Vercel)',
     logos: ['React', 'Next.js', 'TypeScript', 'HTML5', 'CSS', 'Tailwind CSS', 'Storybook', 'Node.js', 'Git'],
     logosLabel: 'Front-End Engineering platforms',
   },
   {
     id: 'growth',
     title: 'Growth & experimentation',
-    skills: '[[A/B Testing|g]], [[CRO|g]], UX Design & Wireframing, [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]] (Adobe Analytics), Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
+    skills: '[[A/B Testing|g]], [[Experiment Design & Analysis|g]], [[Experimentation Infrastructure|g,e]], [[CRO|g]], UX Design & Wireframing, [[Analytics Instrumentation|g,e]], [[Funnel Analytics|g]] (Adobe Analytics), Paid Performance Measurement, [[SEO|g]], Regional GTM Launches, Impact/Effort Prioritisation',
     logos: ['Optimizely', 'Google Analytics', 'FullStory', 'Google Ads', 'Semrush', 'Ahrefs', 'Figma', 'Hotjar', 'Amplitude'],
     logosLabel: 'Growth and Experimentation platforms',
     omit: { engineering: ['SEO', 'Google Ads', 'Semrush', 'Ahrefs'] },
@@ -246,7 +248,7 @@ export const skills: SkillGroup[] = [
   {
     id: 'ai',
     title: 'AI-native workflows',
-    skills: 'Context Engineering, [[Agentic Development|e]], [[Multi-Agent Orchestration|e]], Plan-Driven Delivery, [[Automated Quality Gates|e]], AI Compliance Guardrails, [[MCP Integrations|e]], Human-in-the-Loop Review, Knowledge Capture & Reuse',
+    skills: 'Context Engineering, Plan-First Delivery, [[Agentic Development|e]], [[Multi-Agent Orchestration|e]], [[MCP Integrations|e]], [[Automated Quality Gates|e]], AI Compliance Guardrails, Human-in-the-Loop Review, Knowledge Capture & Reuse',
     logos: ['Claude', 'OpenAI Codex', 'Cursor', 'Model Context Protocol', 'GitHub', 'Airtable', 'Notion', 'Jira', 'Confluence'],
     logosLabel: 'AI-Native Workflows platforms',
   },

@@ -111,7 +111,17 @@ body {
   }
 }
 
+/* Between the phone layout and A4 width the sheet is shrunk to the window (screen-scale.ts) rather than
+   running off its right edge. Screen only: print is sized by --fit alone, and so is measuring. */
+#cv {
+  zoom: var(--screen-scale, 1);
+}
+
 /* Measuring natural content height (fit.ts): unscaled, unconstrained A4-width pages. */
+:root[data-measure] #cv {
+  zoom: 1;
+}
+
 :root[data-measure] .page {
   zoom: 1;
   height: auto;
@@ -295,6 +305,7 @@ section:last-child { margin-bottom: 0; }
 /* Linear shows issue IDs instead (themes.css); every other theme shows the number. */
 .num-issue { display: none; }
 .summary-emoji { display: none; }
+.summary-ads-icon { display: none; }
 /* The Atlassian theme's ADS badges and advertised role title (atlassian.css). */
 .ads-badges { display: none; }
 .role-alt { display: none; }
@@ -465,6 +476,65 @@ ul.bullets li:last-child { margin-bottom: 0; }
   object-fit: cover;
   flex-shrink: 0;
   border: 1px solid var(--line);
+}
+
+/* Animated finguide mark: the site's dark-mode lime squircle. Its motion is driven by src/finguide-mark.ts
+   (glance, blink, ear flick, hop, cursor follow); this is the resting pose plus the breathing, which only
+   runs while the mark is active. Units are the SVG's own (a 120-wide viewBox), so 5px is 5 user units. */
+.employer-logo-mark {
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  background: #c2f53c;
+}
+
+.fg-mark {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 100%;
+}
+
+.employer-logo-mark[data-active="true"] .fg-mark {
+  animation: fg-breathe var(--fg-breathe-seconds, 4s) ease-in-out infinite;
+}
+
+@keyframes fg-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(var(--fg-breathe-peak, 1.015)); }
+}
+
+/* Lean and hop pivot on the feet, a little below the drawn outline (the original pivots on its 120-unit box). */
+.fg-lean,
+.fg-hop,
+.fg-ear,
+.fg-eyehop,
+.fg-blink,
+.fg-eye {
+  transform-box: fill-box;
+}
+
+.fg-lean,
+.fg-hop { transform-origin: 50% calc(100% + 7px); }
+.fg-ear-l { transform-origin: 62% 63%; }
+.fg-ear-r { transform-origin: 38% 63%; }
+.fg-eyehop,
+.fg-blink,
+.fg-eye { transform-origin: 50% 50%; }
+
+/* Print and PDF export always show the resting pose, whatever the script left mid-motion. */
+@media print {
+  .fg-mark,
+  .fg-lean,
+  .fg-hop,
+  .fg-ear,
+  .fg-eyes,
+  .fg-eyehop,
+  .fg-blink,
+  .fg-eye {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 .employer-name {

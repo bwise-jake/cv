@@ -1,16 +1,18 @@
 import './styles/base.css';
 import './styles/themes.css';
+import './styles/ads-tokens.css';
 import './styles/atlassian.css';
 import './styles/controls.css';
 import './styles/notes.css';
 import './styles/print.css';
 
 import { initAnalytics, track } from './analytics';
-import { person } from './content/cv';
 import { fitPages, fitPagesForScreen } from './fit';
+import { mountFinguideMark } from './finguide-mark';
 import { annotateNotes, mountNotes } from './notes';
 import { bindPrintTitle, downloadPdf } from './pdf';
 import { renderCv } from './render/cv';
+import { bindScreenScale } from './screen-scale';
 import { mountControls } from './render/controls';
 import { getRecipient, getState, initState, setState, subscribe } from './state';
 import { ensureThemeFonts, getTheme, themes } from './themes/registry';
@@ -25,13 +27,8 @@ const recipient = getRecipient(location.search);
 function render(focus: Focus) {
   renderCv(cvRoot, focus, recipient);
   annotateNotes(cvRoot);
-  syncLiveLinks();
+  mountFinguideMark(cvRoot);
   fitPagesForScreen(cvRoot);
-}
-
-/** The header's website link opens the live CV in the same theme/focus/company as this view. */
-function syncLiveLinks() {
-  cvRoot.querySelectorAll<HTMLAnchorElement>('[data-live-link]').forEach((a) => (a.href = person.website + location.search));
 }
 
 /** FLIP: re-render, then animate every [data-flip] element from its old position to its new one. */
@@ -113,6 +110,7 @@ function boot() {
   render(state.focus);
   void applyTheme(state);
   mountNotes(cvRoot);
+  bindScreenScale();
   // Web fonts arriving late change line wrapping, so refit whenever any finish loading.
   document.fonts.addEventListener('loadingdone', () => fitPagesForScreen(cvRoot));
 
@@ -139,7 +137,6 @@ function boot() {
       renderWithFlip(next.focus);
       track('Focus', { focus: next.focus });
     }
-    syncLiveLinks();
   });
 }
 

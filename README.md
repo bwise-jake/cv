@@ -20,8 +20,7 @@ Keyboard: `T` / `Shift+T` cycle themes, `F` / `Shift+F` cycle focus, `P` downloa
 ## Tailored links, analytics and metric notes
 
 - **Tailored links**: add `for=` to any link, e.g.
-  `…/?theme=atlassian&focus=growth&for=Atlassian`. The header shows "Prepared for Atlassian",
-  and the website link in the header (and so in the PDF) carries the same view.
+  `…/?theme=atlassian&focus=growth&for=Atlassian`. The header shows "Prepared for Atlassian".
 - **Analytics** (Umami, cookieless): create a free site at cloud.umami.is, then add its website
   ID as a repo Actions variable `UMAMI_WEBSITE_ID`. Events: `Visit`, `Theme`, `Focus`,
   `PDF download`, `Metric note`, each tagged with `for`. Off locally and when the ID is unset
@@ -38,6 +37,7 @@ npm run dev        # http://localhost:5173
 npm test           # content/state unit tests
 npm run lint       # Atlassian Design System Stylelint (Atlassian theme) + ESLint plugins
 npm run pdf        # builds, renders all 24 theme × focus PDFs to exports/, asserts each is 2 pages
+npm run ads:tokens # regenerate src/styles/ads-tokens.css from @atlaskit/tokens
 ```
 
 The Atlassian theme is built with the Atlassian Design System. Agents get its MCP server from `.mcp.json`

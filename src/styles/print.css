@@ -45,6 +45,11 @@
     animation: none !important;
   }
 
+  /* The screen-only shrink-to-window scale (screen-scale.ts) must not touch the printed sheet. */
+  #cv {
+    zoom: 1;
+  }
+
   /* Exactly one sheet per .page; --fit (fit.ts) guarantees the content fits inside it. */
   .page {
     zoom: var(--fit);

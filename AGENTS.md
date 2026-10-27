@@ -11,6 +11,8 @@ Interactive two-page CV (Vite + TypeScript, no framework). Read `README.md` firs
 
 - Build it with Atlassian Design System (ADS) tokens only: `var(--ds-*, <light-theme fallback>)`.
   `npm run lint:css` (the ADS Stylelint plugin) must pass.
+- After adding or changing a `--ds-*` token in `src/styles/atlassian.css`, run `npm run ads:tokens` and commit
+  `src/styles/ads-tokens.css` (`npm test` fails if it is stale).
 - Use ADS icons only (`@atlaskit/icon/core/*`), as inline SVG with `fill="currentColor"`. Look them up
   with the `ads_search_icons` tool. Never use Unicode or emoji glyphs as icons in this theme.
 - Visual rules come from Atlassian's DESIGN.md: https://atlassian.design/DESIGN.md (not the repo's own

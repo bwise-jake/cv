@@ -68,6 +68,11 @@ Every theme's small text is checked for WCAG AA (4.5:1) in a real browser by `np
   annotation rather than a Word tracked-change leftover.
 - **Company logos**: 36px squares (corner radius from the `--radius-logo` token) with a hairline
   border, beside the employer tags and name — treated as real brand marks, not decorative badges.
+  The finguide mark is the exception: the site's dark-mode logo redrawn as inline SVG
+  (`src/content/logo-marks.ts`) and animated by `src/finguide-mark.ts`, a port of finguide-marketing's
+  `AnimatedPigMark` (glances, blinks, ear flicks, an occasional hop; on a fine pointer the eyes follow the
+  cursor and a click hops). It moves only while on screen and the tab is visible, and stands still under
+  `prefers-reduced-motion` and in print.
 
 ## Print
 
@@ -115,7 +120,7 @@ real text, so PDFs and ATS parsing are unaffected):
 
 | Theme | Industry tags | Section numbers | Other |
 |---|---|---|---|
-| Atlassian | ADS Tags: transparent, grey border, sentence case | Hidden (Confluence headings are unnumbered) | Confluence page: blue cover band over a white title block, kicker as the byline, Summary as an ADS information section message with the status-information icon, unruled headings, sans skill sub-headings, three ADS Tags with check icons under the role title |
+| Atlassian | ADS Tags: transparent, grey border, sentence case | Hidden (Confluence headings are unnumbered) | Confluence page: blue cover band over a white title block, kicker as the byline, Summary as a full-bleed brand-bold band with inverse text and an ADS icon per item (angle-brackets, chart-trend-up, people-group, lightbulb; placeholders turn light yellow there), unruled headings, Skills & stacks as three flat ADS accent cards (blue, green, purple by group, `radius.xlarge`, stack logos under the title), three ADS Tags with check icons under the role title |
 | Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons |
 | Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
 | Canva | Rounded purple chips | Default | |
