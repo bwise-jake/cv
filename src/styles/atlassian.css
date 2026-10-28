@@ -97,7 +97,7 @@
 }
 
 /* Atlassian: Confluence page anatomy. A cover band over the page title, a byline under it,
-   the summary as an information section message and plain (unruled) headings. Spacing sits on
+   the summary as a dark full-bleed band and plain (unruled) headings. Spacing sits on
    the 8px grid. */
 :root[data-theme="atlassian"] {
   /* The cover band is a background layer, not a positioned ::after, so the header can print
@@ -109,6 +109,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto;
+    margin-block-end: var(--ds-space-300, 1.5rem);
     padding-top: var(--ds-space-0, 0);
     padding-bottom: var(--ds-space-0, 0);
     /* The header's content sits 24px (space.300) from the sheet edge, closer than the 48px of the body. */
@@ -196,45 +197,28 @@
     font-size-adjust: none;
   }
 
-  /* Summary as a full-bleed brand band (like atlassian.com's blue banners): brand-bold background
-     edge to edge across the sheet, inverse text, heading and icons, one ADS icon per item. */
+  /* Summary as a white ADS card: surface fill, a hairline border and the Skills cards' xlarge radius.
+     The negative inline margin cancels the card's own padding, so the text keeps the page's column. */
   section:has(> ul.summary-list) {
-    /* The band cancels the page's side padding exactly. That padding is --page-pad-x: 48px (space.600),
-       or 24px on a phone (base.css), so the band reads the variable rather than a fixed token. */
-    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- ADS has no space.negative.600; this is -1 × the page's side padding */
-    margin-inline: calc(-1 * var(--page-pad-x));
-    padding-block: var(--ds-space-300, 1.5rem);
-    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- the page's side padding again, so the text stays where it was */
-    padding-inline: var(--page-pad-x);
-    background: var(--ds-background-brand-bold, #1868db);
-    color: var(--ds-text-inverse, #ffffff);
+    margin-block-start: var(--ds-space-300, 1.5rem);
+    margin-inline: var(--ds-space-negative-200, -1rem);
+    padding: var(--ds-space-200, 1rem);
+    border: var(--ds-border-width, 0.0625rem) solid var(--ds-border, #0b120e24);
+    border-radius: var(--ds-radius-xlarge, 0.75rem);
+    background: var(--ds-surface, #ffffff);
   }
-  section:has(> ul.summary-list) h2 { color: var(--ds-text-inverse, #ffffff); }
   ul.summary-list {
-    --strong-color: var(--ds-text-inverse, #ffffff);
     display: flex;
     flex-direction: column;
     gap: var(--ds-space-075, 0.375rem);
   }
-  ul.summary-list li,
-  ul.summary-list b { color: var(--ds-text-inverse, #ffffff); }
-  /* Placeholders: the page-wide orange is unreadable on brand blue. The text is inverse (5.2:1 on
-     brand-bold; the light yellow it had was 4.2:1, under AA for 12px) and the italics plus the
-     dashed yellow underline, which is not text and so needs only 3:1, still mark it. */
-  ul.summary-list .fill {
-    color: var(--ds-text-inverse, #ffffff);
-    border-bottom-color: var(--ds-background-accent-yellow-subtler, #f5e989);
-  }
-  ul.summary-list .has-note { text-decoration-color: var(--ds-text-inverse, #ffffff); }
-  ul.summary-list .has-note:hover,
-  ul.summary-list .has-note:focus-visible { background: var(--ds-background-brand-bold-hovered, #1558bc); }
   .summary-ads-icon {
     display: block;
     flex-shrink: 0;
     width: var(--ds-space-200, 1rem);
     height: var(--ds-space-200, 1rem);
     margin-top: var(--ds-space-025, 0.125rem);
-    color: var(--ds-icon-inverse, #ffffff);
+    color: var(--ds-icon-brand, #1868db);
   }
   .summary-ads-icon svg {
     display: block;
@@ -244,12 +228,9 @@
   ul.summary-list li {
     gap: var(--ds-space-150, 0.75rem);
     margin-bottom: var(--ds-space-0, 0);
-    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font: var(--ds-font-body, normal 400 0.875rem/1.25rem var(--sans));
     font-size-adjust: 0.53;
-    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- dense A4 prose keeps a 1.5 line height, an optical step looser than body-small */
-    line-height: 18px;
   }
-  ul.summary-list .summary-label { color: var(--ds-text-inverse, #ffffff); }
   .summary-icon { display: none; }
 
   .section-head {
@@ -319,6 +300,13 @@
   }
   .skill-set + .skill-set::before { content: none; }
   .skill-extra[data-theme-extra="atlassian"] { display: inline; }
+  /* Each set opens with a run-in subtitle ("Delivery: …"). Run-in rather than a line of its own: a separate
+     line per set cost the Atlassian PDF 3.8 points of scale, run-in about 1.8. The keywords carry no bold,
+     so the subtitle's semibold is the card's only emphasis. */
+  .skill-set-title[data-theme-title="atlassian"] {
+    display: inline;
+    font-weight: var(--ds-font-weight-semibold, 600);
+  }
   /* The stack logos sit under the card title, above the keywords. The markup keeps title, keywords, logos
      (the other themes show the logos last), so this is CSS `order` only. The logos are the card's only focusable
      elements, so keyboard order is unchanged; screen readers still read the keywords before the logos. */

@@ -8,6 +8,11 @@ const read = (name: string) => readFileSync(new URL(`../src/styles/${name}`, imp
 const atlassian = read('atlassian.css');
 
 describe('skills cards', () => {
+  it('shows set subtitles only in the Atlassian theme', () => {
+    expect(read('base.css')).toMatch(/\.skill-set-title\s*\{\s*display:\s*none;\s*\}/);
+    expect(atlassian).toMatch(/\.skill-set-title\[data-theme-title="atlassian"\]\s*\{\s*display:\s*inline;/);
+  });
+
   it('gives every skill group its own Atlassian colour', () => {
     const fills = skills.map((g) => {
       const rule = new RegExp(`\\.skill-group\\[data-skill="${g.id}"\\]\\s*\\{\\s*background:\\s*var\\(--ds-background-accent-([a-z]+)-subtler,[^)]*\\)\\s*;?\\s*\\}`);

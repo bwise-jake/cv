@@ -65,10 +65,10 @@ describe('visibleSkillSets', () => {
       expect(visibleSkillSets(group('ai'), focus)).toHaveLength(4);
     }
   });
-  it('carries the Atlassian extras for the AI group only where the content defines them', () => {
+  it('carries the Atlassian extras only where the content defines them', () => {
     for (const focus of FOCUSES) {
       expect(visibleSkillSets(group('ai'), focus).every((s) => s.extras.length > 0)).toBe(true);
-      expect(visibleSkillSets(group('frontend'), focus).every((s) => s.extras.length === 0)).toBe(true);
+      expect(visibleSkillSets(group('frontend'), focus).map((s) => s.extras.length)).toEqual([1, 0, 0]);
     }
   });
 });

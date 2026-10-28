@@ -155,7 +155,7 @@ function skillsSection(focus: Focus) {
       return `
       <div class="skill-group" data-skill="${g.id}" data-flip="skills-${g.id}">
         <h3>${escapeHtml(g.title)}</h3>
-        <div class="skill-list">${sets.map(({ text, extras }) => `<p class="skill-set">${rich(text)}${extras.map(([theme, extra]) => `<span class="skill-extra" data-theme-extra="${theme}">, ${rich(extra)}</span>`).join('')}</p>`).join('')}</div>
+        <div class="skill-list">${sets.map(({ text, extras, titles }) => `<p class="skill-set">${titles.map(([theme, title]) => `<span class="skill-set-title" data-theme-title="${theme}">${escapeHtml(title)}: </span>`).join('')}${rich(text)}${extras.map(([theme, extra]) => `<span class="skill-extra" data-theme-extra="${theme}">, ${rich(extra)}</span>`).join('')}</p>`).join('')}</div>
         <div class="logo-wrapper" role="group" aria-label="${escapeHtml(g.logosLabel)}">
           ${logos.map((name) => `<div class="stack-logo" role="img" tabindex="0" aria-label="${escapeHtml(name)}" data-tooltip="${escapeHtml(name)}">${stackLogos[name]}</div>`).join('')}
         </div>

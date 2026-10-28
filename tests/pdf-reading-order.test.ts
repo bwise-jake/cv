@@ -33,9 +33,9 @@ describe('expectedOrder skills cards', () => {
       const names = skills.map((g) => g.title);
       return needles.slice(needles.indexOf('Skills')).filter((n) => names.includes(n));
     };
-    expect(titlesAfterSkills('engineering')).toEqual(['Front-end engineering', 'AI-native workflows', 'Analytics & experimentation']);
-    expect(titlesAfterSkills('growth')).toEqual(['Analytics & experimentation', 'Front-end engineering', 'AI-native workflows']);
-    expect(titlesAfterSkills('balanced')).toEqual(['Front-end engineering', 'Analytics & experimentation', 'AI-native workflows']);
+    expect(titlesAfterSkills('engineering')).toEqual(['Frontend engineering', 'AI-native workflows', 'Analytics & experimentation']);
+    expect(titlesAfterSkills('growth')).toEqual(['Analytics & experimentation', 'Frontend engineering', 'AI-native workflows']);
+    expect(titlesAfterSkills('balanced')).toEqual(['Frontend engineering', 'Analytics & experimentation', 'AI-native workflows']);
   });
   it('follows each card title with one needle per set the card shows', () => {
     for (const focus of FOCUSES) {
@@ -89,9 +89,9 @@ describe('readingOrderProblems', () => {
     expect(problems.length).toBeGreaterThan(0);
     expect(problems[0]).toContain(order[i + 1]);
   });
-  it('flags the skills cards swapped (AI-native before Front-end)', () => {
+  it('flags the skills cards swapped (AI-native before Frontend)', () => {
     const needles = expectedOrder('engineering');
-    const fe = needles.indexOf('Front-end engineering');
+    const fe = needles.indexOf('Frontend engineering');
     const ai = needles.indexOf('AI-native workflows');
     const moved = [...needles.slice(0, fe), ...needles.slice(ai), ...needles.slice(fe, ai)].join('\n');
     expect(readingOrderProblems(needles.join('\n'), needles)).toEqual([]);

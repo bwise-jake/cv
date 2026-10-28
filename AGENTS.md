@@ -23,3 +23,13 @@ Interactive two-page CV (Vite + TypeScript, no framework). Read `README.md` firs
 - ADS agent skills (`npx @atlassian/skills`) are Atlassian-employee-only and not on public npm, so they
   are not installed here. Do not try to install them.
 - Proprietary Atlassian typefaces are not available; Inter is the open stand-in (see `src/themes/registry.ts`).
+
+## Atlassian application context (local only)
+
+- The brief for the Atlassian Senior Frontend Software Engineer application (REQ-2026-1255) is in `docs/atlassian/`:
+  read `CONTEXT.md` first (the role, how Atlassian reads a CV, the interview stages, the candidate's evidence), then
+  `CV-Recommendations.md` (what to change on the CV). `Atlassian-Sources.md` is the full text of Atlassian's job spec,
+  CV tips and interview guide.
+- The folder is git-ignored on purpose: this repo is public, and the folder holds Atlassian's candidate-only interview
+  guide and the owner's application notes. Never commit it, never copy its text into tracked files, and expect it to be
+  missing on a fresh clone.

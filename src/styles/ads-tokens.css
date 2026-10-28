@@ -5,9 +5,7 @@
   --ds-background-accent-blue-subtler: #CFE1FD;
   --ds-background-accent-green-subtler: #BAF3DB;
   --ds-background-accent-purple-subtler: #EED7FC;
-  --ds-background-accent-yellow-subtler: #F5E989;
   --ds-background-brand-bold: #1868DB;
-  --ds-background-brand-bold-hovered: #1558BC;
   --ds-background-inverse-subtle: #00000029;
   --ds-background-inverse-subtle-hovered: #0000003D;
   --ds-background-inverse-subtle-pressed: #00000052;
@@ -22,6 +20,7 @@
   --ds-font-weight-bold: 653;
   --ds-font-weight-medium: 500;
   --ds-font-weight-semibold: 600;
+  --ds-icon-brand: #1868DB;
   --ds-icon-inverse: #FFFFFF;
   --ds-link: #1868DB;
   --ds-link-pressed: #1558BC;
@@ -38,6 +37,7 @@
   --ds-space-200: 1rem;
   --ds-space-300: 1.5rem;
   --ds-space-400: 2rem;
+  --ds-space-negative-200: -1rem;
   --ds-surface: #FFFFFF;
   --ds-surface-sunken: #F8F8F8;
   --ds-text: #292A2E;

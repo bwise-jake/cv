@@ -669,6 +669,8 @@ header.identity,
 .skill-set + .skill-set::before { content: ", "; }
 /* Theme-only keywords (the same idea as .role-alt): in the markup for every theme, shown by the theme that has room for them. */
 .skill-extra { display: none; }
+/* Set subtitles work the same way: in the markup for every theme, shown only by the theme they are written for. */
+.skill-set-title { display: none; }
 
 .skill-group .logo-wrapper {
   margin-top: 10px;

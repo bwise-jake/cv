@@ -4,8 +4,9 @@
  * A4 layout (see [data-measure] in base.css) and binary-search the largest zoom that fits each
  * page, then apply the smallest to all pages so type size is consistent across the document.
  */
-// A few px of headroom: print layout can differ from screen by sub-pixel rounding.
-const A4_HEIGHT_PX = (297 / 25.4) * 96 - 12;
+// A few px of headroom: print layout can differ from screen by sub-pixel rounding. 12px once let the Everlab PDF
+// clip by 2px in print at a 97.9% fit, so keep at least 16.
+const A4_HEIGHT_PX = (297 / 25.4) * 96 - 16;
 const MIN_FIT = 0.8;
 
 /** Phone screens reflow into one column (base.css), so the A4 fit only matters for print there. */

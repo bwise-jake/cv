@@ -4,3 +4,6 @@ exports
 .DS_Store
 *.log
 .claude
+# Atlassian application notes: private, never committed (the repo is public)
+docs/atlassian/
+plans/
