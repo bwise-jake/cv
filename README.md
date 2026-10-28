@@ -2,7 +2,7 @@
 
 A two-page A4 CV that restyles itself for the company reading it.
 
-- **Company themes**: Default, Atlassian, Notion, Canva, Stripe, Linear, Relevance AI, Everlab. Colours were
+- **Company themes**: Default, Atlassian, Notion, Canva, Stripe, Linear, Relevance AI, Everlab, and finguide (Jake's own app). Colours were
   sampled from each company's live site; proprietary typefaces are swapped for the closest open
   font (see the header of `src/styles/themes.css`).
 - **Focus modes**: Engineering (the default), Growth, Balanced. Each changes which phrases are bold, the order
@@ -36,7 +36,7 @@ npm install
 npm run dev        # http://localhost:5173
 npm test           # content/state unit tests
 npm run lint       # Atlassian Design System Stylelint (Atlassian theme) + ESLint plugins
-npm run pdf        # builds, renders all 24 theme × focus PDFs to exports/, asserts each is 2 pages
+npm run pdf        # builds, renders all 27 theme × focus PDFs to exports/, asserts each is 2 pages
 npm run og         # builds, renders the link-preview image to public/og-image.jpg (re-run after header/summary changes)
 npm run ads:tokens # regenerate src/styles/ads-tokens.css from @atlaskit/tokens
 ```

@@ -97,7 +97,7 @@ describe('cvMarkup', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('<span class="tag">Open source</span>');
     expect(html).toContain('Started Sep 2026');
-    expect(html).toContain('keeping all 24 PDFs at 2 pages, in reading order');
+    expect(html).toContain('keeping all 27 PDFs at 2 pages, in reading order');
     expect(html).toContain('passing <b class="kw" data-f="engineering">WCAG AA contrast</b>');
     expect(html).not.toContain('7 company themes');
     expect(html).not.toContain('This CV as a');

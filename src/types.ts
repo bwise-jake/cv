@@ -1,7 +1,7 @@
 export const FOCUSES = ['engineering', 'growth', 'balanced'] as const;
 export type Focus = (typeof FOCUSES)[number];
 
-export const THEME_IDS = ['default', 'atlassian', 'notion', 'canva', 'stripe', 'linear', 'relevance', 'everlab'] as const;
+export const THEME_IDS = ['default', 'atlassian', 'notion', 'canva', 'stripe', 'linear', 'relevance', 'everlab', 'finguide'] as const;
 export type ThemeId = (typeof THEME_IDS)[number];
 
 export interface CvState {

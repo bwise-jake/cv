@@ -97,6 +97,7 @@ the two-page layout hold everywhere.
 | Linear | Inter + JetBrains Mono (Berkeley Mono) | #7170FF | dark page, violet haze |
 | Relevance AI | Sora + Inter (both open) | #6056FF, teal #0E9384 tags | light lavender → pink wash |
 | Everlab | Newsreader + Schibsted Grotesk + DM Mono (for Tobias, Saans, Saans Mono) | black and grey; #FF6A1A squares only | near-black, serif name, muted-white mono kicker |
+| finguide | Hanken Grotesk (finguide's own, open) | lime #C0F43E on Ink | dark page (#1C1C1C card on #080808), Ink header band, lime role dash and labels |
 
 The controls (`src/render/controls.ts`) are typeset as a CV section headed **Version** in the
 margin beside the centred page, sticky so only the pages scroll. No card, blur or pills: a section
@@ -125,4 +126,5 @@ real text, so PDFs and ATS parsing are unaffected):
 | Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
 | Canva | Rounded purple chips | Default | |
 | Everlab | Uppercase mono, each after an orange square | Outlined mono "subhead" tag with a black square | Serif name only (headings stay sans, "continued" in two-tone grey), monochrome summary in a linen card, skill sub-headings as black mono labels after an orange square |
+| finguide | Neutral pill badges (#2E2E2E, hairline border) | Hidden | Rounded-square photo (16px); lime role dash and summary labels |
 | Default, Stripe, Relevance AI | Interpunct-separated mono text | Default | |

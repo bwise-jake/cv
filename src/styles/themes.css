@@ -9,6 +9,7 @@
  *   Linear     Inter Variable, Berkeley Mono        → Inter, JetBrains Mono
  *   Relevance  Sora + Inter                         → same (open source)
  *   Everlab    Tobias, Saans, Saans Mono            → Newsreader, Schibsted Grotesk, DM Mono
+ *   finguide   Hanken Grotesk (open source)               → same
  */
 
 /* ---------- Notion ---------- */
@@ -221,6 +222,39 @@
   --radius-logo: 8px;
 }
 
+/* ---------- finguide (dark) ---------- */
+/* Jake's own app. Values are finguide's dark tokens (DESIGN.md); alpha borders made opaque for PDF. */
+:root[data-theme="finguide"] {
+  color-scheme: dark;
+  --paper: #1c1c1c;
+  --canvas: #080808;
+  --ink: #fafafa;
+  --ink-soft: #fafafa;
+  --ink-faint: #bdbdbd;
+  --line: #333333;
+  --accent: #c0f43e;
+  --accent-wash: #343f1f;
+  --tag: #bdbdbd;
+  --link: #c0f43e;
+
+  --header-bg: #0a0a0b;
+  --header-noise-opacity: 0;
+  --header-border: 1px solid #333333;
+  --paper-on-ink: #fafafa;
+  --muted-on-ink: #bdbdbd;
+  --line-on-ink: #333333;
+  --accent-on-ink: #c0f43e;
+
+  --sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --name-weight: 650;
+  --name-tracking: -0.025em;
+  --heading-weight: 560;
+  --strong-weight: 600;
+  --radius-avatar: 16px;
+  --radius-logo: 8px;
+}
+
 /* =====================================================================================
  * Brand components. Beyond tokens, each theme renders a few elements the way the company's
  * own design system does. All of it is real text (PDF/ATS-safe); spaces between tags are kept
@@ -424,4 +458,29 @@
     vertical-align: 1px;
     background: #ff6a1a;
   }
+}
+
+/* finguide: neutral pill badges for industry tags and unnumbered headings. Lime stays an accent;
+   violet text is not used, so lime and violet never touch. */
+:root[data-theme="finguide"] {
+  .tag {
+    display: inline-block;
+    margin-right: 2px;
+    padding: 0 8px;
+    border: 1px solid #333333;
+    border-radius: 999px;
+    background: #2e2e2e;
+    color: #bdbdbd;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 17px;
+    white-space: nowrap;
+  }
+  .tag + .tag::before { content: none; }
+  .employer-tags { line-height: 1.9; }
+
+  .section-num { display: none; }
 }

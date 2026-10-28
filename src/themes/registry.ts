@@ -68,6 +68,13 @@ export const themes: Theme[] = [
     families: ['Newsreader', 'Schibsted Grotesk', 'DM Mono'],
     note: 'Newsreader + Schibsted Grotesk + DM Mono, standing in for Tobias, Saans & Saans Mono',
   },
+  {
+    id: 'finguide',
+    label: 'finguide',
+    fonts: 'family=Hanken+Grotesk:wght@400..700',
+    families: ['Hanken Grotesk'],
+    note: 'Hanken Grotesk, finguide’s own typeface · Jake’s app',
+  },
 ];
 
 export const getTheme = (id: ThemeId): Theme => themes.find((t) => t.id === id) ?? themes[0];

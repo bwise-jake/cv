@@ -237,7 +237,7 @@ export const ventures: Employer[] = [
     tags: 'Open source · Tech · Design systems',
     name: '[github.com/bwise-jake/cv](https://github.com/bwise-jake/cv)',
     span: 'Started Sep 2026',
-    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 24 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
+    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 27 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
     jobs: [],
   },
 ];
