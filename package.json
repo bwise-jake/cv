@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "pdf": "vite build && tsx scripts/export-pdfs.ts",
-    "og": "vite build && tsx scripts/og-image.ts",
+    "og": "tsx scripts/og-image.ts",
     "check:contrast": "vite build && tsx scripts/check-contrast.ts",
     "lint": "npm run lint:css && npm run lint:ts",
     "lint:css": "stylelint src/styles/atlassian.css",

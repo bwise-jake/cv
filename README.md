@@ -37,7 +37,7 @@ npm run dev        # http://localhost:5173
 npm test           # content/state unit tests
 npm run lint       # Atlassian Design System Stylelint (Atlassian theme) + ESLint plugins
 npm run pdf        # builds, renders all 27 theme × focus PDFs to exports/, asserts each is 2 pages
-npm run og         # builds, renders the link-preview image to public/og-image.jpg (re-run after header/summary changes)
+npm run og         # renders the link-preview intro slide (finguide style) to public/og-image.jpg
 npm run ads:tokens # regenerate src/styles/ads-tokens.css from @atlaskit/tokens
 ```
 
