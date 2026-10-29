@@ -77,7 +77,7 @@ function header(focus: Focus, recipient: string | null) {
         ${recipient ? `<span class="prepared-for">Prepared for ${escapeHtml(recipient)}</span>` : ''}
         <span>${escapeHtml(person.location)}</span>
         <a href="mailto:${person.email}">${person.email}</a>
-        <a href="https://${person.linkedin}">${person.linkedin}</a>
+        <a href="https://${person.linkedin}" target="_blank" rel="noopener noreferrer">${person.linkedin}</a>
       </div>
     </div>
     ${adsBadges()}

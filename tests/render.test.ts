@@ -254,6 +254,12 @@ describe('cvMarkup', () => {
     expect(html).toContain('Introduced impact/effort/complexity triage');
   });
 
+  it('opens every web link in a new tab', () => {
+    const links = [...cvMarkup('engineering').matchAll(/<a\s[^>]*href="https?:[^>]*>/g)].map(([tag]) => tag);
+    expect(links.length).toBeGreaterThan(5);
+    for (const tag of links) expect(tag, tag).toContain('target="_blank" rel="noopener noreferrer"');
+  });
+
   it('bolds role keywords, not client names, under the Engineering focus', () => {
     const bold = (f: 'engineering' | 'growth', phrase: string) =>
       [...cvMarkup(f).matchAll(/<b class="kw" data-f="([^"]*)">(.*?)<\/b>/g)].some(
