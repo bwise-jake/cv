@@ -374,6 +374,13 @@
    :root:not([data-measure]) guard as base.css, which keeps the A4 fit measured on the desktop layout. */
 @media screen and (max-width: 640px) {
   :root[data-theme="atlassian"]:not([data-measure]) .skill-grid { grid-template-columns: 1fr; }
+  /* The phone header grid puts the logo and name on its top row, so the first employer can't be pulled up
+     onto the section heading's line (it would overprint "Experience"); the heading keeps its space below. */
+  :root[data-theme="atlassian"]:not([data-measure]) {
+    .section-head:has(+ .employer-block) { margin-bottom: var(--ds-space-200, 1rem); }
+    .section-head + .employer-block { margin-top: var(--ds-space-0, 0); }
+    .section-head + .employer-block .employer-head { row-gap: var(--ds-space-050, 0.25rem); }
+  }
 }
 
 /* Atlassian: the brand band across the top of the sheet, saying what the theme is built and checked with: a
