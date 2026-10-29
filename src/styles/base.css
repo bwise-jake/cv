@@ -372,6 +372,8 @@ ul.summary-list .summary-label {
   page-break-inside: avoid;
 }
 .job:last-child { margin-bottom: 0; }
+/* Above a divider, the last job keeps the same 10px an intro paragraph leaves, so every divider has equal space above it. */
+.employer-block:not(:last-child) .job:last-child { margin-bottom: 10px; }
 
 .job-head {
   display: flex;
