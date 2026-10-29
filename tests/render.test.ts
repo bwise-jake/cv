@@ -107,7 +107,7 @@ describe('cvMarkup', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('Built client websites on WordPress, CQ5 (AEM) and Sitecore');
     expect(html).toContain('<b class="kw" data-f="balanced growth">Lion</b> and <b class="kw" data-f="balanced growth">Young Henrys</b>');
-    expect(html).toContain('full-funnel personalised omni-channel best-in-class experiences');
+    expect(html).toContain('full-funnel personalised omni-channel experiences, resulting');
     expect(html).toContain('in closed alpha and gathering user feedback');
     expect(html).toContain('compounding improvements measured by behavioural signals, heuristic tracking and automated experience metrics.');
     expect(html).toContain('transforming the website into a growth sales channel');
@@ -291,7 +291,7 @@ describe('cvMarkup', () => {
   });
 
   it('breaks the founder summary line between finguide and fuelr', () => {
-    expect(cvMarkup('balanced')).toContain('rel="noopener noreferrer">web application</a>.<br><b>fuelr</b>, a web consultancy, supporting SMBs');
+    expect(cvMarkup('balanced')).toContain('rel="noopener noreferrer">web application</a>.<br>Runs <b>fuelr</b>, a web consultancy supporting SMBs');
   });
 
   it('draws the finguide logo as an animated inline mark, not an image', () => {

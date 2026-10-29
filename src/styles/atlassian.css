@@ -63,8 +63,9 @@
 
 /* ---------- Brand components ---------- */
 
-/* Atlassian: the employer categories are label chips matching the skill card titles (below): bold uppercase
-   body-small, subtle text on the neutral fill, small radius, no border. The tags are inline boxes, and
+/* Atlassian: the employer categories are label chips like the skill card titles (below): bold body-small,
+   subtle text on the neutral fill, small radius, no border. Normal case, unlike the card titles, so "SaaS"
+   and "SMBs" keep their spelling. The tags are inline boxes, and
    12px Inter plus space.025 padding makes the 20px tag height. Chrome writes no space glyph between padded inline boxes, so PDF parsers split words
    by the gap between tags; the extra space.050 of word spacing keeps "B2C B2B AI" from
    reading as "B2CB2BAI" (checked with pypdf and PyMuPDF). */
@@ -86,7 +87,7 @@
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
     font-weight: var(--ds-font-weight-bold, 653);
     font-size-adjust: none;
-    text-transform: uppercase;
+    text-transform: none;
     letter-spacing: 0;
   }
 
