@@ -150,7 +150,7 @@ export const experience: Employer[] = [
         title: 'Senior Staff Growth Engineer, APAC',
         dates: 'Jun 2025 – Aug 2026',
         bullets: [
-          'Owned [[growth engineering and experimentation strategy|g]] and [[development|e]] for QuickBooks and Mailchimp across APAC, using the [[10× traffic|b,g]] of the wider scope to [[triple experimentation velocity|b,g]] and roll A/B winners out to [[9+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]] in FY26.',
+          'Owned [[growth engineering and experimentation|g,e]] for QuickBooks and Mailchimp across APAC, from strategy to build, using the [[10× traffic|b,g]] of the wider scope to [[triple experimentation velocity|b,g]] and roll A/B winners out to [[9+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]] in FY26.',
           '[[Technical lead|e]] for regional GTM launches, including 3 global AI platform rebrands: led APAC delivery and contributed to the [[global component strategy|e]] and [[built a new component library|e]], balancing rich experiences, developer resource and [[load performance|e]] (Core Web Vitals passed).',
           '[[Mentored engineers|e]] as technical lead and led [[early adoption of agentic coding|e]], sharing [[open-source agent skills|e]] adapted to the team\'s use cases. Set up shared knowledge spaces with relational databases for most AU departments and trained each team.',
         ],
@@ -159,7 +159,7 @@ export const experience: Employer[] = [
         title: 'Head of Web, Australia',
         dates: 'Aug 2023 – Jun 2025',
         bullets: [
-          "Led the [[technical strategy|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels; embedded and rebuilt Australia's desktop sign-up flow: deferred scripts, added skeleton loading and [[rebuilt all its UI and interactions|e]], making it the highest-converting of Intuit's international markets, with [[32% of sign-up starts completing|b,g,e]] the flow.",
+          "Led the [[technical strategy|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels. Embedded Australia's desktop sign-up flow, deferred scripts, added skeleton loading and [[rebuilt all its UI and interactions|e]], making it the highest-converting of Intuit's international markets, with [[32% of sign-up starts completing|b,g,e]] the flow.",
           'Introduced impact/effort/complexity triage with parallel agency workstreams, [[freeing engineers for complex builds|e]] and [[doubling marketing content authoring velocity|b,g]].',
         ],
       },
@@ -175,7 +175,7 @@ export const experience: Employer[] = [
         title: 'Senior Web Development Manager',
         dates: 'Mar 2020 – Jan 2022',
         bullets: [
-          'Led a [[team of 4 engineers|e]] and agency partners, [[building frontend development|e]] and delivery for QuickBooks Australia.',
+          'Led a [[team of 4 engineers|e]] and agency partners, [[building the frontend|e]] and running delivery for QuickBooks Australia.',
           'Built a [[shared component library|e]] on [[Atomic Design|b,e]] principles in [[React and Next.js|b,e]], with [[Storybook tests|e]] and [[Chromatic visual regression|e]], and partnered with design to deliver multiple site migrations and full rebrands using [[tokens|e]].',
         ],
       },
