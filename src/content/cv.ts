@@ -219,7 +219,7 @@ export const ventures: Employer[] = [
       {
         bullets: [
           'Designed and built the frontend in [[React 19, TypeScript and Tailwind|b,e]] on a [[Radix/shadcn design system|e]] in [[[Storybook](https://finguide-storybook.vercel.app/?path=%2Fdocs%2Fmarketing-showcase--docs)|b,e]], backed by a [[typed GraphQL API|e]] over a Django service with Celery workers, hosted on Railway and Vercel.',
-          'Tested at every layer: 800+ [[Jest and Testing Library|b,e]] specs, 300+ Storybook stories run as [[Vitest browser tests|e]] that [[fail CI on accessibility violations|e]], Chromatic visual regression with MSW-mocked GraphQL, and pytest on the backend.',
+          'Tested at every layer: 800+ [[Jest and Testing Library|b,e]] specs, 1,000+ Storybook stories run as [[Vitest browser tests|e]] that [[fail CI on accessibility violations|e]], Chromatic visual regression with MSW-mocked GraphQL, and pytest on the backend.',
           'Built an [[agent-driven delivery pipeline|b,e]] utilising frontier models for planning and lower-cost subagents for execution, [[gated by automated tests|e]], compliance checks and [[HITL code reviews|e]].',
         ],
       },
