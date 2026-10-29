@@ -3,16 +3,19 @@
    tokens are left out on purpose: ADS's own families would replace the Inter/Outfit stand-ins. */
 :root[data-theme="atlassian"] {
   --ds-background-accent-blue-subtler: #CFE1FD;
+  --ds-background-accent-blue-subtlest: #E9F2FE;
   --ds-background-accent-green-subtler: #BAF3DB;
+  --ds-background-accent-green-subtlest: #DCFFF1;
   --ds-background-accent-purple-subtler: #EED7FC;
+  --ds-background-accent-purple-subtlest: #F8EEFE;
   --ds-background-brand-bold: #1868DB;
   --ds-background-inverse-subtle: #00000029;
   --ds-background-inverse-subtle-hovered: #0000003D;
   --ds-background-inverse-subtle-pressed: #00000052;
+  --ds-background-neutral: #0515240F;
   --ds-background-neutral-bold: #292A2E;
   --ds-background-selected: #E9F2FE;
   --ds-border: #0B120E24;
-  --ds-border-accent-gray: #7D818A;
   --ds-border-focused: #4688EC;
   --ds-border-inverse: #FFFFFF;
   --ds-border-width: 0.0625rem;
@@ -26,6 +29,7 @@
   --ds-link-pressed: #1558BC;
   --ds-link-visited: #803FA5;
   --ds-radius-full: 624.9375rem;
+  --ds-radius-large: 0.5rem;
   --ds-radius-small: 0.25rem;
   --ds-radius-xlarge: 0.75rem;
   --ds-space-0: 0rem;
@@ -37,10 +41,16 @@
   --ds-space-200: 1rem;
   --ds-space-300: 1.5rem;
   --ds-space-400: 2rem;
+  --ds-space-600: 3rem;
   --ds-space-negative-200: -1rem;
+  --ds-space-negative-250: -1.25rem;
+  --ds-space-negative-300: -1.5rem;
   --ds-surface: #FFFFFF;
   --ds-surface-sunken: #F8F8F8;
   --ds-text: #292A2E;
+  --ds-text-accent-blue-bolder: #123263;
+  --ds-text-accent-green-bolder: #164B35;
+  --ds-text-accent-purple-bolder: #48245D;
   --ds-text-brand: #1868DB;
   --ds-text-inverse: #FFFFFF;
   --ds-text-subtle: #505258;

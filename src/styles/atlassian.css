@@ -63,11 +63,9 @@
 
 /* ---------- Brand components ---------- */
 
-/* Atlassian: the employer categories are decorative labels, so they are ADS Tags, not Lozenges
-   (Lozenges carry status): transparent, with a grey accent border, body-small text. Inline
-   padding is one optical step up from the recipe's space.025 so 12px text doesn't touch the
-   border. The tags are inline boxes, and 12px Inter plus space.025 padding makes the 20px tag
-   height. Chrome writes no space glyph between padded inline boxes, so PDF parsers split words
+/* Atlassian: the employer categories are label chips matching the skill card titles (below): bold uppercase
+   body-small, subtle text on the neutral fill, small radius, no border. The tags are inline boxes, and
+   12px Inter plus space.025 padding makes the 20px tag height. Chrome writes no space glyph between padded inline boxes, so PDF parsers split words
    by the gap between tags; the extra space.050 of word spacing keeps "B2C B2B AI" from
    reading as "B2CB2BAI" (checked with pypdf and PyMuPDF). */
 :root[data-theme="atlassian"] {
@@ -81,14 +79,14 @@
   .tag {
     display: inline;
     word-spacing: normal;
-    padding: var(--ds-space-025, 0.125rem) var(--ds-space-050, 0.25rem);
-    border: var(--ds-border-width, 0.0625rem) solid var(--ds-border-accent-gray, #7d818a);
+    padding: var(--ds-space-025, 0.125rem) var(--ds-space-075, 0.375rem);
     border-radius: var(--ds-radius-small, 0.25rem);
-    background: transparent;
-    color: var(--ds-text, #292a2e);
+    background: var(--ds-background-neutral, #0515240f);
+    color: var(--ds-text-subtle, #505258);
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-weight: var(--ds-font-weight-bold, 653);
     font-size-adjust: none;
-    text-transform: none;
+    text-transform: uppercase;
     letter-spacing: 0;
   }
 
@@ -100,23 +98,29 @@
    the summary as a dark full-bleed band and plain (unruled) headings. Spacing sits on
    the 8px grid. */
 :root[data-theme="atlassian"] {
-  /* The cover band is a background layer, not a positioned ::after, so the header can print
+  /* The cover band is the badge row itself (below), not a positioned ::after, so the header can print
      unpositioned and its text comes first in the PDF (print.css). */
   header.identity {
-    /* The band's 32px (space.400) is the badge row, which comes after the identity row in the source (so PDF
+    /* The band (space.400) is the badge row, which comes after the identity row in the source (so PDF
        text reads the name first) and is placed above it by the grid. Grid placement doesn't change paint
        order, unlike flex `order`. There is no top padding of its own. */
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto;
-    margin-block-end: var(--ds-space-300, 1.5rem);
+    margin-block-end: var(--ds-space-400, 2rem);
     padding-top: var(--ds-space-0, 0);
     padding-bottom: var(--ds-space-0, 0);
     /* The header's content sits 24px (space.300) from the sheet edge, closer than the 48px of the body. */
     padding-inline: var(--ds-space-300, 1.5rem);
-    background:
-      linear-gradient(var(--ds-background-brand-bold, #1868db), var(--ds-background-brand-bold, #1868db)) top / 100% var(--ds-space-400, 2rem) no-repeat,
-      var(--ds-surface, #ffffff);
+    background: var(--ds-surface, #ffffff);
+  }
+
+  /* The photo is centred on the name, role and byline beside it. */
+  .identity-main { align-items: center; }
+  /* A larger photo: 96px, the ADS Avatar xlarge size. */
+  .avatar-frame {
+    width: calc(2 * var(--ds-space-600, 3rem));
+    height: calc(2 * var(--ds-space-600, 3rem));
   }
 
   /* Marketing-site headings: brand display face, bold, heading ink. */
@@ -164,7 +168,6 @@
      links are 16px tall at a 28px pitch, so each has a 24px target (WCAG 2.2, 2.5.8). */
   .contact {
     gap: var(--ds-space-100, 0.5rem);
-    padding-top: var(--ds-space-050, 0.25rem);
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
     font-size-adjust: none;
     font-weight: var(--ds-font-weight-medium, 500);
@@ -217,7 +220,8 @@
     flex-shrink: 0;
     width: var(--ds-space-200, 1rem);
     height: var(--ds-space-200, 1rem);
-    margin-top: var(--ds-space-025, 0.125rem);
+    /* stylelint-disable-next-line design-system/ensure-design-token-usage -- 1px down from the 20px line's top (no 1px space token), which reads as centred on the label's mixed-case text */
+    margin-top: 1px;
     color: var(--ds-icon-brand, #1868db);
   }
   .summary-ads-icon svg {
@@ -226,7 +230,7 @@
     height: 100%;
   }
   ul.summary-list li {
-    gap: var(--ds-space-150, 0.75rem);
+    gap: var(--ds-space-100, 0.5rem);
     margin-bottom: var(--ds-space-0, 0);
     font: var(--ds-font-body, normal 400 0.875rem/1.25rem var(--sans));
     font-size-adjust: 0.53;
@@ -236,7 +240,27 @@
   .section-head {
     padding-bottom: var(--ds-space-0, 0);
     border-bottom: 0;
-    margin-bottom: var(--ds-space-100, 0.5rem);
+    margin-bottom: var(--ds-space-200, 1rem);
+  }
+  /* A hairline divides each section from the one above it on the same sheet, except under the Summary card,
+     whose own border already closes it off. */
+  section + section {
+    padding-top: var(--ds-space-200, 1rem);
+    border-top: var(--ds-border-width, 0.0625rem) solid var(--ds-border, #0b120e24);
+  }
+  section:has(> ul.summary-list) + section {
+    padding-top: var(--ds-space-0, 0);
+    border-top: 0;
+  }
+  /* The first employer's date line (the top row of its header grid, right-aligned) sits on the section
+     heading's line instead of a line of its own: the block is pulled up by the heading's line less 2px,
+     which puts the 12px dates on the 16px heading's baseline. Source order is unchanged, so the PDF still
+     reads the heading first. The heading's 16px of space below then goes between the date line and the
+     employer's name row. */
+  .section-head:has(+ .employer-block) { margin-bottom: var(--ds-space-0, 0); }
+  .section-head + .employer-block .employer-head { row-gap: var(--ds-space-200, 1rem); }
+  .section-head + .employer-block {
+    margin-top: calc(var(--ds-space-negative-250, -1.25rem) + var(--ds-space-025, 0.125rem));
   }
   h2 {
     font: var(--ds-font-heading-small, normal 700 1rem/1.25rem var(--display));
@@ -253,14 +277,30 @@
     color: var(--ds-text-subtle, #505258);
   }
 
-  /* Skill group headings are the card titles: ADS heading-xsmall (14/20), bold, in the display face, like .job-title. */
+  /* Skill group titles are label chips, after the content-type labels on atlassian.com's story cards: bold
+     uppercase body-small in the group's bolder accent text, on its subtlest accent fill, small radius. */
   .skill-group h3 {
+    align-self: flex-start;
     margin: var(--ds-space-0, 0) var(--ds-space-0, 0) var(--ds-space-100, 0.5rem);
-    font: var(--ds-font-heading-xsmall, normal 700 0.875rem/1.25rem var(--display));
+    padding: var(--ds-space-025, 0.125rem) var(--ds-space-075, 0.375rem);
+    border-radius: var(--ds-radius-small, 0.25rem);
+    font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-weight: var(--ds-font-weight-bold, 653);
     font-size-adjust: none;
-    text-transform: none;
+    text-transform: uppercase;
     letter-spacing: 0;
-    color: var(--heading-ink);
+  }
+  .skill-group[data-skill="frontend"] h3 {
+    background: var(--ds-background-accent-blue-subtlest, #e9f2fe);
+    color: var(--ds-text-accent-blue-bolder, #123263);
+  }
+  .skill-group[data-skill="growth"] h3 {
+    background: var(--ds-background-accent-green-subtlest, #dcfff1);
+    color: var(--ds-text-accent-green-bolder, #164b35);
+  }
+  .skill-group[data-skill="ai"] h3 {
+    background: var(--ds-background-accent-purple-subtlest, #f8eefe);
+    color: var(--ds-text-accent-purple-bolder, #48245d);
   }
 }
 
@@ -329,29 +369,40 @@
   :root[data-theme="atlassian"]:not([data-measure]) .skill-grid { grid-template-columns: 1fr; }
 }
 
-/* Atlassian: the badges in the brand band across the top of the sheet, right-aligned, saying what the theme
-   is built and checked with. They sit on brand-bold, so they use the inverse set: a translucent dark
-   chip (background.inverse.subtle) with inverse text and icon, which darkens the blue under white text
-   instead of lightening it. The row is exactly the band's height (space.400); the margin below it
-   restores the header's old 48px top padding, so the sheet's layout is unchanged. */
+/* Atlassian: the brand band across the top of the sheet, saying what the theme is built and checked with: a
+   bold label on the left and badges on the right. They sit on brand-bold, so they use the inverse set: a
+   translucent dark chip (background.inverse.subtle) with inverse text and icon, which darkens the blue under
+   white text instead of lightening it. The row is exactly the band's height (space.400), with space.400
+   below it before the name. */
 :root[data-theme="atlassian"] {
-  .identity-row { grid-row: 2; }
+  /* The contact block is centred on the photo and name block beside it, like the photo itself. */
+  .identity-row { grid-row: 2; align-items: center; }
+  /* The band runs the full sheet width (out past the header's 24px padding) with its two bottom corners
+     rounded: the label on the left, the chips on the right. */
   .ads-badges {
     grid-row: 1;
     display: flex;
-    flex-wrap: nowrap;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: var(--ds-space-100, 0.5rem);
     height: var(--ds-space-400, 2rem);
-    margin: var(--ds-space-0, 0) var(--ds-space-0, 0) var(--ds-space-200, 1rem);
+    margin: var(--ds-space-0, 0) var(--ds-space-negative-300, -1.5rem) var(--ds-space-400, 2rem);
+    padding-inline: var(--ds-space-300, 1.5rem);
+    border-radius: var(--ds-space-0, 0) var(--ds-space-0, 0) var(--ds-radius-large, 0.5rem) var(--ds-radius-large, 0.5rem);
+    background: var(--ds-background-brand-bold, #1868db);
   }
   .ads-badges-label {
-    margin-right: var(--ds-space-050, 0.25rem);
     color: var(--ds-text-inverse, #ffffff);
     font: var(--ds-font-body-small, normal 400 0.75rem/1rem var(--sans));
+    font-weight: var(--ds-font-weight-bold, 653);
     font-size-adjust: 0.53;
     white-space: nowrap;
+  }
+  /* Pinned right even when the label is hidden (phones, below). */
+  .ads-badge-list {
+    margin-left: auto;
+    display: flex;
+    gap: var(--ds-space-100, 0.5rem);
   }
   .ads-badge {
     display: inline-flex;

@@ -44,10 +44,10 @@ const ADS_BADGES = [
 ] as const;
 
 const adsBadges = () =>
-  `<p class="ads-badges"><span class="ads-badges-label">Built with Atlassian Design System</span>${ADS_BADGES.map(
+  `<p class="ads-badges"><span class="ads-badges-label">Built with Atlassian Design System</span><span class="ads-badge-list">${ADS_BADGES.map(
     (b) =>
       `<a class="ads-badge" href="${b.href}" title="${b.title}" target="_blank" rel="noopener noreferrer">${adsBadgeIcons[b.icon]}${b.label}</a>`,
-  ).join(' ')}</p>`;
+  ).join(' ')}</span></p>`;
 
 /**
  * The role title, plus any company's advertised title for it. Themes show the one that applies
