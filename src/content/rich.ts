@@ -6,6 +6,7 @@ import type { Focus } from '../types';
  *   [[text|b,g,e]]      bold only under the listed focuses (b=balanced, g=growth, e=engineering)
  *   {{text}}            placeholder still to be filled in
  *   [text](https://…)   external link
+ *   \n                  line break
  * Everything else is treated as plain text and HTML-escaped.
  */
 
@@ -30,7 +31,8 @@ export function rich(src: string): string {
     .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
     .replace(/\{\{(.+?)\}\}/g, '<span class="fill">$1</span>')
     .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/\n/g, '<br>');
 }
 
 /** The visible text of a content string: strips **bold**, [[text|keys]], {{fill}} and [text](url) markup, the same grammar rich() turns into HTML. */
@@ -39,5 +41,6 @@ export function plainText(src: string): string {
     .replace(/\[\[(.+?)\|([a-z,\s]+)\]\]/g, '$1')
     .replace(/\*\*(.+?)\*\*/g, '$1')
     .replace(/\{\{(.+?)\}\}/g, '$1')
-    .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '$1');
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '$1')
+    .replace(/\n/g, ' ');
 }

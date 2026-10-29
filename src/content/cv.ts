@@ -77,7 +77,8 @@ export const person = {
 export const metricNotes: Record<string, string> = {
   '$5.5m+ in incremental LTV':
     'Incremental subscriptions measured by A/B test or holdout (~10,600 paying subscriptions) × $520 lifetime value (monthly price × average retention).',
-  '60+ web experiments':
+  '50m+ visitors p/a': 'Annual visitors across QuickBooks and Mailchimp web in APAC.',
+  '60+ web component and content experiments':
     'Split and multi-armed bandit tests across key landing pages, scoped with FullStory and measured in Adobe Analytics to statistical significance, 2022–2026.',
   '10× traffic': 'From ~100k monthly visits (QuickBooks AU) to ~1m across APAC when the role expanded to the region.',
   'triple experimentation velocity':
@@ -116,22 +117,22 @@ export const summary: SummaryItem[] = [
   {
     id: 'growth',
     label: 'Growth',
-    text: 'Growth engineer who most recently led QuickBooks web across APAC for **Intuit**, applying design thinking to [[60+ web experiments|b,g]] across the funnel (merchandising, UX/UI, components, content, [[page speed and technical SEO|e]]) that drove [[$5.5m+ in incremental LTV|b,g]].',
+    text: 'Growth engineer who most recently led QuickBooks web across APAC for **Intuit** ([[50m+ visitors p/a|b,g]]), applying design thinking to [[60+ web component and content experiments|b,g]] across the key touch points ([[UX/UI|e]], [[component builds|e]], merchandising, [[page speed|e]] and technical SEO) that drove [[$5.5m+ in incremental LTV|b,g,e]].',
   },
   {
     id: 'engineering',
     label: 'Engineering',
-    text: 'Senior [[frontend engineer with 10+ years|b,e]] of enterprise/agency experience, shipping [[performant, decoupled, testable code in React|b,e]] on high-traffic and revenue-critical sites with a focus on reliability. Ships through [[agentic workflows|b,e]] gated by automated tests and code review.',
+    text: 'Senior [[frontend engineer with 10+ years|b,e]] of [[enterprise|e]]/agency experience, shipping [[performant, decoupled, testable code in React|b,e]] on high-traffic and revenue-critical sites with a focus on reliability. Maximises velocity through tailored [[agentic workflows|b,e]] gated by [[automated tests|e]] and [[HITL|e]] code reviews.',
   },
   {
     id: 'founder',
     label: 'Founder',
-    text: 'Currently user-testing **finguide**, a [[full-stack open-banking|e]] personal-finance app. Supporting SMBs through **fuelr**, a web consultancy building self-service marketing stacks for [[25 small businesses|b,g]].',
+    text: 'Currently user-testing **finguide**, a [[full-stack open-banking|e]] personal-finance [web application](https://finguide-storybook.vercel.app/?path=%2Fstory%2Fmarketing-showcase--hero-guide).\n**fuelr**, a web consultancy, supporting SMBs with self-service marketing stacks for [[25 small businesses|b,g]].',
   },
   {
     id: 'customer',
     label: 'Customer-focused',
-    text: 'Shapes UI from [[user evidence|b,g,e]]: uses analytics and session recordings to pinpoint and remove user friction. Synthesises sales and support feedback into tailored full-funnel personalised experiences across paid creative, landing pages, sign-up flows and onboarding, resulting in improvements to customer web KPIs (reduced bounce rates and increased page interactivity and scroll depth).',
+    text: 'Shapes UI from [[user evidence|b,g,e]]: uses analytics and session recordings to pinpoint and remove user friction. Translates sales and support feedback into tailored full-funnel personalised omni-channel best-in-class experiences, resulting in compounding improvements measured by behavioural signals, heuristic tracking and automated experience metrics.',
   },
 ];
 
@@ -142,31 +143,31 @@ export const experience: Employer[] = [
     tags: 'Enterprise · SaaS · Finance · B2C · B2B · AI',
     name: 'Intuit – [QuickBooks](https://quickbooks.intuit.com/au/) & [Mailchimp](https://mailchimp.com/)',
     span: '(6 yrs 6 months) Mar 2020 – Aug 2026',
-    intro: 'Promoted 3× from Senior Web Development Manager (M1) to Senior Staff Growth Engineer (P6) on the individual-contributor track. Engineering lead for QuickBooks Australia, expanding to Mailchimp and 9+ countries across APAC, owning web development, authoring, experimentation and growth delivery against business and technical KPIs.',
+    intro: 'Promoted 3× from [[Senior Web Development|e]] Manager (M1) to [[Senior Staff Growth Engineer|e]] (P6) on the individual-contributor track. [[Engineering|e]] lead for QuickBooks Australia, expanding to Mailchimp and 9+ countries across APAC, owning web [[engineering|e]], experimentation, SEO and growth delivery against business and [[technical KPIs|e]].',
     long: true,
     jobs: [
       {
         title: 'Senior Staff Growth Engineer, APAC',
         dates: 'Jun 2025 – Aug 2026',
         bullets: [
-          'Owned [[growth engineering and experimentation strategy|g]] for QuickBooks and Mailchimp across APAC, using the [[10× traffic|b,g]] of the wider scope to [[triple experimentation velocity|b,g]] and roll A/B winners out to [[9+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]] in FY26.',
-          '[[Technical lead|e]] for regional GTM launches, including 3 global AI platform rebrands: led APAC delivery and contributed to the global component strategy and build, balancing rich experiences, developer resource and [[load performance|e]] (Core Web Vitals passed).',
-          '[[Mentored engineers|e]] as technical lead and led early adoption of agentic coding, sharing open-source agent skills adapted to the team\'s use cases. Set up shared knowledge spaces in Notion for most AU departments and trained each team to use them.',
+          'Owned [[growth engineering and experimentation strategy|g]]/[[development|e]] for QuickBooks and Mailchimp across APAC, using the [[10× traffic|b,g]] of the wider scope to [[triple experimentation velocity|b,g]] and roll A/B winners out to [[9+ countries|b,g]], driving [[3k+ incremental subscriptions|b,g]] in FY26.',
+          '[[Technical lead|e]] for regional GTM launches, including 3 global AI platform rebrands: led APAC delivery and contributed to the [[global component strategy|e]] and [[built a new component library|e]], balancing rich experiences, developer resource and [[load performance|e]] (Core Web Vitals passed).',
+          '[[Mentored engineers|e]] as technical lead and led [[early adoption of agentic coding|e]], sharing [[open-source agent skills|e]] adapted to the team\'s use cases. Set up shared knowledge spaces with relational databases for most AU departments and trained each team.',
         ],
       },
       {
         title: 'Head of Web, Australia',
         dates: 'Aug 2023 – Jun 2025',
         bullets: [
-          "Set [[technical direction|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels; embedded Australia's desktop sign-up flow, deferred scripts, added skeleton loading and rebuilt all its UI and interactions, making it the highest-converting of Intuit's international markets, with [[32% of sign-up starts completing|b,g,e]].",
-          'Introduced impact/effort/complexity triage with parallel agency workstreams, freeing engineers for complex builds and [[doubling marketing content authoring velocity|b,g]].',
+          "Led the [[technical strategy|e]] for [[paid performance, CRO and measurement|g]] across all digital sales channels; rebuilt and embedded Australia's sign-up flow, deferred scripts, added skeleton loading and [[rebuilt all its UI and interactions|e]], making it the highest-converting of Intuit's international markets, with [[32% of sign-up starts completing|b,g,e]] the flow.",
+          'Introduced impact/effort/complexity triage with parallel agency workstreams, [[freeing engineers for complex builds|e]] and [[doubling marketing content authoring velocity|b,g]].',
         ],
       },
       {
         title: 'Senior Web Development & CRO Manager',
         dates: 'Jan 2022 – Aug 2023',
         bullets: [
-          'Added [[CRO experimentation|g]] and [[performance|e]] to the remit, transforming the website into a growth sales channel. Full-funnel personalisation experiments delivered a [[28% increase in traffic to sign-up|b,g,e]].',
+          'Added [[CRO experimentation|g]] and performance to the remit, transforming the website into a growth sales channel. Full-funnel personalisation experiments delivered a [[28% increase in traffic to sign-up|b,g,e]].',
           'Rebuilt the [[experimentation analytics and component-level event tracking|e]], so experiments were more accurate and reached statistical significance [[20–30% faster|b,g,e]].',
         ],
       },
@@ -174,8 +175,8 @@ export const experience: Employer[] = [
         title: 'Senior Web Development Manager',
         dates: 'Mar 2020 – Jan 2022',
         bullets: [
-          'Led a [[team of 4 engineers|e]] and agency partners, running frontend development and delivery for QuickBooks Australia.',
-          'Built a [[shared component library|e]] on [[Atomic Design|b,e]] principles in [[React and Next.js|b,e]], with Storybook docs, tests and [[Chromatic visual regression|e]], and partnered with design to deliver multiple site migrations and full rebrands on it.',
+          'Led a [[team of 4 engineers|e]] and agency partners, [[running/building frontend development|e]] and delivery for QuickBooks Australia.',
+          'Built a [[shared component library|e]] on [[Atomic Design|b,e]] principles in [[React and Next.js|b,e]], with [[Storybook tests|e]] and [[Chromatic visual regression|e]], and partnered with design to deliver multiple site migrations and full rebrands using [[tokens|e]].',
         ],
       },
     ],
@@ -192,14 +193,14 @@ export const experience: Employer[] = [
         title: 'Web Development Lead',
         dates: 'Dec 2016 – Mar 2020',
         bullets: [
-          "Led a team of 4 developers and 3 content authors delivering frontend website builds, component development and content authoring for **McDonald's**, **Hyundai**, **Nivea**, **Charter Hall**, **Lion** and **Young Henrys**.",
+          "Led a team of 4 developers and 3 content authors delivering [[frontend website builds|e]], [[component development|e]] and content authoring for [[McDonald's|b,g]], [[Hyundai|b,g]], [[Nivea|b,g]], [[Charter Hall|b,g]], [[Lion|b,g]] and [[Young Henrys|b,g]].",
         ],
       },
       {
         title: 'Web Developer',
         dates: 'Nov 2015 – Dec 2016',
         bullets: [
-          "Built [[responsive, cross-browser|e]] campaign sites for **Kellogg's** across APAC in CQ5, with themeable shared component blocks.",
+          "Built [[responsive, cross-browser|e]] campaign sites for [[Kellogg's|b,g]] across APAC in CQ5, with [[themeable shared component blocks|e]].",
         ],
       },
     ],
@@ -213,13 +214,13 @@ export const ventures: Employer[] = [
     tags: 'Start-up · Tech · Finance · AI',
     name: '[finguide.money](https://finguide.money)',
     span: 'Founded Jan 2026',
-    intro: 'Personal-finance education app for Australians, in closed alpha and gathering user feedback: step-by-step finance admin guides, sorted by effort and impact and personalised with the user’s own banking data via open banking, plus an optional AI browser assistant.',
+    intro: 'Personal-finance education app for Australians, in closed alpha and gathering user feedback: step-by-step finance admin guides, sorted by effort and impact and personalised with the user’s own banking data via [[open banking|e]], plus an optional AI browser assistant.',
     jobs: [
       {
         bullets: [
-          'Designed and built the frontend in [[React 19, TypeScript and Tailwind|b,e]] on a Radix/shadcn design system in [[[Storybook](https://finguide-storybook.vercel.app/)|b,e]], backed by a [[typed GraphQL API|e]] over a Django service with Celery workers, hosted on [[Railway and Vercel|e]].',
-          'Tested at every layer: 800+ [[Jest and Testing Library|b,e]] specs, 300+ Storybook stories run as [[Vitest browser tests|e]] that fail CI on accessibility violations, [[Chromatic visual regression|e]] with MSW-mocked GraphQL, and pytest on the backend.',
-          'Built an [[agent-driven delivery pipeline|b,e]] utilising frontier models for planning and lower-cost subagents for execution, gated by automated tests, compliance checks and code review.',
+          'Designed and built the frontend in [[React 19, TypeScript and Tailwind|b,e]] on a [[Radix/shadcn design system|e]] in [[[Storybook](https://finguide-storybook.vercel.app/?path=%2Fdocs%2Fmarketing-showcase--docs)|b,e]], backed by a [[typed GraphQL API|e]] over a Django service with Celery workers, hosted on Railway and Vercel.',
+          'Tested at every layer: 800+ [[Jest and Testing Library|b,e]] specs, 300+ Storybook stories run as [[Vitest browser tests|e]] that [[fail CI on accessibility violations|e]], Chromatic visual regression with MSW-mocked GraphQL, and pytest on the backend.',
+          'Built an [[agent-driven delivery pipeline|b,e]] utilising frontier models for planning and lower-cost subagents for execution, [[gated by automated tests|e]], compliance checks and [[HITL code reviews|e]].',
         ],
       },
     ],

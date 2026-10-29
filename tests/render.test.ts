@@ -106,19 +106,19 @@ describe('cvMarkup', () => {
   it('shows the confirmed VML, customer and finguide copy', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('Built client websites on WordPress, CQ5 (AEM) and Sitecore');
-    expect(html).toContain('<b>Charter Hall</b>, <b>Lion</b> and <b>Young Henrys</b>');
-    expect(html).toContain('full-funnel personalised experiences across paid creative, landing pages, sign-up flows and onboarding');
+    expect(html).toContain('<b class="kw" data-f="balanced growth">Lion</b> and <b class="kw" data-f="balanced growth">Young Henrys</b>');
+    expect(html).toContain('full-funnel personalised omni-channel best-in-class experiences');
     expect(html).toContain('in closed alpha and gathering user feedback');
-    expect(html).toContain('(reduced bounce rates and increased page interactivity and scroll depth)');
+    expect(html).toContain('compounding improvements measured by behavioural signals, heuristic tracking and automated experience metrics.');
     expect(html).toContain('transforming the website into a growth sales channel');
     expect(html).toContain('Side web consultancy');
     expect(html).toContain('Built this CV as a');
     expect(html).not.toContain('AEM, React and Next.js');
-    expect(html).toContain('that fail CI on accessibility violations');
+    expect(html).toContain('that <b class="kw" data-f="engineering">fail CI on accessibility violations</b>');
     expect(html).toContain('(Core Web Vitals passed)');
-    expect(html).toContain('deferred scripts, added skeleton loading and rebuilt all its UI and interactions');
+    expect(html).toContain('deferred scripts, added skeleton loading and <b class="kw" data-f="engineering">rebuilt all its UI and interactions</b>');
     expect(html).not.toContain('our use cases');
-    expect(html).toContain('gated by automated tests and code review');
+    expect(html).toContain('compliance checks and <b class="kw" data-f="engineering">HITL code reviews</b>');
     expect(html).not.toContain('AI-native engineer');
   });
 
@@ -246,12 +246,24 @@ describe('cvMarkup', () => {
   it('shows the confirmed Intuit engineering facts', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('individual-contributor track');
-    expect(html).toContain('against business and technical KPIs');
+    expect(html).toContain('against business and <b class="kw" data-f="engineering">technical KPIs</b>');
     expect(html).toContain('>Mentored engineers</b>');
     expect(html).toContain('>experimentation analytics and component-level event tracking</b>');
     expect(html).toContain('>28% increase in traffic to sign-up</b>');
-    expect(html.match(/>Chromatic visual regression<\/b>/g)?.length).toBe(2);
+    expect(html.match(/>Chromatic visual regression<\/b>/g)?.length).toBe(1);
     expect(html).toContain('Introduced impact/effort/complexity triage');
+  });
+
+  it('bolds role keywords, not client names, under the Engineering focus', () => {
+    const bold = (f: 'engineering' | 'growth', phrase: string) =>
+      [...cvMarkup(f).matchAll(/<b class="kw" data-f="([^"]*)">(.*?)<\/b>/g)].some(
+        ([, focuses, text]) => text === phrase && focuses.split(' ').includes(f),
+      );
+    for (const phrase of ['Radix/shadcn design system', 'fail CI on accessibility violations', 'open-source agent skills', 'global component strategy', 'page speed'])
+      expect(bold('engineering', phrase), phrase).toBe(true);
+    for (const phrase of ["McDonald's", "Kellogg's", 'performance', 'Railway and Vercel'])
+      expect(bold('engineering', phrase), phrase).toBe(false);
+    expect(bold('growth', "McDonald's")).toBe(true);
   });
 
   it('bolds every metric-note phrase in at least one focus, so each note can show', () => {
@@ -270,11 +282,16 @@ describe('cvMarkup', () => {
     expect(cvMarkup('engineering')).not.toContain('Airtable impact/effort scoring system');
   });
 
-  it('shows finguide testing and the Notion knowledge spaces', () => {
+  it('shows finguide testing and the knowledge spaces, without naming Notion', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('Tested at every layer');
-    expect(html).toContain('href="https://finguide-storybook.vercel.app/"');
-    expect(html).toContain('shared knowledge spaces in Notion');
+    expect(html).toContain('href="https://finguide-storybook.vercel.app/?path=%2Fdocs%2Fmarketing-showcase--docs"');
+    expect(html).toContain('shared knowledge spaces with relational databases');
+    expect(html).not.toContain('spaces in Notion');
+  });
+
+  it('breaks the founder summary line between finguide and fuelr', () => {
+    expect(cvMarkup('balanced')).toContain('rel="noopener noreferrer">web application</a>.<br><b>fuelr</b>, a web consultancy, supporting SMBs');
   });
 
   it('draws the finguide logo as an animated inline mark, not an image', () => {
