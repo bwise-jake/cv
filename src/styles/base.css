@@ -379,7 +379,8 @@ ul.summary-list .summary-label {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 16px;
+  /* When a long title pushes the dates onto their own line (phones), they sit tight under it, not 16px away. */
+  gap: 2px 16px;
   flex-wrap: wrap;
 }
 
