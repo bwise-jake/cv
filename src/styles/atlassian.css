@@ -253,6 +253,12 @@
     padding-top: var(--ds-space-0, 0);
     border-top: 0;
   }
+  /* The hairline between employers within a section is lighter than the section divider, so the sections
+     still read as the main breaks. ADS has no lighter neutral border than border.disabled, so it lends its
+     colour here. */
+  .employer-block:not(:last-child) {
+    border-bottom-color: var(--ds-border-disabled, #0515240f);
+  }
   /* The first employer's date line (the top row of its header grid, right-aligned) sits on the section
      heading's line instead of a line of its own: the block is pulled up by the heading's line less 2px,
      which puts the 12px dates on the 16px heading's baseline. Source order is unchanged, so the PDF still
