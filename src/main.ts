@@ -95,6 +95,9 @@ function warmThemeFontsOnIntent(controls: HTMLElement) {
   }
 }
 
+/** The PDF button and P shortcut; a built-PDF download is tracked here, printing on beforeprint. */
+const download = () => downloadPdf(() => track('PDF download', { ...getState(), source: 'built' }));
+
 function cycle<T>(list: readonly T[], current: T, step = 1): T {
   return list[(list.indexOf(current) + step + list.length) % list.length];
 }
@@ -107,7 +110,7 @@ function bindShortcuts() {
     const key = e.key.toLowerCase();
     if (key === 's') setState({ theme: cycle(themes.map((t) => t.id), theme, step) });
     else if (key === 'e') setState({ focus: cycle(FOCUSES, focus, step) });
-    else if (key === 'p') downloadPdf();
+    else if (key === 'p') download();
   });
 }
 
@@ -122,7 +125,7 @@ function boot() {
   // Web fonts arriving late change line wrapping, so refit whenever any finish loading.
   document.fonts.addEventListener('loadingdone', () => fitPagesForScreen(cvRoot));
 
-  mountControls(document.getElementById('controls')!, downloadPdf);
+  mountControls(document.getElementById('controls')!, download);
   bindShortcuts();
   bindPrintTitle();
   warmThemeFontsOnIntent(document.getElementById('controls')!);

@@ -8,7 +8,9 @@ A two-page A4 CV that restyles itself for the company reading it.
 - **Focus modes**: Engineering (the default), Growth, Balanced. Each changes which phrases are bold, the order
   of the Summary and Skills sections, and the headline role/kicker.
 - **Download PDF**: prints exactly what's on screen (vector, selectable text), named
-  `Jake-Thornton-Bowen-CV-<Theme>-<Focus>.pdf` (the default Engineering view omits the focus suffix).
+  `Jake-Thornton-Bowen-CV-<Theme>-<Focus>.pdf` (the default Engineering view omits the focus suffix). Phones and
+  tablets print with their own page margins, which spills each A4 sheet onto a blank page, so on touch devices the
+  button downloads the matching PDF that CI built and checked instead (`pdf/` on the deployed site).
 - **Shareable state**: `?theme=atlassian&focus=growth` opens straight into that view.
 
 The CV stays centred and the controls sit in a panel in the right-hand gutter (it stays put while the pages scroll): a Theme
@@ -85,4 +87,5 @@ checked against `src/types.ts` by `tests/prepaint.test.ts`.
 ## Deploy
 
 `.github/workflows/deploy.yml` builds and publishes `dist/` to GitHub Pages on every push to `main`
-(enable Pages → "GitHub Actions" in the repo settings once).
+(enable Pages → "GitHub Actions" in the repo settings once). The 27 PDFs from the PDF check ship with it under
+`dist/pdf/`, for the Download PDF button on touch devices.

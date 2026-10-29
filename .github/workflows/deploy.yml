@@ -37,6 +37,9 @@ jobs:
         env:
           # Optional: set in repo Settings → Secrets and variables → Actions → Variables.
           VITE_UMAMI_WEBSITE_ID: ${{ vars.UMAMI_WEBSITE_ID }}
+      # The PDFs the check above just built and verified; phones download these instead of printing.
+      - name: Ship the checked PDFs
+        run: mkdir -p dist/pdf && cp exports/*.pdf dist/pdf/
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
