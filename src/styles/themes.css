@@ -427,6 +427,8 @@
     margin-right: 8px;
     white-space: nowrap;
   }
+  /* Right-aligned under the dates, so the row ends flush with them. */
+  .tag:last-child { margin-right: 0; }
   .tag::before,
   .tag + .tag::before {
     content: "";

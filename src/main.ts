@@ -14,7 +14,7 @@ import { bindPrintTitle, downloadPdf } from './pdf';
 import { renderCv } from './render/cv';
 import { bindScreenScale } from './screen-scale';
 import { mountControls } from './render/controls';
-import { getRecipient, getState, initState, setState, subscribe } from './state';
+import { getRecipient, getState, initState, setState, subscribe, toSearch } from './state';
 import { ensureThemeFonts, getTheme, themes } from './themes/registry';
 import { FOCUSES, type CvState, type Focus } from './types';
 
@@ -22,10 +22,18 @@ const html = document.documentElement;
 const cvRoot = document.getElementById('cv')!;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const recipient = getRecipient(location.search);
+const SITE_URL = 'https://bwise-jake.github.io/cv/';
+
+/** Point links to this site at the current theme and focus, so a click in the PDF opens the same view. */
+function linkSiteToState() {
+  const href = `${SITE_URL}${toSearch(getState())}`;
+  cvRoot.querySelectorAll<HTMLAnchorElement>(`a[href^="${SITE_URL}"]`).forEach((a) => (a.href = href));
+}
 
 /** Render the CV for a focus, then everything that depends on the fresh DOM. */
 function render(focus: Focus) {
   renderCv(cvRoot, focus, recipient);
+  linkSiteToState();
   annotateNotes(cvRoot);
   mountFinguideMark(cvRoot);
   fitPagesForScreen(cvRoot);
@@ -129,6 +137,7 @@ function boot() {
   });
 
   subscribe((next, prev) => {
+    linkSiteToState();
     if (next.theme !== prev.theme) {
       void applyTheme(next);
       track('Theme', { theme: next.theme });

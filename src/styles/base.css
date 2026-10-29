@@ -445,35 +445,32 @@ ul.bullets a {
   border-bottom: 1px solid var(--line);
 }
 
+/* One grid for logo, name, tags and dates (.employer-copy is display: contents, so its children are
+   grid items here). Row 2 is the logo, the name and the tags on one line, centred on the logo, with
+   the tags right-aligned; the dates sit on row 1, right-aligned directly above the tags like the job
+   dates. Source order is name, tags, dates, so PDF text reads "Intuit … / Enterprise · SaaS … / dates"
+   (Chrome writes a grid's text in source order). Phones put the name beside the logo, then dates,
+   then tags, both from the logo's left edge (below). */
 .employer-head {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: 10px;
+  row-gap: 3px;
   align-items: center;
-  gap: 10px;
   margin-bottom: 3px;
   break-after: avoid;
   page-break-after: avoid;
 }
 
-/* The name comes first in the source, so PDF text reads "Intuit … / Enterprise · SaaS … / dates";
-   grid rows still show the tags above it. (Not column-reverse: Chrome paints, and so writes PDF
-   text, in a flex container's visual order, but in a grid's source order.) The date line shares
-   the name's row and baseline, right-aligned like the job dates, so each employer takes one line
-   less. Phones stack it under the name (below). */
-.employer-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 16px;
-  row-gap: 3px;
-  align-items: baseline;
-  flex: 1;
-  min-width: 0;
-}
-.employer-copy .employer-tags { grid-row: 1; grid-column: 1 / -1; }
-.employer-copy .employer-name { grid-row: 2; grid-column: 1; }
+.employer-copy { display: contents; }
+.employer-head .employer-logo { grid-row: 2; grid-column: 1; }
+.employer-copy .employer-name { grid-row: 2; grid-column: 2; }
+.employer-copy .employer-tags { grid-row: 2; grid-column: 3; text-align: right; }
 .employer-copy .employer-span {
-  grid-row: 2;
-  grid-column: 2;
+  grid-row: 1;
+  grid-column: 3;
   margin: 0;
+  text-align: right;
   white-space: nowrap;
 }
 
@@ -562,6 +559,17 @@ ul.bullets a {
   color: var(--link);
   border-bottom-color: var(--link);
 }
+
+/* GitHub mark after a venture's site link, linking to its source. Faint until hovered, like a secondary action. */
+.employer-name a.employer-repo {
+  display: inline-flex;
+  vertical-align: -0.1em;
+  margin-left: 4px;
+  color: var(--ink-faint);
+  border-bottom: 0;
+}
+.employer-name a.employer-repo:hover { color: var(--link); }
+.employer-repo svg { width: 0.9em; height: 0.9em; }
 
 /* Focus-driven emphasis. `.kw` is only bold when the active focus is listed in data-f.
    Bold text keeps its context colour (ink in the summary, inherited elsewhere) via --strong-color. */
@@ -761,6 +769,9 @@ header.identity,
     .skill-grid { grid-template-columns: 1fr; }
     .employer-span,
     .employer-intro { margin-left: 0; }
-    .employer-copy .employer-span { grid-row: 3; grid-column: 1 / -1; white-space: normal; }
+    .employer-head .employer-logo { grid-row: 1; }
+    .employer-copy .employer-name { grid-row: 1; grid-column: 2 / -1; }
+    .employer-copy .employer-span { grid-row: 2; grid-column: 1 / -1; text-align: left; white-space: normal; }
+    .employer-copy .employer-tags { grid-row: 3; grid-column: 1 / -1; text-align: left; }
   }
 }

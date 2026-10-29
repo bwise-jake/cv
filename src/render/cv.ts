@@ -129,7 +129,11 @@ function employerBlock(e: Employer) {
             : `<img class="employer-logo" src="${e.logo}" alt="${escapeHtml(e.logoAlt)}" width="36" height="36">`
         }
         <div class="employer-copy">
-          <div class="employer-name">${rich(e.name)}</div>
+          <div class="employer-name">${rich(e.name)}${
+            e.repo
+              ? ` <a class="employer-repo" href="${e.repo}" target="_blank" rel="noopener noreferrer" aria-label="Source code on GitHub">${stackLogos.GitHub}</a>`
+              : ''
+          }</div>
           ${
             e.tags
               ? `<div class="employer-tags">${e.tags

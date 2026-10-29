@@ -48,8 +48,9 @@ Every theme's small text is checked for WCAG AA (4.5:1) in a real browser by `np
   deliberate system.
 - Two text columns only: everything starts on the page's left edge, except section titles and
   summary text, which share one column 26px in (section numbers are fixed 16px wide, the same as
-  the summary icons). Employer logo + tags + name form one media unit; the date line, intro,
-  roles and bullets below it return to the left edge. Bullets hang their dash. No side-stripe
+  the summary icons). Each employer header is one line of logo, name and tags (tags right-aligned),
+  with the date line right-aligned above the tags; the intro, roles and bullets below it return to
+  the left edge. Bullets hang their dash. No side-stripe
   borders anywhere (banned pattern).
 - Every page uses the same fit scale (the smallest any page needs), so type size and margins are
   identical from page to page.
@@ -67,7 +68,7 @@ Every theme's small text is checked for WCAG AA (4.5:1) in a real browser by `np
   dashed underline, not a yellow highlighter block — reads as a considered
   annotation rather than a Word tracked-change leftover.
 - **Company logos**: 36px squares (corner radius from the `--radius-logo` token) with a hairline
-  border, beside the employer tags and name — treated as real brand marks, not decorative badges.
+  border, on the same line as the employer name and tags — treated as real brand marks, not decorative badges.
   The finguide mark is the exception: the site's dark-mode logo redrawn as inline SVG
   (`src/content/logo-marks.ts`) and animated by `src/finguide-mark.ts`, a port of finguide-marketing's
   `AnimatedPigMark` (glances, blinks, ear flicks, an occasional hop; on a fine pointer the eyes follow the

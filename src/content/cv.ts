@@ -37,6 +37,8 @@ export interface Employer {
   /** Industry tags, " · "-separated. Omitted for entries that fold them into `span`. */
   tags?: string;
   name: string;
+  /** Source repository, shown as a GitHub icon link after the name. */
+  repo?: string;
   span: string;
   intro?: string;
   /** Long blocks may split across a printed page. */
@@ -235,7 +237,8 @@ export const ventures: Employer[] = [
     logo: 'assets/logos/cv-knight.png',
     logoAlt: 'Pixel-art knight avatar',
     tags: 'Open source · Tech · Design systems',
-    name: '[github.com/bwise-jake/cv](https://github.com/bwise-jake/cv)',
+    name: '[bwise-jake.github.io/cv/](https://bwise-jake.github.io/cv/)',
+    repo: 'https://github.com/bwise-jake/cv',
     span: 'Started Sep 2026',
     intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 27 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
     jobs: [],
