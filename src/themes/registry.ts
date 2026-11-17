@@ -69,6 +69,13 @@ export const themes: Theme[] = [
     note: 'Newsreader + Schibsted Grotesk + DM Mono, standing in for Tobias, Saans & Saans Mono',
   },
   {
+    id: 'remitly',
+    label: 'Remitly',
+    fonts: 'family=Figtree:wght@400..700',
+    families: ['Figtree'],
+    note: 'Figtree, standing in for Greycliff CF',
+  },
+  {
     id: 'finguide',
     label: 'finguide',
     fonts: 'family=Hanken+Grotesk:wght@400..700',

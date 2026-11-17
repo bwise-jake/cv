@@ -6,6 +6,7 @@ import finguide from '../assets/brands/finguide.png';
 import linear from '../assets/brands/linear.png';
 import notion from '../assets/brands/notion.png';
 import relevance from '../assets/brands/relevance.png';
+import remitly from '../assets/brands/remitly.svg';
 import stripe from '../assets/brands/stripe.png';
 import type { ThemeId } from '../types';
 
@@ -22,5 +23,6 @@ export const themeLogos: Record<ThemeId, string> = {
   linear,
   relevance,
   everlab,
+  remitly,
   finguide,
 };

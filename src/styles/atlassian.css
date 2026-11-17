@@ -174,7 +174,7 @@
     font-weight: var(--ds-font-weight-medium, 500);
   }
   /* The contact details are links, so they take the ADS link: link colour, underlined; hover drops the
-     underline, pressed darkens, visited turns purple. The hairline border the other themes use goes. */
+     underline, pressed darkens, visited turns purple. */
   .contact a {
     border-bottom: 0;
     color: var(--ds-link, #1868db);
@@ -338,7 +338,7 @@
   }
   /* Each keyword set is its own block, divided from the one above by a hairline (border token), so the
      groups read as groups. The 4px above and below the rule are what a 12px-text card can spend: 8px each
-     cost the Atlassian PDF 2.5 points of scale, 4px cost about 1.2. The ", " the other themes put between sets is dropped. */
+     cost the Atlassian PDF 2.5 points of scale, 4px cost about 1.2. */
   .skill-set { display: block; }
   .skill-set + .skill-set {
     margin-top: var(--ds-space-050, 0.25rem);
@@ -346,16 +346,14 @@
     border-top: var(--ds-border-width, 0.0625rem) solid var(--ds-border, #0b120e24);
   }
   .skill-set + .skill-set::before { content: none; }
-  .skill-extra[data-theme-extra="atlassian"] { display: inline; }
   /* Each set opens with a run-in subtitle ("Delivery: …"). Run-in rather than a line of its own: a separate
      line per set cost the Atlassian PDF 3.8 points of scale, run-in about 1.8. The keywords carry no bold,
      so the subtitle's semibold is the card's only emphasis. */
-  .skill-set-title[data-theme-title="atlassian"] {
-    display: inline;
+  .skill-set-title {
     font-weight: var(--ds-font-weight-semibold, 600);
   }
   /* The stack logos sit under the card title, above the keywords. The markup keeps title, keywords, logos
-     (the other themes show the logos last), so this is CSS `order` only. The logos are the card's only focusable
+     (logos last), so this is CSS `order` only. The logos are the card's only focusable
      elements, so keyboard order is unchanged; screen readers still read the keywords before the logos. */
   .skill-group .logo-wrapper {
     order: 1;

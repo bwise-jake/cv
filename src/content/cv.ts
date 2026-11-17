@@ -49,14 +49,12 @@ export interface Employer {
 export interface SkillGroup {
   id: 'frontend' | 'growth' | 'ai';
   title: string;
-  /** One entry per visually separated set of keywords. */
+  /** One entry per visually separated set of keywords, each its own block in the card. */
   skills: string[];
+  /** Run-in subtitles for the sets, by index ("Delivery: …"). */
+  titles: string[];
   logos: string[];
   logosLabel: string;
-  /** Extra keywords shown under one theme only (the other themes hide them), appended to the set at the same index; '' for none. They cost the other themes page space, so only the Atlassian theme, which has the room, has any. */
-  extra?: Partial<Record<ThemeId, string[]>>;
-  /** Run-in subtitles for the sets, by index, shown under one theme only (the other themes hide them). Only the Atlassian theme, whose sets are separate card blocks, has any. */
-  titles?: Partial<Record<ThemeId, string[]>>;
   /** Skills and logos (by their plain text) left out under a focus. */
   omit?: Partial<Record<Focus, string[]>>;
 }
@@ -241,7 +239,7 @@ export const ventures: Employer[] = [
     name: '[bwise-jake.github.io/cv/](https://bwise-jake.github.io/cv/)',
     repo: 'https://github.com/bwise-jake/cv',
     span: 'Started Sep 2026',
-    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 27 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
+    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 30 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
     jobs: [],
   },
 ];
@@ -251,39 +249,25 @@ export const skills: SkillGroup[] = [
     id: 'frontend',
     title: 'Frontend engineering',
     skills: [
-      'Component Architecture, Design Systems, Design Patterns, State & Data Management, API Integration (GraphQL, REST), CMS & Content Authoring',
+      'Component Architecture, Design Systems, Design Patterns, State & Data Management, API Integration (GraphQL, REST), CMS & Content Authoring, Design Tokens, Migrations & Rebrands',
       'Responsive UI, Cross-Browser Compatibility, Accessibility (WCAG), Internationalisation (i18n), Web Performance (Core Web Vitals)',
       'Unit & Visual Regression Testing, Code Review, Technical Design, CI/CD, Cloud Hosting',
     ],
-    titles: { atlassian: ['Foundations', 'User experience', 'Delivery'] },
+    titles: ['Foundations', 'User experience', 'Delivery'],
     logos: ['React', 'Next.js', 'TypeScript', 'HTML5', 'CSS', 'Tailwind CSS', 'Storybook', 'Node.js', 'Git'],
     logosLabel: 'Frontend Engineering platforms',
-    extra: {
-      atlassian: [
-        'Design Tokens, Migrations & Rebrands',
-        '',
-        '',
-      ],
-    },
   },
   {
     id: 'growth',
     title: 'Analytics & experimentation',
     skills: [
-      'A/B Testing, Experiment Design & Analysis, Experimentation Infrastructure, CRO, UX Design & Wireframing',
-      'Analytics Instrumentation, Funnel Analytics',
+      'A/B Testing, Experiment Design & Analysis, Experimentation Infrastructure, CRO, UX Design & Wireframing, Holdout Testing, Multi-Armed Bandit Testing, Personalisation',
+      'Analytics Instrumentation, Funnel Analytics, Behavioural Analytics, Session Replay, Event Tracking, Incrementality & LTV Measurement',
       'Paid Performance Measurement, SEO, Regional GTM Launches, Impact/Effort Prioritisation',
     ],
-    titles: { atlassian: ['Experimentation', 'Measurement', 'Go-to-market'] },
+    titles: ['Experimentation', 'Measurement', 'Go-to-market'],
     logos: ['Optimizely', 'Google Analytics', 'Google Tag Manager', 'Looker', 'FullStory', 'Google Ads', 'Semrush', 'Ahrefs', 'Figma', 'Hotjar', 'Amplitude', 'Google Search Console'],
     logosLabel: 'Analytics and Experimentation platforms',
-    extra: {
-      atlassian: [
-        'Holdout Testing, Multi-Armed Bandit Testing, Personalisation',
-        'Behavioural Analytics, Session Replay, Event Tracking, Incrementality & LTV Measurement',
-        '',
-      ],
-    },
     omit: {
       engineering: ['SEO', 'Google Ads', 'Semrush', 'Ahrefs'],
       growth: ['Google Tag Manager', 'Looker', 'Google Search Console'],
@@ -294,22 +278,14 @@ export const skills: SkillGroup[] = [
     id: 'ai',
     title: 'AI-native workflows',
     skills: [
-      'Context Engineering, Plan-First Delivery',
-      'Agentic Development, Multi-Agent Orchestration, MCP Integrations',
-      'Automated Quality Gates, AI Compliance Guardrails, Human-in-the-Loop Review',
-      'Knowledge Capture & Reuse',
+      'Context Engineering, Plan-First Delivery, AI Coding Assistants',
+      'Agentic Development, Multi-Agent Orchestration, MCP Integrations, Agent-Driven Delivery Pipelines',
+      'Automated Quality Gates, AI Compliance Guardrails, Human-in-the-Loop Review, Automated Compliance Checks, Accessibility Checks',
+      'Knowledge Capture & Reuse, Shared Knowledge Bases, Technical Leadership & Mentoring',
     ],
-    titles: { atlassian: ['Planning', 'Agents', 'Guardrails', 'Sharing'] },
+    titles: ['Planning', 'Agents', 'Guardrails', 'Sharing'],
     logos: ['Claude', 'OpenAI Codex', 'Cursor', 'Model Context Protocol', 'GitHub', 'Airtable', 'Notion', 'Jira', 'Confluence'],
     logosLabel: 'AI-Native Workflows platforms',
-    extra: {
-      atlassian: [
-        'AI Coding Assistants',
-        'Agent-Driven Delivery Pipelines',
-        'Automated Compliance Checks, Accessibility Checks',
-        'Shared Knowledge Bases, Technical Leadership & Mentoring',
-      ],
-    },
   },
 ];
 
@@ -338,29 +314,19 @@ export function byOrder<T extends { id: string }>(items: T[], ids: readonly stri
 }
 
 /**
- * The keyword sets a card shows under a focus: keywords named in `omit` are removed (matched by their plain text),
- * and so are sets left empty. Each set carries the per-theme `extra` keywords for the same index, filtered the same
- * way. The renderer and the PDF reading-order check both use this, so they cannot disagree about what a card shows.
+ * The keyword sets a card shows under a focus, each with its subtitle: keywords named in `omit` are removed (matched
+ * by their plain text), and so are sets left empty. The renderer and the PDF reading-order check both use this, so
+ * they cannot disagree about what a card shows.
  */
-export function visibleSkillSets(
-  group: SkillGroup,
-  focus: Focus,
-): { text: string; extras: [ThemeId, string][]; titles: [ThemeId, string][] }[] {
+export function visibleSkillSets(group: SkillGroup, focus: Focus): { title: string; text: string }[] {
   const omitted = new Set(group.omit?.[focus]);
-  const keep = (list: string) =>
-    list
-      .split(', ')
-      .filter((s) => !omitted.has(plainText(s)))
-      .join(', ');
   return group.skills
     .map((set, i) => ({
-      text: keep(set),
-      extras: Object.entries(group.extra ?? {})
-        .map(([theme, lists]) => [theme as ThemeId, keep(lists?.[i] ?? '')] as [ThemeId, string])
-        .filter(([, text]) => text),
-      titles: Object.entries(group.titles ?? {})
-        .map(([theme, list]) => [theme as ThemeId, list?.[i] ?? ''] as [ThemeId, string])
-        .filter(([, title]) => title),
+      title: group.titles[i] ?? '',
+      text: set
+        .split(', ')
+        .filter((s) => !omitted.has(plainText(s)))
+        .join(', '),
     }))
     .filter(({ text }) => text);
 }

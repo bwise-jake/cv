@@ -65,10 +65,10 @@ describe('visibleSkillSets', () => {
       expect(visibleSkillSets(group('ai'), focus)).toHaveLength(4);
     }
   });
-  it('carries the Atlassian extras only where the content defines them', () => {
+  it('gives every set its subtitle, in order', () => {
     for (const focus of FOCUSES) {
-      expect(visibleSkillSets(group('ai'), focus).every((s) => s.extras.length > 0)).toBe(true);
-      expect(visibleSkillSets(group('frontend'), focus).map((s) => s.extras.length)).toEqual([1, 0, 0]);
+      expect(visibleSkillSets(group('ai'), focus).map((s) => s.title)).toEqual(['Planning', 'Agents', 'Guardrails', 'Sharing']);
+      expect(visibleSkillSets(group('frontend'), focus).map((s) => s.title)).toEqual(['Foundations', 'User experience', 'Delivery']);
     }
   });
 });

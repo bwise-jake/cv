@@ -9,6 +9,7 @@
  *   Linear     Inter Variable, Berkeley Mono        → Inter, JetBrains Mono
  *   Relevance  Sora + Inter                         → same (open source)
  *   Everlab    Tobias, Saans, Saans Mono            → Newsreader, Schibsted Grotesk, DM Mono
+ *   Remitly    Greycliff CF                         → Figtree
  *   finguide   Hanken Grotesk (open source)               → same
  */
 
@@ -222,6 +223,50 @@
   --radius-logo: 8px;
 }
 
+/* ---------- Remitly ---------- */
+/* Brand palette: main indigo #16273c, indigo #22354c, teal #397882, light teal #bfe6ec, green #42c888 and
+   ube purple #743d95. Neutrals are Remitly's own design tokens, read from the --color-* custom properties on
+   remitly.com (2026-11-17): warm "Jicama" neutrals, ink #242620. */
+:root[data-theme="remitly"] {
+  --paper: #ffffff;
+  /* --color-jicama-theme-bg */
+  --canvas: #faf8f5;
+  /* --color-text-default, --color-border-pressed, --color-text-subtle */
+  --ink: #242620;
+  --ink-soft: #41403b;
+  --ink-faint: #615f5a;
+  /* --color-border-subtle */
+  --line: #e1ddd7;
+  --accent: #16273c;
+  --accent-wash: #bfe6ec;
+  --tag: #397882;
+  --link: #16273c;
+
+  /* A flat main-indigo band, like the site's extra-dark indigo sections. */
+  --header-bg: #16273c;
+  --header-noise-opacity: 0;
+  --paper-on-ink: #ffffff;
+  /* Dark-section tokens: --color-text-inverse-subtle, and --color-border-subtle (#ffffff40) made opaque
+     over the indigo for PDF. */
+  --muted-on-ink: #efece7;
+  --line-on-ink: #505d6d;
+  /* Agave, the business pages' eyebrow colour on dark: the kicker, the role dash and "Prepared for". */
+  --accent-on-ink: #96d0d8;
+
+  --sans: 'Figtree', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Remitly sets no monospace anywhere, so the metadata the other themes set in mono is the sans too. */
+  --mono: var(--sans);
+  /* The site loads only two GreycliffCF files: Medium (as 400) and Bold (700). So its body copy is
+     medium (set on .page below) and its 600 headings and bold text render at 700. No tracking. */
+  --name-weight: 700;
+  --name-tracking: 0;
+  --heading-weight: 700;
+  --strong-weight: 700;
+  --radius-avatar: 50%;
+  /* --radius-lg */
+  --radius-logo: 8px;
+}
+
 /* ---------- finguide (dark) ---------- */
 /* Jake's own app. Values are finguide's dark tokens (DESIGN.md); alpha borders made opaque for PDF. */
 :root[data-theme="finguide"] {
@@ -307,6 +352,13 @@
   h1 { font-size: 32px; }
 
   .section-num { display: none; }
+
+  /* Skills cards in Notion's block background colours (blue, green, purple), titled in the matching select pill. */
+  .skill-group[data-skill="frontend"] { --skill-card: #e7f3f8; --skill-chip: #d3e5ef; }
+  .skill-group[data-skill="growth"] { --skill-card: #edf3ec; --skill-chip: #dbeddb; }
+  .skill-group[data-skill="ai"] { --skill-card: #f6f3f9; --skill-chip: #e8deee; }
+  .skill-group h3 { border-radius: 3px; }
+
   .summary-icon { display: none; }
   .summary-emoji {
     display: block;
@@ -365,7 +417,7 @@
     color: #5a32fa;
     font-family: var(--sans);
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: none;
     letter-spacing: 0;
     line-height: 18px;
@@ -449,8 +501,15 @@
   .summary-icon { color: var(--ink); }
   ul.summary-list li:last-child { margin-bottom: 0; }
 
-  /* Skill sub-headings are the feature cards' label: black mono after an orange square. */
-  .skill-group h3 { color: var(--ink); }
+  /* Skills cards are the summary's linen card; sub-headings are the feature cards' label (black mono after an
+     orange square), so no chip. */
+  --skill-card: #f4efed;
+  .skill-group { border-radius: 16px; }
+  .skill-group h3 {
+    padding: 0;
+    background: none;
+    color: var(--ink);
+  }
   .skill-group h3::before {
     content: "";
     display: inline-block;
@@ -485,4 +544,89 @@
   .employer-tags { line-height: 1.9; }
 
   .section-num { display: none; }
+
+  /* Skills cards on the raised neutral surface, so lime stays an accent; the title chip is the lime wash. */
+  --skill-card: #262626;
+  --skill-chip: #343f1f;
+  --radius-card: 16px;
+}
+
+/* Remitly: the site's components. Industry tags are its 12px/600 tag pills on the medium warm neutral;
+   section headings are unnumbered, like the site's; the summary is a 16px-radius card on the pale
+   "Eucalyptus" theme background with teal icons; skill sub-headings are pills in one brand colour per group. */
+:root[data-theme="remitly"] {
+  .tag {
+    display: inline-block;
+    margin-right: 2px;
+    padding: 0 8px;
+    border-radius: 100px;
+    background: #efece7;
+    color: #242620;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+  .tag + .tag::before { content: none; }
+  .employer-tags { line-height: 1.9; }
+
+  .section-num { display: none; }
+
+  ul.summary-list {
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: #e5f6f9;
+  }
+  ul.summary-list li:last-child { margin-bottom: 0; }
+  ul.summary-list .summary-label { color: var(--accent); }
+  .summary-icon { color: #397882; }
+
+  .skill-group h3 {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  /* Skills cards on the site's theme backgrounds (Eucalyptus, Wasabi, Macadamia) with its 16px card radius. */
+  --radius-card: 16px;
+  .skill-group[data-skill="frontend"] { --skill-card: #e5f6f9; }
+  .skill-group[data-skill="growth"] { --skill-card: #eaf9cb; }
+  .skill-group[data-skill="ai"] { --skill-card: #fff6ec; }
+  /* By group, not position, since the focus reorders them. Text contrast: 12.6, 7.1 and 8.4:1. */
+  .skill-group[data-skill="frontend"] h3 { background: #bfe6ec; color: #16273c; }
+  .skill-group[data-skill="growth"] h3 { background: #42c888; color: #16273c; }
+  .skill-group[data-skill="ai"] h3 { background: #743d95; color: #ffffff; }
+
+  /* The metadata the other themes set in small uppercase mono is the sans here (--mono above), so it is set
+     a step larger and in normal case, like the site's 14px/600 eyebrow and 12px disclaimer text. */
+  /* The kicker is the business pages' eyebrow on dark: 12px bold in Agave (--color-business-eyebrow). */
+  .kicker {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .contact { font-size: 11px; }
+  /* Links on dark sections hover to light teal (--color-link-hover in the dark theme). */
+  .contact a:hover {
+    color: #bfe6ec;
+    border-color: #bfe6ec;
+  }
+
+  .page { font-weight: 500; }
+  /* Section headings take the business pages' heading colour, indigo. */
+  h2 { color: #2c415a; }
+  .job-meta,
+  .employer-span { font-size: 11.5px; }
+  .section-cont {
+    font-size: 11px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
 }

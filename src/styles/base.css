@@ -32,6 +32,12 @@
   --link: var(--accent);
   --cta-bg: var(--accent);
   --cta-fg: #ffffff;
+  /* Skills cards: a light wash of the theme's accent, with a stronger wash for the title chip. Themes can set
+     their own per group (on .skill-group[data-skill]); the rule between keyword sets is mixed from the card fill,
+     so it works on any of them. */
+  --skill-card: color-mix(in srgb, var(--accent) 7%, var(--paper));
+  --skill-chip: color-mix(in srgb, var(--accent) 16%, var(--paper));
+  --radius-card: 12px;
 }
 
 * { box-sizing: border-box; }
@@ -161,13 +167,14 @@ header.identity > * {
 .identity-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  /* The contact block is centred on the photo and name block beside it, like the photo itself. */
+  align-items: center;
   gap: 24px;
 }
 
 .identity-main {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 14px;
   min-width: 0;
 }
@@ -242,18 +249,19 @@ h1 {
   line-height: 1;
   white-space: nowrap;
   flex-shrink: 0;
-  padding-top: 6px;
 }
 
+/* The contact details are links, so they read as links: underlined, dropping the underline on hover. */
 .contact a {
   color: var(--muted-on-ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--line-on-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-on-ink);
+  text-underline-offset: 2px;
 }
 
 .contact a:hover {
   color: var(--accent-on-ink);
-  border-color: var(--accent-on-ink);
+  text-decoration: none;
 }
 
 /* Tailored links (?for=Company): a quiet line above the contact details. */
@@ -268,13 +276,16 @@ h1 {
 
 section { margin-bottom: 24px; }
 section:last-child { margin-bottom: 0; }
+/* A hairline divides each section from the one above it on the same sheet; the headings themselves are unruled. */
+section + section {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
 
 .section-head {
   display: flex;
   align-items: baseline;
   gap: 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--line);
   margin-bottom: 12px;
   break-after: avoid;
   page-break-after: avoid;
@@ -313,6 +324,8 @@ section:last-child { margin-bottom: 0; }
 h2 {
   font-family: var(--display);
   font-size: 15px;
+  /* A fixed line, so the first employer's date line can sit on it (below). */
+  line-height: 20px;
   color: var(--ink);
   font-weight: var(--heading-weight);
   margin: 0;
@@ -322,6 +335,9 @@ h2 {
 .section-cont {
   font-family: var(--mono);
   font-size: 10px;
+  /* Its own short line, so the smaller mono face doesn't deepen the heading's 20px line (the first employer's
+     date line sits on that line's baseline). */
+  line-height: 1;
   font-weight: 500;
   color: var(--ink-faint);
   letter-spacing: 0.04em;
@@ -338,8 +354,8 @@ ul.summary-list li {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 20px;
   color: var(--ink-soft);
   margin-bottom: 8px;
 }
@@ -445,8 +461,18 @@ ul.bullets a {
 
 .employer-block:not(:last-child) {
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
+  /* Lighter than the section rule, so the sections still read as the main breaks. */
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, var(--paper));
 }
+
+/* The first employer's date line (the top row of its header grid, right-aligned) sits on the section heading's
+   line instead of a line of its own: the block is pulled up by the heading's 20px line less 4px, which puts the
+   dates on the heading's baseline. Source order is unchanged, so the PDF still reads the heading first. The
+   heading's 12px of space below then goes between the date line and the employer's name row. */
+.section-head:has(+ .employer-block) { margin-bottom: 0; }
+.section-head + .employer-block { margin-top: -16px; }
+.section-head + .employer-block .employer-head { row-gap: 12px; }
+.employer-copy .employer-span { line-height: 16px; }
 
 /* One grid for logo, name, tags and dates (.employer-copy is display: contents, so its children are
    grid items here). Row 2 is the logo, the name and the tags on one line, centred on the logo, with
@@ -650,41 +676,67 @@ header.identity,
   content: "· ";
 }
 
+/* Skills & stacks as three cards side by side: a tinted fill (--skill-card), the title as a label chip, the stack
+   logos under the title and the keywords below them. The markup keeps title, keywords, logos, so the logos move up
+   by CSS `order` only: keyboard order is unchanged and screen readers still read the keywords first. */
 .skill-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.skill-group { margin-bottom: 0; }
+.skill-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  padding: 12px;
+  border-radius: var(--radius-card);
+  background: var(--skill-card);
+}
 
 .skill-group h3 {
+  align-self: flex-start;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--skill-chip);
   font-family: var(--mono);
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-weight: 500;
-  color: var(--accent);
-  margin: 0 0 4px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px;
 }
 
 .skill-list {
+  order: 2;
   font-size: 12px;
-  line-height: 1.55;
+  line-height: 16px;
   color: var(--ink-soft);
 }
 
-/* Keywords come in sets, one <p> each. Themes flow them inline, joined by ", " (the Atlassian theme shows them
-   as blocks, atlassian.css); the comma is generated, like the tag separator above. */
-.skill-set { display: inline; margin: 0; }
-.skill-set + .skill-set::before { content: ", "; }
-/* Theme-only keywords (the same idea as .role-alt): in the markup for every theme, shown by the theme that has room for them. */
-.skill-extra { display: none; }
-/* Set subtitles work the same way: in the markup for every theme, shown only by the theme they are written for. */
-.skill-set-title { display: none; }
+/* Each keyword set is its own block, divided from the one above by a hairline mixed from the card's fill. */
+.skill-set { display: block; margin: 0; }
+.skill-set + .skill-set {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, var(--skill-card));
+}
+/* Each set opens with a run-in subtitle ("Delivery: …"), the card's only emphasis. */
+.skill-set-title {
+  font-weight: var(--strong-weight);
+  color: var(--ink);
+}
 
 .skill-group .logo-wrapper {
-  margin-top: 10px;
+  order: 1;
+  margin: 0;
+  padding-bottom: 12px;
+  gap: 8px;
+}
+.skill-group .stack-logo {
+  width: 16px;
+  height: 16px;
 }
 
 .logo-wrapper {
@@ -770,6 +822,11 @@ header.identity,
     h1 { white-space: normal; }
     .contact { text-align: left; align-items: flex-start; }
     .skill-grid { grid-template-columns: 1fr; }
+    /* The phone header grid puts the logo and name on its top row, so the first employer can't be pulled up
+       onto the section heading's line (it would overprint the heading); the heading keeps its space below. */
+    .section-head:has(+ .employer-block) { margin-bottom: 12px; }
+    .section-head + .employer-block { margin-top: 0; }
+    .section-head + .employer-block .employer-head { row-gap: 3px; }
     .employer-span,
     .employer-intro { margin-left: 0; }
     .employer-head .employer-logo { grid-row: 1; }

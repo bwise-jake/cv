@@ -8,9 +8,9 @@ const read = (name: string) => readFileSync(new URL(`../src/styles/${name}`, imp
 const atlassian = read('atlassian.css');
 
 describe('skills cards', () => {
-  it('shows set subtitles only in the Atlassian theme', () => {
-    expect(read('base.css')).toMatch(/\.skill-set-title\s*\{\s*display:\s*none;\s*\}/);
-    expect(atlassian).toMatch(/\.skill-set-title\[data-theme-title="atlassian"\]\s*\{\s*display:\s*inline;/);
+  it('shows set subtitles in every theme', () => {
+    expect(read('base.css')).not.toMatch(/\.skill-set-title\s*\{\s*display:\s*none;/);
+    expect(cvMarkup('engineering')).toContain('<span class="skill-set-title">Foundations: </span>');
   });
 
   it('gives every skill group its own Atlassian colour', () => {

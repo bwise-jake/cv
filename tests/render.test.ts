@@ -97,7 +97,7 @@ describe('cvMarkup', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('<span class="tag">Open source</span>');
     expect(html).toContain('Started Sep 2026');
-    expect(html).toContain('keeping all 27 PDFs at 2 pages, in reading order');
+    expect(html).toContain('keeping all 30 PDFs at 2 pages, in reading order');
     expect(html).toContain('passing <b class="kw" data-f="engineering">WCAG AA contrast</b>');
     expect(html).not.toContain('7 company themes');
     expect(html).not.toContain('This CV as a');
@@ -130,7 +130,6 @@ describe('cvMarkup', () => {
       return [...html.slice(start, end).matchAll(/<p class="skill-set">(.*?)<\/p>/gs)].map((m) =>
         m[1]
           .replace(/<span class="skill-set-title".*?<\/span>/gs, '')
-          .replace(/<span class="skill-extra".*?<\/span>/gs, '')
           .replace(/<[^>]*>/g, ''),
       );
     };
@@ -139,9 +138,9 @@ describe('cvMarkup', () => {
     expect(sets('frontend')).toHaveLength(3);
     expect(sets('growth')).toHaveLength(3);
     expect(sets('ai')).toHaveLength(4);
-    expect(items('frontend')).toHaveLength(16);
-    expect(items('growth')).toHaveLength(11);
-    expect(items('ai')).toHaveLength(9);
+    expect(items('frontend')).toHaveLength(18);
+    expect(items('growth')).toHaveLength(18);
+    expect(items('ai')).toHaveLength(15);
 
     const starts = (id: string): string[] => sets(id).map((set) => set.slice(0, 40));
     const expected: Record<string, string[]> = {
@@ -178,13 +177,8 @@ describe('cvMarkup', () => {
     expect(cvMarkup('engineering')).not.toContain('Growth &amp; experimentation');
   });
 
-  it('adds Atlassian-only keywords that balance the shorter cards', () => {
+  it('includes the keywords that balance the shorter cards, in every theme', () => {
     const html = cvMarkup('balanced');
-    const spans = [...html.matchAll(/<span class="skill-extra"[^>]*>.*?<\/span>/gs)].map((m) => m[0]);
-    expect(spans).toHaveLength(7);
-    expect(html.match(/class="skill-extra"/g)).toHaveLength(7);
-    for (const span of spans) expect(span).toContain('data-theme-extra="atlassian"');
-    const extraText = spans.join(' ').replace(/<[^>]*>/g, '');
     const phrases = [
       'Multi-Armed Bandit Testing',
       'Personalisation',
@@ -202,39 +196,22 @@ describe('cvMarkup', () => {
       'Accessibility Checks',
       'Technical Leadership &amp; Mentoring',
     ];
-    for (const phrase of phrases) {
-      expect(extraText).toContain(phrase);
-      // every occurrence in the page sits inside a skill-extra span
-      expect(html.split(phrase).length).toBe(extraText.split(phrase).length);
-    }
-
-    const total = (id: string): number => {
-      const start = html.indexOf(`data-flip="skills-${id}">`);
-      const end = html.indexOf('class="logo-wrapper"', start);
-      const sets = [...html.slice(start, end).matchAll(/<p class="skill-set">(.*?)<\/p>/gs)].map((m) =>
-        m[1]
-          .replace(/<span class="skill-set-title".*?<\/span>/gs, '')
-          .replace(/<span class="skill-extra"[^>]*>, /g, ', ')
-          .replace(/<[^>]*>/g, ''),
-      );
-      return sets.join(', ').split(/, (?![^()]*\))/).length;
-    };
-    expect(total('frontend')).toBe(18);
-    expect(total('growth')).toBe(18);
-    expect(total('ai')).toBe(15);
+    for (const phrase of phrases) expect(html).toContain(phrase);
+    expect(html).not.toContain('skill-extra');
+    expect(html).not.toContain('data-theme-');
   });
 
-  it('opens each Atlassian skill set with a subtitle and bolds no skills keyword', () => {
+  it('opens each skill set with a subtitle and bolds no skills keyword', () => {
     for (const focus of ['balanced', 'growth', 'engineering'] as const) {
       const html = cvMarkup(focus);
       const start = html.indexOf('class="skill-grid"');
       const grid = html.slice(start, html.indexOf('</section>', start));
       expect(grid, focus).not.toContain('<b');
-      expect(grid.match(/<span class="skill-set-title" data-theme-title="atlassian">/g), focus).toHaveLength(10);
+      expect(grid.match(/<span class="skill-set-title">/g), focus).toHaveLength(10);
     }
     const html = cvMarkup('engineering');
     const labels = ['Foundations', 'User experience', 'Delivery', 'Experimentation', 'Measurement', 'Go-to-market', 'Planning', 'Agents', 'Guardrails', 'Sharing'];
-    for (const label of labels) expect(html).toContain(`data-theme-title="atlassian">${label}: </span>`);
+    for (const label of labels) expect(html).toContain(`<span class="skill-set-title">${label}: </span>`);
   });
 
   it('has no placeholders left in any focus', () => {
