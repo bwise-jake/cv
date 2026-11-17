@@ -45,7 +45,19 @@ describe('cvMarkup', () => {
     const role = cvMarkup('engineering').match(/<p class="role-title">.*?<\/p>/s)?.[0] ?? '';
     expect(role).toContain('<span class="role-std">Senior Frontend Engineer</span>');
     expect(role).toContain('data-theme-role="atlassian">Senior Frontend Software Engineer</span>');
-    expect(cvMarkup('growth')).not.toContain('role-alt');
+    expect(cvMarkup('growth')).not.toContain('data-theme-role="atlassian"');
+  });
+
+  it('carries the Anduril kicker under Engineering focus', () => {
+    const kicker = cvMarkup('engineering').match(/<p class="kicker">.*?<\/p>/s)?.[0] ?? '';
+    expect(kicker).toContain('<span class="kicker-std">10+ Years’ Experience · React &amp; TypeScript · Design Systems</span>');
+    expect(kicker).toContain('data-theme-kicker="anduril">10+ Years’ Experience · React &amp; TypeScript · Systems Design</span>');
+  });
+
+  it('carries the Anduril title in every focus', () => {
+    for (const focus of ['balanced', 'growth', 'engineering'] as const) {
+      expect(cvMarkup(focus)).toContain('data-theme-role="anduril">Senior Software Engineering Manager</span>');
+    }
   });
 
   it('leaves SEO and ad tools out of the Growth skills under Engineering focus', () => {
@@ -97,7 +109,7 @@ describe('cvMarkup', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('<span class="tag">Open source</span>');
     expect(html).toContain('Started Sep 2026');
-    expect(html).toContain('keeping all 30 PDFs at 2 pages, in reading order');
+    expect(html).toContain('keeping all 33 PDFs at 2 pages, in reading order');
     expect(html).toContain('passing <b class="kw" data-f="engineering">WCAG AA contrast</b>');
     expect(html).not.toContain('7 company themes');
     expect(html).not.toContain('This CV as a');
@@ -198,7 +210,7 @@ describe('cvMarkup', () => {
     ];
     for (const phrase of phrases) expect(html).toContain(phrase);
     expect(html).not.toContain('skill-extra');
-    expect(html).not.toContain('data-theme-');
+    expect(html).not.toContain('data-theme-title');
   });
 
   it('opens each skill set with a subtitle and bolds no skills keyword', () => {

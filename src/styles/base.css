@@ -320,6 +320,7 @@ section + section {
 /* The Atlassian theme's ADS badges and advertised role title (atlassian.css). */
 .ads-badges { display: none; }
 .role-alt { display: none; }
+.kicker-alt { display: none; }
 
 h2 {
   font-family: var(--display);
@@ -441,9 +442,10 @@ ul.bullets li::before {
 
 ul.bullets li:last-child { margin-bottom: 0; }
 
-/* Links in a bullet keep their colour and underline in print too: print.css resets every link to
+/* Links in a bullet or the summary keep their colour and underline in print too: print.css resets every link to
    plain text, which made the Storybook URL look like unlinked text in the PDF. */
-ul.bullets a {
+ul.bullets a,
+ul.summary-list a {
   color: var(--link);
   text-decoration: underline;
   text-underline-offset: 2px;

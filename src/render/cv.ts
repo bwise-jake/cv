@@ -58,6 +58,12 @@ const roleTitle = ({ role, roleByTheme = {} }: Headline) =>
     .map(([theme, title]) => `<span class="role-alt" data-theme-role="${theme}">${escapeHtml(title)}</span>`)
     .join('')}`;
 
+/** The kicker, plus any company's version of it, shown and hidden the same way as the role title. */
+const kicker = ({ kicker: std, kickerByTheme = {} }: Headline) =>
+  `<span class="kicker-std">${escapeHtml(std)}</span>${Object.entries(kickerByTheme)
+    .map(([theme, text]) => `<span class="kicker-alt" data-theme-kicker="${theme}">${escapeHtml(text)}</span>`)
+    .join('')}`;
+
 function header(focus: Focus, recipient: string | null) {
   const headline = headlines[focus];
   return `
@@ -68,7 +74,7 @@ function header(focus: Focus, recipient: string | null) {
           <img class="avatar" src="${person.photo}" alt="${escapeHtml(person.name)}" width="80" height="80">
         </span>
         <div>
-          <p class="kicker">${escapeHtml(headline.kicker)}</p>
+          <p class="kicker">${kicker(headline)}</p>
           <h1>${escapeHtml(person.name)}</h1>
           <p class="role-title">${roleTitle(headline)}</p>
         </div>

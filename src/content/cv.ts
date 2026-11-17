@@ -14,6 +14,8 @@ export interface Headline {
   role: string;
   /** A company's advertised title, shown in that company's theme instead of `role`. */
   roleByTheme?: Partial<Record<ThemeId, string>>;
+  /** A kicker tuned to a company's role, shown in that company's theme instead of `kicker`. */
+  kickerByTheme?: Partial<Record<ThemeId, string>>;
 }
 
 export interface SummaryItem {
@@ -99,15 +101,18 @@ export const headlines: Record<Focus, Headline> = {
   balanced: {
     kicker: '10+ yrs · Ex-Intuit · 60+ experiments · $5.5m+ incremental LTV',
     role: 'Frontend Growth Engineer',
+    roleByTheme: { anduril: 'Senior Software Engineering Manager' },
   },
   growth: {
     kicker: '$5.5m+ incremental LTV · 60+ experiments · Ex-Intuit',
     role: 'Senior Growth Engineer',
+    roleByTheme: { anduril: 'Senior Software Engineering Manager' },
   },
   engineering: {
     kicker: '10+ Years’ Experience · React & TypeScript · Design Systems',
+    kickerByTheme: { anduril: '10+ Years’ Experience · React & TypeScript · Systems Design' },
     role: 'Senior Frontend Engineer',
-    roleByTheme: { atlassian: 'Senior Frontend Software Engineer' },
+    roleByTheme: { atlassian: 'Senior Frontend Software Engineer', anduril: 'Senior Software Engineering Manager' },
   },
 };
 
@@ -239,7 +244,7 @@ export const ventures: Employer[] = [
     name: '[bwise-jake.github.io/cv/](https://bwise-jake.github.io/cv/)',
     repo: 'https://github.com/bwise-jake/cv',
     span: 'Started Sep 2026',
-    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 30 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
+    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 33 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
     jobs: [],
   },
 ];

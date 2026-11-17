@@ -10,6 +10,7 @@
  *   Relevance  Sora + Inter                         → same (open source)
  *   Everlab    Tobias, Saans, Saans Mono            → Newsreader, Schibsted Grotesk, DM Mono
  *   Remitly    Greycliff CF                         → Figtree
+ *   Anduril    Helvetica Now Display                → Inter Tight
  *   finguide   Hanken Grotesk (open source)               → same
  */
 
@@ -265,6 +266,47 @@
   --radius-avatar: 50%;
   /* --radius-lg */
   --radius-logo: 8px;
+}
+
+/* ---------- Anduril ---------- */
+/* Sampled from anduril.com (2026-11-17): near-black #010101 (--theme-color-background) with white type, the warm
+   off-white #f1f0ea of its light sections, mid grey #8e9291 and olive #505544 for its cards, and a lime #dff140
+   it keeps for small marks on black. */
+:root[data-theme="anduril"] {
+  --paper: #ffffff;
+  --canvas: #f1f0ea;
+  --ink: #010101;
+  --ink-soft: #333333;
+  /* The site's #8e9291 grey, darkened to pass AA on the off-white cards. */
+  --ink-faint: #5e6261;
+  --line: #dcdbd5;
+  /* Olive: lime fails as text on white, so the olive cards' colour carries the accent on paper. */
+  --accent: #505544;
+  --accent-wash: #f1f0ea;
+  --tag: #333333;
+  --link: #010101;
+
+  /* A flat black band, like the site's header and hero. */
+  --header-bg: #010101;
+  --header-noise-opacity: 0;
+  --paper-on-ink: #ffffff;
+  --muted-on-ink: #a6a8a7;
+  --line-on-ink: #444444;
+  /* Lime on black: the kicker, the role dash and "Prepared for". */
+  --accent-on-ink: #dff140;
+
+  --sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* The site sets no monospace: its labels are the sans, small, uppercase and tracked (components below). */
+  --mono: var(--sans);
+  /* Display type at 400 with tight tracking; one step heavier here so it holds up at CV sizes. */
+  --name-weight: 500;
+  --name-tracking: -0.02em;
+  --heading-weight: 500;
+  --strong-weight: 600;
+  /* The photo is a squircle (corner-shape below; a rounded square where that is unsupported). Logos keep the
+     site's square 2px corners. */
+  --radius-avatar: 28px;
+  --radius-logo: 2px;
 }
 
 /* ---------- finguide (dark) ---------- */
@@ -629,4 +671,62 @@
     text-transform: none;
     letter-spacing: 0;
   }
+}
+
+/* Anduril: the site's components. Its labels (dates, eyebrows, card tags) are the sans at 10.5px/500, uppercase,
+   tracked 0.04em, so the CV's metadata is set the same way. Industry tags are outlined 2px boxes, like its
+   secondary buttons; the skills cards are its off-white sections with square corners, each titled with a chip
+   in one of its card colours: black (with the lime), olive and grey. */
+:root[data-theme="anduril"] {
+  .kicker,
+  .section-cont,
+  .job-meta,
+  .employer-span,
+  .prepared-for {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .kicker { font-size: 10px; }
+  .job-meta,
+  .employer-span { font-size: 10px; }
+  .contact { font-size: 11px; }
+
+  .tag {
+    display: inline-block;
+    margin-right: 2px;
+    padding: 0 5px;
+    border: 1px solid #b3b3b3;
+    border-radius: 2px;
+    color: var(--ink-soft);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 15px;
+    white-space: nowrap;
+  }
+  .tag + .tag::before { content: none; }
+  .employer-tags { line-height: 1.9; }
+
+  h2 { letter-spacing: -0.01em; }
+
+  .avatar-frame { corner-shape: squircle; }
+
+  /* The title for the Anduril role in every focus, and its Engineering kicker (content/cv.ts). */
+  .role-title:has(.role-alt[data-theme-role="anduril"]) .role-std { display: none; }
+  .role-alt[data-theme-role="anduril"] { display: inline; }
+  .kicker:has(.kicker-alt[data-theme-kicker="anduril"]) .kicker-std { display: none; }
+  .kicker-alt[data-theme-kicker="anduril"] { display: inline; }
+
+  --radius-card: 2px;
+  --skill-card: #f1f0ea;
+  .skill-group h3 {
+    border-radius: 2px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  /* By group, not position, since the focus reorders them. Text contrast: 16.6, 7.5 and 6.6:1. */
+  .skill-group[data-skill="frontend"] h3 { background: #010101; color: #dff140; }
+  .skill-group[data-skill="growth"] h3 { background: #505544; color: #ffffff; }
+  .skill-group[data-skill="ai"] h3 { background: #8e9291; color: #010101; }
 }

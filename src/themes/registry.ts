@@ -20,18 +20,18 @@ export const themes: Theme[] = [
     note: 'Geist · Jake’s own design',
   },
   {
+    id: 'anduril',
+    label: 'Anduril',
+    fonts: 'family=Inter+Tight:wght@400..700',
+    families: ['Inter Tight'],
+    note: 'Inter Tight, standing in for Helvetica Now Display',
+  },
+  {
     id: 'atlassian',
     label: 'Atlassian',
     fonts: 'family=Inter:wght@400..700&family=Outfit:wght@700',
     families: ['Inter', 'Outfit'],
     note: 'Outfit for Charlie Display headings, Inter for Atlassian Sans body',
-  },
-  {
-    id: 'notion',
-    label: 'Notion',
-    fonts: 'family=Inter:wght@400..700',
-    families: ['Inter'],
-    note: 'Inter, the open base of NotionInter',
   },
   {
     id: 'canva',
@@ -41,11 +41,18 @@ export const themes: Theme[] = [
     note: 'Plus Jakarta Sans, standing in for Canva Sans',
   },
   {
-    id: 'stripe',
-    label: 'Stripe',
-    fonts: 'family=Inter+Tight:wght@300..700&family=Source+Code+Pro:wght@400;500',
-    families: ['Inter Tight', 'Source Code Pro'],
-    note: 'Inter Tight, standing in for Söhne',
+    id: 'everlab',
+    label: 'Everlab',
+    fonts: 'family=Newsreader:opsz,wght@6..72,400&family=Schibsted+Grotesk:wght@400..700&family=DM+Mono:wght@400;500',
+    families: ['Newsreader', 'Schibsted Grotesk', 'DM Mono'],
+    note: 'Newsreader + Schibsted Grotesk + DM Mono, standing in for Tobias, Saans & Saans Mono',
+  },
+  {
+    id: 'finguide',
+    label: 'finguide',
+    fonts: 'family=Hanken+Grotesk:wght@400..700',
+    families: ['Hanken Grotesk'],
+    note: 'Hanken Grotesk, finguide’s own typeface · Jake’s app',
   },
   {
     id: 'linear',
@@ -55,18 +62,18 @@ export const themes: Theme[] = [
     note: 'Inter + JetBrains Mono, standing in for Berkeley Mono',
   },
   {
+    id: 'notion',
+    label: 'Notion',
+    fonts: 'family=Inter:wght@400..700',
+    families: ['Inter'],
+    note: 'Inter, the open base of NotionInter',
+  },
+  {
     id: 'relevance',
     label: 'Relevance AI',
     fonts: 'family=Sora:wght@400;600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500',
     families: ['Sora', 'Inter', 'JetBrains Mono'],
     note: 'Sora + Inter, Relevance AI’s own open-source typefaces',
-  },
-  {
-    id: 'everlab',
-    label: 'Everlab',
-    fonts: 'family=Newsreader:opsz,wght@6..72,400&family=Schibsted+Grotesk:wght@400..700&family=DM+Mono:wght@400;500',
-    families: ['Newsreader', 'Schibsted Grotesk', 'DM Mono'],
-    note: 'Newsreader + Schibsted Grotesk + DM Mono, standing in for Tobias, Saans & Saans Mono',
   },
   {
     id: 'remitly',
@@ -76,11 +83,11 @@ export const themes: Theme[] = [
     note: 'Figtree, standing in for Greycliff CF',
   },
   {
-    id: 'finguide',
-    label: 'finguide',
-    fonts: 'family=Hanken+Grotesk:wght@400..700',
-    families: ['Hanken Grotesk'],
-    note: 'Hanken Grotesk, finguide’s own typeface · Jake’s app',
+    id: 'stripe',
+    label: 'Stripe',
+    fonts: 'family=Inter+Tight:wght@300..700&family=Source+Code+Pro:wght@400;500',
+    families: ['Inter Tight', 'Source Code Pro'],
+    note: 'Inter Tight, standing in for Söhne',
   },
 ];
 

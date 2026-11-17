@@ -96,7 +96,7 @@ uses a blend mode that makes Apple's PDF renderer flatten gradients).
 
 ## Company themes (interactive version)
 
-The default design above is one of ten themes. The others re-skin the same layout by overriding
+The default design above is one of eleven themes. The others re-skin the same layout by overriding
 tokens only (`src/styles/themes.css`); no theme changes the structure, so ATS text order and
 the two-page layout hold everywhere.
 
@@ -110,6 +110,7 @@ the two-page layout hold everywhere.
 | Relevance AI | Sora + Inter (both open) | #6056FF, teal #0E9384 tags | light lavender → pink wash |
 | Everlab | Newsreader + Schibsted Grotesk + DM Mono (for Tobias, Saans, Saans Mono) | black and grey; #FF6A1A squares only | near-black, serif name, muted-white mono kicker |
 | Remitly | Figtree (for Greycliff CF), no mono | main indigo #16273C; teal #397882, light teal #BFE6EC, green #42C888, ube #743D95 | flat main indigo #16273C, Agave #96D0D8 kicker and role dash |
+| Anduril | Inter Tight (for Helvetica Now Display), no mono | near-black #010101 and olive #505544; lime #DFF140 on black only | flat near-black #010101, lime kicker and role dash |
 | finguide | Hanken Grotesk (finguide's own, open) | lime #C0F43E on Ink | dark page (#1C1C1C card on #080808), Ink header band, lime role dash and labels |
 
 The controls (`src/render/controls.ts`) are typeset as a CV section headed **Version** in the
@@ -140,5 +141,6 @@ real text, so PDFs and ATS parsing are unaffected):
 | Canva | Rounded purple chips | Default | |
 | Everlab | Uppercase mono, each after an orange square | Outlined mono "subhead" tag with a black square | Serif name only (headings stay sans, "continued" in two-tone grey), monochrome summary in a linen card, skills cards in the same linen, sub-headings as black mono labels after an orange square (no chip) |
 | Remitly | Warm-neutral pills (#EFECE7), 12px/600 tag style | Hidden | Summary in a 16px-radius Eucalyptus (#E5F6F9) card with teal icons, skills cards on the site's Eucalyptus, Wasabi and Macadamia backgrounds, sub-headings as pills by group: light teal, green, ube purple |
+| Anduril | Outlined 2px boxes, uppercase | Default (olive) | Square 2px photo; metadata as the site's uppercase tracked sans labels; skills cards on its off-white #F1F0EA with 2px corners, sub-headings as chips by group: black with lime, olive, grey |
 | finguide | Neutral pill badges (#2E2E2E, hairline border) | Hidden | Rounded-square photo (16px); lime role dash and summary labels; skills cards on the raised neutral (#262626) with lime-wash title chips |
 | Default, Stripe, Relevance AI | Interpunct-separated mono text | Default | |
