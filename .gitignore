@@ -6,4 +6,6 @@ exports
 .claude
 # Atlassian application notes: private, never committed (the repo is public)
 docs/atlassian/
+# Mitti application notes (job description): private, never committed
+docs/mitti/
 plans/

@@ -2,7 +2,7 @@ import { byOrder, experience, headlines, order, person, skills, summary, venture
 import { adsBadgeIcons, adsSummaryIcons, stackLogos, summaryIcons } from '../content/icons';
 import { logoMarks } from '../content/logo-marks';
 import { escapeHtml, rich } from '../content/rich';
-import type { Focus } from '../types';
+import type { Focus, ThemeId } from '../types';
 
 /** Notion-theme page icons for the summary items (shown instead of the line icons). */
 const SUMMARY_EMOJI: Record<string, string> = { growth: '📈', engineering: '💻', founder: '🚀', customer: '🤝' };
@@ -64,6 +64,20 @@ const kicker = ({ kicker: std, kickerByTheme = {} }: Headline) =>
     .map(([theme, text]) => `<span class="kicker-alt" data-theme-kicker="${theme}">${escapeHtml(text)}</span>`)
     .join('')}`;
 
+/**
+ * Content with company-tuned versions (`textByTheme`, `introByTheme`, `bulletsByTheme` in content/cv.ts): the
+ * standard version names the themes that replace it in data-theme-std, and each version carries its theme in
+ * data-theme-alt. base.css shows only the one that applies, with display:none, so PDFs carry only that one.
+ */
+function themed<T>(std: T, byTheme: Partial<Record<ThemeId, T>> = {}, render: (value: T, attrs: string) => string): string {
+  const alts = Object.entries(byTheme) as [ThemeId, T][];
+  if (!alts.length) return render(std, '');
+  return [
+    render(std, ` data-theme-std="${alts.map(([theme]) => theme).join(' ')}"`),
+    ...alts.map(([theme, value]) => render(value, ` data-theme-alt="${theme}"`)),
+  ].join('');
+}
+
 function header(focus: Focus, recipient: string | null) {
   const headline = headlines[focus];
   return `
@@ -98,7 +112,9 @@ function summarySection(focus: Focus) {
         <span class="summary-icon" aria-hidden="true">${summaryIcons[item.id]}</span>
         <span class="summary-emoji" aria-hidden="true">${SUMMARY_EMOJI[item.id]}</span>
         <span class="summary-ads-icon" aria-hidden="true">${adsSummaryIcons[item.id]}</span>
-        <span><b class="summary-label">${escapeHtml(item.label)}</b> • ${rich(item.text)}</span>
+        <span>${themed(item.label, item.labelByTheme, (label, attrs) => `<b class="summary-label"${attrs}>${escapeHtml(label)}</b>`)} • ${themed(item.text, item.textByTheme, (text, attrs) =>
+          attrs ? `<span${attrs}>${rich(text)}</span>` : rich(text),
+        )}</span>
       </li>`,
     )
     .join('');
@@ -122,7 +138,7 @@ function employerBlock(e: Employer) {
         </div>`
             : ''
         }
-        <ul class="bullets">${job.bullets.map((b) => `<li>${rich(b)}</li>`).join('')}</ul>
+        ${themed(job.bullets, job.bulletsByTheme, (bullets, attrs) => `<ul class="bullets"${attrs}>${bullets.map((b) => `<li>${rich(b)}</li>`).join('')}</ul>`)}
       </div>`,
     )
     .join('');
@@ -151,7 +167,7 @@ function employerBlock(e: Employer) {
           <div class="employer-span">${escapeHtml(e.span)}</div>
         </div>
       </div>
-      ${e.intro ? `<p class="employer-intro">${rich(e.intro)}</p>` : ''}
+      ${e.intro ? themed(e.intro, e.introByTheme, (intro, attrs) => `<p class="employer-intro"${attrs}>${rich(intro)}</p>`) : ''}
       ${jobs}
     </div>`;
 }
@@ -160,12 +176,16 @@ function skillsSection(focus: Focus) {
   const groups = byOrder(skills, order[focus].skills)
     .map((g) => {
       const omitted = new Set(g.omit?.[focus]);
-      const sets = visibleSkillSets(g, focus);
+      const setsHtml = (sets: ReturnType<typeof visibleSkillSets>, attrs: string) =>
+        `<div class="skill-list"${attrs}>${sets.map(({ title, text }) => `<p class="skill-set">${title ? `<span class="skill-set-title">${escapeHtml(title)}: </span>` : ''}${rich(text)}</p>`).join('')}</div>`;
+      const byTheme = Object.fromEntries(
+        Object.keys(g.skillsByTheme ?? {}).map((theme) => [theme, visibleSkillSets(g, focus, theme as ThemeId)]),
+      );
       const logos = g.logos.filter((name) => !omitted.has(name));
       return `
       <div class="skill-group" data-skill="${g.id}" data-flip="skills-${g.id}">
-        <h3>${escapeHtml(g.title)}</h3>
-        <div class="skill-list">${sets.map(({ title, text }) => `<p class="skill-set">${title ? `<span class="skill-set-title">${escapeHtml(title)}: </span>` : ''}${rich(text)}</p>`).join('')}</div>
+        ${themed(g.title, g.titleByTheme, (title, attrs) => `<h3${attrs}>${escapeHtml(title)}</h3>`)}
+        ${themed(visibleSkillSets(g, focus), byTheme, setsHtml)}
         <div class="logo-wrapper" role="group" aria-label="${escapeHtml(g.logosLabel)}">
           ${logos.map((name) => `<div class="stack-logo" role="img" tabindex="0" aria-label="${escapeHtml(name)}" data-tooltip="${escapeHtml(name)}">${stackLogos[name]}</div>`).join('')}
         </div>

@@ -14,7 +14,7 @@ import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { preview } from 'vite';
 import { pdfFileName } from '../src/pdf';
 import { themes } from '../src/themes/registry';
-import { FOCUSES, type Focus } from '../src/types';
+import { FOCUSES } from '../src/types';
 import { expectedOrder, readingOrderProblems } from './pdf-reading-order';
 
 const EXPECTED_PAGES = 2;
@@ -41,7 +41,6 @@ async function pdfText(pdf: Buffer): Promise<string> {
 }
 
 async function main() {
-  const needlesByFocus = Object.fromEntries(FOCUSES.map((focus) => [focus, expectedOrder(focus)])) as Record<Focus, string[]>;
   const server = await preview({ preview: { port: 4174, strictPort: true, open: false } });
   const base = server.resolvedUrls?.local[0] ?? 'http://localhost:4174/';
   const browser = await launch();
@@ -68,17 +67,26 @@ async function main() {
           [...document.querySelectorAll<HTMLElement>('.page')].map((p) => Number(p.style.getPropertyValue('--fit') || 1)),
         );
 
+        // Company-tuned copy: no other company's version, and not the standard one where this theme has its own.
+        const strays = await page.evaluate(
+          (id) =>
+            [...document.querySelectorAll<HTMLElement>(`[data-theme-alt]:not([data-theme-alt="${id}"]), [data-theme-std~="${id}"]`)]
+              .filter((el) => el.getClientRects().length > 0)
+              .map((el) => el.textContent?.trim().slice(0, 40) ?? ''),
+          theme.id,
+        );
+
         const pdf = await page.pdf({ preferCSSPageSize: true, printBackground: true });
         const pages = (await PDFDocument.load(pdf)).getPageCount();
         const name = `${pdfFileName({ theme: theme.id, focus })}.pdf`;
         await writeFile(new URL(name, OUT_DIR), pdf);
 
-        const order = readingOrderProblems(await pdfText(pdf), needlesByFocus[focus]);
+        const order = readingOrderProblems(await pdfText(pdf), expectedOrder(focus, theme.id));
 
-        const ok = pages === EXPECTED_PAGES && clipped.length === 0 && order.length === 0;
+        const ok = pages === EXPECTED_PAGES && clipped.length === 0 && order.length === 0 && strays.length === 0;
         if (!ok) {
           failures.push(
-            `${name}: ${pages} pages${clipped.length ? `, clipped by ${clipped.join('/')}px` : ''}${order.length ? `, text out of order: ${order[0]}` : ''}`,
+            `${name}: ${pages} pages${clipped.length ? `, clipped by ${clipped.join('/')}px` : ''}${order.length ? `, text out of order: ${order[0]}` : ''}${strays.length ? `, shows another version of "${strays[0]}"` : ''}`,
           );
         }
         const scale = fits.map((f) => `${Math.round(f * 1000) / 10}%`).join(' / ');
@@ -92,7 +100,7 @@ async function main() {
   }
 
   if (failures.length) {
-    console.error(`\n${failures.length} export(s) failed (page count, clipping or text order):\n  ${failures.join('\n  ')}`);
+    console.error(`\n${failures.length} export(s) failed (page count, clipping, text order or tuned copy):\n  ${failures.join('\n  ')}`);
     process.exit(1);
   }
   console.log(`\nAll ${themes.length * FOCUSES.length} PDFs fit on ${EXPECTED_PAGES} pages and read in order → exports/`);

@@ -2,6 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { cvMarkup } from '../src/render/cv';
 import { metricNotes } from '../src/content/cv';
 
+/** The CV without company-tuned skills sets (data-theme-alt), i.e. what every theme but that company's shows. */
+const standardSkills = (html: string) => html.replace(/<div class="skill-list" data-theme-alt="[^"]*">.*?<\/div>/gs, '');
+
 describe('cvMarkup', () => {
   it('renders two A4 pages with the core content', () => {
     const html = cvMarkup('balanced');
@@ -13,7 +16,7 @@ describe('cvMarkup', () => {
 
   it('orders summary items by focus', () => {
     const firstLabel = (focus: 'growth' | 'engineering') =>
-      cvMarkup(focus).match(/class="summary-label">([^<]+)</)?.[1];
+      cvMarkup(focus).match(/class="summary-label"(?: data-theme-std="[^"]*")?>([^<]+)</)?.[1];
     expect(firstLabel('growth')).toBe('Growth');
     expect(firstLabel('engineering')).toBe('Engineering');
   });
@@ -37,7 +40,7 @@ describe('cvMarkup', () => {
   });
 
   it('orders the engineering summary for frontend roles', () => {
-    const labels = [...cvMarkup('engineering').matchAll(/class="summary-label">([^<]+)</g)].map((m) => m[1]);
+    const labels = [...cvMarkup('engineering').matchAll(/class="summary-label"(?: data-theme-std="[^"]*")?>([^<]+)</g)].map((m) => m[1]);
     expect(labels).toEqual(['Engineering', 'Customer-focused', 'Growth', 'Founder']);
   });
 
@@ -57,6 +60,28 @@ describe('cvMarkup', () => {
   it('carries the Anduril title in every focus', () => {
     for (const focus of ['balanced', 'growth', 'engineering'] as const) {
       expect(cvMarkup(focus)).toContain('data-theme-role="anduril">Senior Software Engineering Manager</span>');
+    }
+  });
+
+  it('carries the Mitti-tuned summary, intro and bullets beside the standard ones', () => {
+    const html = cvMarkup('growth');
+    expect(html).toContain('<span data-theme-std="mitti">');
+    expect(html).toMatch(/<span data-theme-alt="mitti">Growth engineer and marketer/);
+    expect(html).toMatch(/<p class="employer-intro" data-theme-alt="mitti">Growth lead within Intuit's marketing organisation/);
+    expect(html).toMatch(/<ul class="bullets" data-theme-alt="mitti">(?:(?!<\/ul>).)*<li>Tied experiments to/s);
+    // Jobs without a Mitti version render one plain list.
+    expect(html).toMatch(/<ul class="bullets"><li>Built <b class="kw"/);
+  });
+
+  it('carries the Mitti title, kicker, label and skills in every focus', () => {
+    for (const focus of ['balanced', 'growth', 'engineering'] as const) {
+      const html = cvMarkup(focus);
+      expect(html).toContain('data-theme-role="mitti">Senior Manager, Growth Technology Lead</span>');
+      expect(html).toContain('data-theme-kicker="mitti">');
+      expect(html).toContain('<b class="summary-label" data-theme-alt="mitti">Technology</b>');
+      expect(html).toMatch(/<div class="skill-list" data-theme-alt="mitti">.*Salesforce, HubSpot, Segment/s);
+      expect(html).toContain('<h3 data-theme-alt="mitti">Martech &amp; experimentation</h3>');
+      expect(html).toContain('<h3 data-theme-std="mitti">Analytics &amp; experimentation</h3>');
     }
   });
 
@@ -109,7 +134,7 @@ describe('cvMarkup', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('<span class="tag">Open source</span>');
     expect(html).toContain('Started Sep 2026');
-    expect(html).toContain('keeping all 33 PDFs at 2 pages, in reading order');
+    expect(html).toContain('keeping all 36 PDFs at 2 pages, in reading order');
     expect(html).toContain('passing <b class="kw" data-f="engineering">WCAG AA contrast</b>');
     expect(html).not.toContain('7 company themes');
     expect(html).not.toContain('This CV as a');
@@ -135,7 +160,7 @@ describe('cvMarkup', () => {
   });
 
   it("keeps each card's keywords in separated sets", () => {
-    const html = cvMarkup('balanced');
+    const html = standardSkills(cvMarkup('balanced'));
     const sets = (id: string): string[] => {
       const start = html.indexOf(`data-flip="skills-${id}">`);
       const end = html.indexOf('class="logo-wrapper"', start);
@@ -215,11 +240,15 @@ describe('cvMarkup', () => {
 
   it('opens each skill set with a subtitle and bolds no skills keyword', () => {
     for (const focus of ['balanced', 'growth', 'engineering'] as const) {
-      const html = cvMarkup(focus);
+      const html = standardSkills(cvMarkup(focus));
       const start = html.indexOf('class="skill-grid"');
       const grid = html.slice(start, html.indexOf('</section>', start));
       expect(grid, focus).not.toContain('<b');
       expect(grid.match(/<span class="skill-set-title">/g), focus).toHaveLength(10);
+      // The Mitti sets keep the same subtitles and bold nothing either.
+      const mitti = cvMarkup(focus).match(/<div class="skill-list" data-theme-alt="mitti">.*?<\/div>/s)?.[0] ?? '';
+      expect(mitti, focus).not.toContain('<b');
+      expect(mitti.match(/<span class="skill-set-title">/g), focus).toHaveLength(3);
     }
     const html = cvMarkup('engineering');
     const labels = ['Foundations', 'User experience', 'Delivery', 'Experimentation', 'Measurement', 'Go-to-market', 'Planning', 'Agents', 'Guardrails', 'Sharing'];

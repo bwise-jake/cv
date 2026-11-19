@@ -8,40 +8,40 @@
  */
 import { byOrder, experience, order, person, skills, ventures, visibleSkillSets } from '../src/content/cv';
 import { plainText } from '../src/content/rich';
-import type { Focus } from '../src/types';
+import type { Focus, ThemeId } from '../src/types';
 
 const BULLET_PREFIX = 24;
 const SET_PREFIX = 24;
 
-function employerNeedles(employers: typeof experience): string[] {
+function employerNeedles(employers: typeof experience, theme: ThemeId): string[] {
   return employers.flatMap((employer) => [
     plainText(employer.name),
     ...employer.jobs.flatMap((job) => [
       ...(job.title ? [job.title] : []),
-      ...job.bullets.map((b) => plainText(b).slice(0, BULLET_PREFIX)),
+      ...(job.bulletsByTheme?.[theme] ?? job.bullets).map((b) => plainText(b).slice(0, BULLET_PREFIX)),
     ]),
   ]);
 }
 
 /** A card's title, then the start of each keyword set it shows, for the cards in the focus's order. */
-function skillNeedles(focus: Focus): string[] {
+function skillNeedles(focus: Focus, theme: ThemeId): string[] {
   return byOrder(skills, order[focus].skills).flatMap((group) => [
-    group.title,
-    ...visibleSkillSets(group, focus).map(({ text }) => plainText(text).slice(0, SET_PREFIX)),
+    group.titleByTheme?.[theme] ?? group.title,
+    ...visibleSkillSets(group, focus, theme).map(({ text }) => plainText(text).slice(0, SET_PREFIX)),
   ]);
 }
 
 /** Ordered phrases a correctly ordered CV PDF must contain, built from src/content/cv.ts. */
-export function expectedOrder(focus: Focus = 'engineering'): string[] {
+export function expectedOrder(focus: Focus = 'engineering', theme: ThemeId = 'default'): string[] {
   return [
     person.name,
     'Summary',
     'Experience',
-    ...employerNeedles(experience),
+    ...employerNeedles(experience, theme),
     'Ventures',
-    ...employerNeedles(ventures),
+    ...employerNeedles(ventures, theme),
     'Skills',
-    ...skillNeedles(focus),
+    ...skillNeedles(focus, theme),
   ];
 }
 

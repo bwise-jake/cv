@@ -321,6 +321,10 @@ section + section {
 .ads-badges { display: none; }
 .role-alt { display: none; }
 .kicker-alt { display: none; }
+/* Company-tuned copy (render/cv.ts `themed`): one line per theme that has some. !important because themes style
+   these elements (skill headings, intros) with more specific selectors, which must never show both versions. */
+:root:not([data-theme="mitti"]) [data-theme-alt="mitti"],
+:root[data-theme="mitti"] [data-theme-std~="mitti"] { display: none !important; }
 
 h2 {
   font-family: var(--display);

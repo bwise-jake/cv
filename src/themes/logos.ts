@@ -5,6 +5,7 @@ import defaultMark from '../assets/brands/default.svg';
 import everlab from '../assets/brands/everlab.png';
 import finguide from '../assets/brands/finguide.png';
 import linear from '../assets/brands/linear.png';
+import mitti from '../assets/brands/mitti.svg';
 import notion from '../assets/brands/notion.png';
 import relevance from '../assets/brands/relevance.png';
 import remitly from '../assets/brands/remitly.svg';
@@ -26,5 +27,6 @@ export const themeLogos: Record<ThemeId, string> = {
   everlab,
   remitly,
   anduril,
+  mitti,
   finguide,
 };

@@ -11,6 +11,7 @@
  *   Everlab    Tobias, Saans, Saans Mono            → Newsreader, Schibsted Grotesk, DM Mono
  *   Remitly    Greycliff CF                         → Figtree
  *   Anduril    Helvetica Now Display                → Inter Tight
+ *   Mitti      Funnel Display + Geist               → same (open source)
  *   finguide   Hanken Grotesk (open source)               → same
  */
 
@@ -307,6 +308,43 @@
      site's square 2px corners. */
   --radius-avatar: 28px;
   --radius-logo: 2px;
+}
+
+/* ---------- Mitti ---------- */
+/* Sampled from mitti.com (2026-11-19): warm near-black #1c1714 for its type and dark sections, warm greys #454140,
+   #666260 and #e9e7e7, indigo #4a42c8 for its primary buttons, the yellow #ffc800 of its CTA on dark, and the
+   logo's swoosh, which runs indigo → cyan #5ecefa → cream #ffe8b0 → yellow. Funnel Display headings, Geist body. */
+:root[data-theme="mitti"] {
+  --paper: #ffffff;
+  --canvas: #f2f1f1;
+  --ink: #1c1714;
+  --ink-soft: #454140;
+  --ink-faint: #666260;
+  --line: #e9e7e7;
+  --accent: #4a42c8;
+  --accent-wash: #edecfa;
+  --tag: #454140;
+  --link: #4a42c8;
+
+  /* A flat near-black band like the site's hero, with the logo's swoosh along its foot (components below). */
+  --header-bg: #1c1714;
+  --header-noise-opacity: 0;
+  --paper-on-ink: #ffffff;
+  --muted-on-ink: #e9e7e7;
+  --line-on-ink: #454140;
+  /* The yellow of the site's CTA on dark: the kicker, the role dash and "Prepared for". */
+  --accent-on-ink: #ffc800;
+
+  --display: 'Funnel Display', 'Geist', system-ui, sans-serif;
+  /* The site sets no monospace: its labels are Geist, uppercase and tracked 0.1em (components below). */
+  --mono: var(--sans);
+  --name-weight: 700;
+  --name-tracking: -0.01em;
+  --heading-weight: 700;
+  --strong-weight: 600;
+  /* Rounded squares, like its 16px cards and 12px buttons. */
+  --radius-avatar: 18px;
+  --radius-logo: 6px;
 }
 
 /* ---------- finguide (dark) ---------- */
@@ -729,4 +767,71 @@
   .skill-group[data-skill="frontend"] h3 { background: #010101; color: #dff140; }
   .skill-group[data-skill="growth"] h3 { background: #505544; color: #ffffff; }
   .skill-group[data-skill="ai"] h3 { background: #8e9291; color: #010101; }
+}
+
+/* Mitti: the site's components. Its labels are Geist 600, uppercase, tracked 0.1em, so the CV's metadata is set the
+   same way; industry tags are outlined like its secondary buttons; the header ends in the logo's swoosh; the skills
+   cards are its light grey #f2f1f1 surface with 16px corners, each titled with a chip in one of its brand colours. */
+:root[data-theme="mitti"] {
+  header.identity::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #4a42c8 0%, #425dc8 20.7%, #5ecefa 47.6%, #86ccdd 62%, #ffe8b0 76.9%, #ffc800 100%);
+  }
+
+  .kicker,
+  .section-cont,
+  .job-meta,
+  .employer-span,
+  .prepared-for {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .kicker { font-size: 9.5px; }
+  .job-meta,
+  .employer-span { font-size: 9.5px; }
+  .contact { font-size: 11px; }
+
+  .tag {
+    display: inline-block;
+    margin-right: 2px;
+    padding: 0 6px;
+    border: 1px solid #bcb8b8;
+    border-radius: 6px;
+    color: var(--ink-soft);
+    font-size: 9.5px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 15px;
+    white-space: nowrap;
+  }
+  .tag + .tag::before { content: none; }
+  .employer-tags { line-height: 1.9; }
+
+  /* The advertised title and a Mitti kicker in every focus (content/cv.ts). */
+  .role-title:has(.role-alt[data-theme-role="mitti"]) .role-std { display: none; }
+  .role-alt[data-theme-role="mitti"] { display: inline; }
+  .kicker:has(.kicker-alt[data-theme-kicker="mitti"]) .kicker-std { display: none; }
+  .kicker-alt[data-theme-kicker="mitti"] { display: inline; }
+
+  --radius-card: 16px;
+  --skill-card: #f2f1f1;
+  .skill-group h3 {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+  /* By group, not position, since the focus reorders them. */
+  .skill-group[data-skill="frontend"] h3 { background: #4a42c8; color: #ffffff; }
+  .skill-group[data-skill="growth"] h3 { background: #ffc800; color: #1c1714; }
+  .skill-group[data-skill="ai"] h3 { background: #5ecefa; color: #1c1714; }
 }

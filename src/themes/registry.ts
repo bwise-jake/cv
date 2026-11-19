@@ -62,6 +62,13 @@ export const themes: Theme[] = [
     note: 'Inter + JetBrains Mono, standing in for Berkeley Mono',
   },
   {
+    id: 'mitti',
+    label: 'Mitti',
+    fonts: 'family=Funnel+Display:wght@400..800',
+    families: ['Funnel Display', 'Geist'],
+    note: 'Funnel Display + Geist, Mitti’s own open typefaces',
+  },
+  {
     id: 'notion',
     label: 'Notion',
     fonts: 'family=Inter:wght@400..700',
