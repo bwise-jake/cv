@@ -20,7 +20,7 @@ deliberately, not everywhere. OKLCH throughout, no pure `#000`/`#fff`.
 | `--ink-soft` | `oklch(39% 0.014 40)` | body copy |
 | `--ink-faint` | `oklch(52% 0.012 40)` | metadata, dates |
 | `--line` | `oklch(88% 0.012 40)` | hairline rules |
-| `--accent` | `oklch(46% 0.15 38)` | kicker, section numbers, links, skill labels, brand mark |
+| `--accent` | `oklch(46% 0.15 38)` | kicker, links, skill labels, brand mark |
 
 Contrast verified: ink-on-paper 17.2:1, ink-soft-on-paper 9.1:1,
 accent-on-paper 7.3:1. All clear WCAG AAA for normal text.
@@ -32,7 +32,7 @@ Every theme's small text is checked for WCAG AA (4.5:1) in a real browser by `np
   Grotesk/IBM Plex (reflex defaults) because it's the actual typeface of the
   named reference (Vercel) and reads precise without being a training-data
   default.
-- **Geist Mono** — dates, locations, contact details, section numbers,
+- **Geist Mono** — dates, locations, contact details,
   skill-group labels, industry tags. Used for anything that's metadata, not
   prose — the mono/sans split IS the hierarchy signal, not color or boxes.
 - Scale: name 28px/700, section h2 15px/600, employer name 15.5px/700, job
@@ -44,17 +44,13 @@ Every theme's small text is checked for WCAG AA (4.5:1) in a real browser by `np
 
 - Single column throughout (ATS parsers choke on multi-column text order), except Skills & stacks: three cards
   side by side, each one block in source order, so PDF text still reads card by card (`npm run pdf` checks it).
-- Numbered section markers (`01 Summary`, `02 Experience`...) in mono +
-  accent, replacing the generic tiny-uppercase-tracked-label pattern with a
-  deliberate system.
 - Sections are divided by a hairline (`--line`) above each one on the same sheet; the headings themselves are
   unruled. Employers within a section are divided by a lighter hairline (`--line` mixed 55% into the paper),
   so the sections still read as the main breaks.
 - The first employer under a heading has its date line on the heading's line (the block is pulled up 16px),
   which saves a line per section. Phones, where the dates move under the name, keep it on its own line.
-- Two text columns only: everything starts on the page's left edge, except section titles and
-  summary text, which share one column 26px in (section numbers are fixed 16px wide, the same as
-  the summary icons). Each employer header is one line of logo, name and tags (tags right-aligned),
+- Two text columns only: everything starts on the page's left edge, except summary text, which
+  starts 26px in, after its 16px icons. Section headings are unnumbered in every theme. Each employer header is one line of logo, name and tags (tags right-aligned),
   with the date line right-aligned above the tags; the intro, roles and bullets below it return to
   the left edge. Bullets hang their dash. No side-stripe
   borders anywhere (banned pattern).
@@ -116,7 +112,7 @@ the two-page layout hold everywhere.
 
 The controls (`src/render/controls.ts`) are typeset as a CV section headed **Version** in the
 margin beside the centred page, sticky so only the pages scroll. No card, blur or pills: a section
-head styled like "01 Summary", then ruled lines of lead word + value. *Style* is a listbox showing each
+head styled like "Summary", then ruled lines of lead word + value. *Style* is a listbox showing each
 company's app icon (`src/themes/logos.ts`) with names set in the theme's own typeface; *Emphasis* is
 three words (Engineering / Growth / Balanced, Engineering by default) with the chosen one underlined in the accent; then an
 *Export* is an ink Download PDF button. Keycaps for S / E / P sit in one column at the end of each label. Colours come from the active theme's
@@ -134,15 +130,15 @@ Summary/Skills items, and briefly washes newly emphasised phrases in the accent 
 Beyond tokens, some themes render elements as the company's own design-system components (all
 real text, so PDFs and ATS parsing are unaffected):
 
-| Theme | Industry tags | Section numbers | Other |
-|---|---|---|---|
-| Atlassian | ADS Tags: transparent, grey border, sentence case | Hidden (Confluence headings are unnumbered) | Confluence page: a full-width brand-blue band with 8px rounded bottom corners (bold label on the left, ADS badges on the right) over a white title block with a 96px photo, kicker as the byline, Summary as a white ADS card (surface fill, hairline border, xlarge radius) with 14px body text and a brand-blue ADS icon per item (angle-brackets, chart-trend-up, people-group, lightbulb), no section divider under the Summary card, Skills & stacks cards in ADS accent fills (blue, green, purple by group, `radius.xlarge`, titled by an uppercase label chip in the group's bolder accent on its subtlest fill), contact links in the ADS link colour, three ADS Tags with check icons under the role title |
-| Notion | Select-property pills, Notion's pastel palette | Hidden (Notion headings are unnumbered) | Page-style header: cover band, face as page icon, 32px title; emoji summary icons; skills cards in Notion's blue, green and purple block backgrounds with matching pill titles |
-| Linear | Outlined issue labels with coloured dots | Issue IDs (`JTB-1`) | |
-| Canva | Rounded purple chips | Default | |
-| Everlab | Uppercase mono, each after an orange square | Outlined mono "subhead" tag with a black square | Serif name only (headings stay sans, "continued" in two-tone grey), monochrome summary in a linen card, skills cards in the same linen, sub-headings as black mono labels after an orange square (no chip) |
-| Remitly | Warm-neutral pills (#EFECE7), 12px/600 tag style | Hidden | Summary in a 16px-radius Eucalyptus (#E5F6F9) card with teal icons, skills cards on the site's Eucalyptus, Wasabi and Macadamia backgrounds, sub-headings as pills by group: light teal, green, ube purple |
-| Anduril | Outlined 2px boxes, uppercase | Default (olive) | Squircle photo; metadata as the site's uppercase tracked sans labels; skills cards on its off-white #F1F0EA with 2px corners, sub-headings as chips by group: black with lime, olive, grey |
-| Mitti | Outlined 6px boxes, like its secondary buttons | Default (indigo) | 18px rounded-square photo; Funnel Display name and headings; metadata as the site's uppercase Geist labels tracked 0.1em; skills cards on its light grey #F2F1F1 with 16px corners, sub-headings as chips by group: indigo, yellow, cyan |
-| finguide | Neutral pill badges (#2E2E2E, hairline border) | Hidden | Rounded-square photo (16px); lime role dash and summary labels; skills cards on the raised neutral (#262626) with lime-wash title chips |
-| Default, Stripe, Relevance AI | Interpunct-separated mono text | Default | |
+| Theme | Industry tags | Other |
+|---|---|---|
+| Atlassian | ADS Tags: transparent, grey border, sentence case | Confluence page: a full-width brand-blue band with 8px rounded bottom corners (bold label on the left, ADS badges on the right) over a white title block with a 96px photo, kicker as the byline, Summary as a white ADS card (surface fill, hairline border, xlarge radius) with 14px body text and a brand-blue ADS icon per item (angle-brackets, chart-trend-up, people-group, lightbulb), no section divider under the Summary card, Skills & stacks cards in ADS accent fills (blue, green, purple by group, `radius.xlarge`, titled by an uppercase label chip in the group's bolder accent on its subtlest fill), contact links in the ADS link colour, three ADS Tags with check icons under the role title |
+| Notion | Select-property pills, Notion's pastel palette | Page-style header: cover band, face as page icon, 32px title; emoji summary icons; skills cards in Notion's blue, green and purple block backgrounds with matching pill titles |
+| Linear | Outlined issue labels with coloured dots | |
+| Canva | Rounded purple chips | |
+| Everlab | Uppercase mono, each after an orange square | Serif name only (headings stay sans, "continued" in two-tone grey), monochrome summary in a linen card, skills cards in the same linen, sub-headings as black mono labels after an orange square (no chip) |
+| Remitly | Warm-neutral pills (#EFECE7), 12px/600 tag style | Summary in a 16px-radius Eucalyptus (#E5F6F9) card with teal icons, skills cards on the site's Eucalyptus, Wasabi and Macadamia backgrounds, sub-headings as pills by group: light teal, green, ube purple |
+| Anduril | Outlined 2px boxes, uppercase | Squircle photo; metadata as the site's uppercase tracked sans labels; skills cards on its off-white #F1F0EA with 2px corners, sub-headings as chips by group: black with lime, olive, grey |
+| Mitti | Outlined 6px boxes, like its secondary buttons | 18px rounded-square photo; Funnel Display name and headings; metadata as the site's uppercase Geist labels tracked 0.1em; skills cards on its light grey #F2F1F1 with 16px corners, sub-headings as chips by group: indigo, yellow, cyan |
+| finguide | Neutral pill badges (#2E2E2E, hairline border) | Rounded-square photo (16px); lime role dash and summary labels; skills cards on the raised neutral (#262626) with lime-wash title chips |
+| Default, Stripe, Relevance AI | Interpunct-separated mono text | |

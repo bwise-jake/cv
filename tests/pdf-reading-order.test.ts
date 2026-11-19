@@ -19,8 +19,8 @@ describe('expectedOrder', () => {
 
 describe('expectedOrder with company-tuned bullets', () => {
   it('expects the Mitti bullets in the Mitti theme and the standard ones elsewhere', () => {
-    expect(expectedOrder('growth', 'mitti')).toContain('Tied experiments to lead');
-    expect(expectedOrder('growth', 'default')).not.toContain('Tied experiments to lead');
+    expect(expectedOrder('growth', 'mitti')).toContain("Rebuilt Australia's desk");
+    expect(expectedOrder('growth', 'default')).not.toContain("Rebuilt Australia's desk");
   });
 });
 

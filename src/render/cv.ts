@@ -7,12 +7,9 @@ import type { Focus, ThemeId } from '../types';
 /** Notion-theme page icons for the summary items (shown instead of the line icons). */
 const SUMMARY_EMOJI: Record<string, string> = { growth: '📈', engineering: '💻', founder: '🚀', customer: '🤝' };
 
-/**
- * Section number, plus a Linear-style issue ID ("JTB-1") that the Linear theme shows instead.
- * Both are real text; themes hide one with display:none so PDFs only carry the visible one.
- */
-const sectionHead = (num: string, title: string, cont = false) =>
-  `<div class="section-head"><span class="section-num"><span class="num-std">${num}</span><span class="num-issue">JTB-${Number(num)}</span></span><h2>${title}${
+/** A section heading (unnumbered in every theme). */
+const sectionHead = (title: string, cont = false) =>
+  `<div class="section-head"><h2>${title}${
     cont ? ' <span class="section-cont">continued</span>' : ''
   }</h2></div>`;
 
@@ -120,7 +117,7 @@ function summarySection(focus: Focus) {
     .join('');
   return `
   <section>
-    ${sectionHead('01', 'Summary')}
+    ${sectionHead('Summary')}
     <ul class="summary-list">${items}</ul>
   </section>`;
 }
@@ -194,7 +191,7 @@ function skillsSection(focus: Focus) {
     .join('');
   return `
   <section>
-    ${sectionHead('04', 'Skills &amp; stacks')}
+    ${sectionHead('Skills &amp; stacks')}
     <div class="skill-grid">${groups}</div>
   </section>`;
 }
@@ -207,18 +204,18 @@ export function cvMarkup(focus: Focus, recipient: string | null = null): string 
   ${header(focus, recipient)}
   ${summarySection(focus)}
   <section>
-    ${sectionHead('02', 'Experience')}
+    ${sectionHead('Experience')}
     ${employerBlock(intuit)}
   </section>
 </div>
 
 <div class="page">
   <section>
-    ${sectionHead('02', 'Experience', true)}
+    ${sectionHead('Experience', true)}
     ${earlier.map(employerBlock).join('')}
   </section>
   <section>
-    ${sectionHead('03', 'Ventures')}
+    ${sectionHead('Ventures')}
     ${ventures.map(employerBlock).join('')}
   </section>
   ${skillsSection(focus)}

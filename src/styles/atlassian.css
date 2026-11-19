@@ -92,7 +92,6 @@
   }
 
   /* Confluence headings aren't numbered, and a number isn't a status, so no Lozenge here. */
-  .section-num { display: none; }
 }
 
 /* Atlassian: Confluence page anatomy. A cover band over the page title, a byline under it,

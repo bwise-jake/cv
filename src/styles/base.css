@@ -291,20 +291,10 @@ section + section {
   page-break-after: avoid;
 }
 
-.section-num {
-  /* Fixed width (= summary icon) so every section title starts on the summary text column. */
-  flex: 0 0 16px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--accent);
-  font-weight: 500;
-}
-
 /* Mono metadata keeps its designed sizes: mono fonts' x-heights vary more, and normalising them
    made the wider ones (DM Mono, Source Code Pro) wrap. */
 .kicker,
 .contact,
-.section-num,
 .section-cont,
 .job-meta,
 .employer-span,
@@ -313,8 +303,6 @@ section + section {
   font-size-adjust: none;
 }
 
-/* Linear shows issue IDs instead (themes.css); every other theme shows the number. */
-.num-issue { display: none; }
 .summary-emoji { display: none; }
 .summary-ads-icon { display: none; }
 /* The Atlassian theme's ADS badges and advertised role title (atlassian.css). */

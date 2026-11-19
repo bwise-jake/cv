@@ -398,7 +398,7 @@
 }
 
 /* Notion: select-property pills in Notion's pastel palette, a page-style header (cover band,
-   page icon overlapping it, big title), emoji page icons and no section numbers. */
+   page icon overlapping it, big title), emoji page icons. */
 :root[data-theme="notion"] {
   .tag {
     padding: 0 6px;
@@ -431,7 +431,6 @@
   .avatar-frame { margin-top: -46px; }
   h1 { font-size: 32px; }
 
-  .section-num { display: none; }
 
   /* Skills cards in Notion's block background colours (blue, green, purple), titled in the matching select pill. */
   .skill-group[data-skill="frontend"] { --skill-card: #e7f3f8; --skill-chip: #d3e5ef; }
@@ -450,7 +449,7 @@
   }
 }
 
-/* Linear: issue labels (outlined, coloured dot) and issue IDs for section numbers. */
+/* Linear: issue labels (outlined, coloured dot). */
 :root[data-theme="linear"] {
   .tag {
     padding: 0 7px 0 6px;
@@ -483,9 +482,6 @@
   .tag:nth-child(7n + 6) { --dot: #eb5757; }
   .tag:nth-child(7n + 7) { --dot: #bb87fc; }
 
-  .num-std { display: none; }
-  .num-issue { display: inline; }
-  .section-num { flex: none; color: var(--ink-faint); }
 }
 
 /* Canva: soft rounded chips in Canva purple. */
@@ -504,8 +500,7 @@
   }
 }
 
-/* Everlab: the site's mono labels. Section numbers become its outlined "subhead" tag (black
-   square, uppercase mono, 8px radius); industry tags take the orange square bullet the feature
+/* Everlab: the site's mono labels. Industry tags take the orange square bullet the feature
    cards use; the summary sits in a monochrome linen card; headings are Saans (sans) with the
    site's two-tone grey continuation, and only the name is the Tobias serif. */
 :root[data-theme="everlab"] {
@@ -530,27 +525,6 @@
   .role-title::before {
     width: 7px;
     height: 7px;
-  }
-
-  .section-head { align-items: center; }
-  .section-num {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 2px 6px;
-    border: 1px solid #c2c2c2;
-    border-radius: 6px;
-    color: var(--ink);
-    font-size: 9px;
-    line-height: 12px;
-    font-variant-numeric: tabular-nums;
-  }
-  .section-num::before {
-    content: "";
-    width: 5px;
-    height: 5px;
-    background: #000000;
   }
 
   .employer-tags { letter-spacing: 0.04em; }
@@ -601,7 +575,7 @@
   }
 }
 
-/* finguide: neutral pill badges for industry tags and unnumbered headings. Lime stays an accent;
+/* finguide: neutral pill badges for industry tags. Lime stays an accent;
    violet text is not used, so lime and violet never touch. */
 :root[data-theme="finguide"] {
   .tag {
@@ -623,7 +597,6 @@
   .tag + .tag::before { content: none; }
   .employer-tags { line-height: 1.9; }
 
-  .section-num { display: none; }
 
   /* Skills cards on the raised neutral surface, so lime stays an accent; the title chip is the lime wash. */
   --skill-card: #262626;
@@ -632,7 +605,7 @@
 }
 
 /* Remitly: the site's components. Industry tags are its 12px/600 tag pills on the medium warm neutral;
-   section headings are unnumbered, like the site's; the summary is a 16px-radius card on the pale
+   the summary is a 16px-radius card on the pale
    "Eucalyptus" theme background with teal icons; skill sub-headings are pills in one brand colour per group. */
 :root[data-theme="remitly"] {
   .tag {
@@ -653,7 +626,6 @@
   .tag + .tag::before { content: none; }
   .employer-tags { line-height: 1.9; }
 
-  .section-num { display: none; }
 
   ul.summary-list {
     padding: 12px 14px;
