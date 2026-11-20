@@ -1,4 +1,5 @@
 import anduril from '../assets/brands/anduril.svg';
+import anthropic from '../assets/brands/anthropic.svg';
 import atlassian from '../assets/brands/atlassian.svg';
 import canva from '../assets/brands/canva.png';
 import defaultMark from '../assets/brands/default.svg';
@@ -27,6 +28,7 @@ export const themeLogos: Record<ThemeId, string> = {
   everlab,
   remitly,
   anduril,
+  anthropic,
   mitti,
   finguide,
 };

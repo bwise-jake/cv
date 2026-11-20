@@ -8,4 +8,6 @@ exports
 docs/atlassian/
 # Mitti application notes (job description): private, never committed
 docs/mitti/
+# Anthropic application notes (job description): private, never committed
+docs/anthropic/
 plans/

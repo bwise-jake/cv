@@ -92,7 +92,7 @@ uses a blend mode that makes Apple's PDF renderer flatten gradients).
 
 ## Company themes (interactive version)
 
-The default design above is one of twelve themes. The others re-skin the same layout by overriding
+The default design above is one of thirteen themes. The others re-skin the same layout by overriding
 tokens only (`src/styles/themes.css`); no theme changes the structure, so ATS text order and
 the two-page layout hold everywhere.
 
@@ -107,6 +107,7 @@ the two-page layout hold everywhere.
 | Everlab | Newsreader + Schibsted Grotesk + DM Mono (for Tobias, Saans, Saans Mono) | black and grey; #FF6A1A squares only | near-black, serif name, muted-white mono kicker |
 | Remitly | Figtree (for Greycliff CF), no mono | main indigo #16273C; teal #397882, light teal #BFE6EC, green #42C888, ube #743D95 | flat main indigo #16273C, Agave #96D0D8 kicker and role dash |
 | Anduril | Inter Tight (for Helvetica Now Display), no mono | near-black #010101 and olive #505544; lime #DFF140 on black only | flat near-black #010101, lime kicker and role dash |
+| Anthropic | Poppins + Lora + DM Mono (for Anthropic Sans, Serif and Mono) | clay #C6613F (brand #D97757) on ivory #FAF9F5, slate #141413 | light warm panel #F0EEE6, slate type, grey mono kicker, clay role dash |
 | Mitti | Funnel Display + Geist (both open), no mono | indigo #4A42C8 on warm near-black #1C1714; yellow #FFC800, cyan #5ECEFA | flat near-black #1C1714 with the logo's indigo → cyan → yellow swoosh along its foot, yellow kicker and role dash |
 | finguide | Hanken Grotesk (finguide's own, open) | lime #C0F43E on Ink | dark page (#1C1C1C card on #080808), Ink header band, lime role dash and labels |
 
@@ -139,6 +140,7 @@ real text, so PDFs and ATS parsing are unaffected):
 | Everlab | Uppercase mono, each after an orange square | Serif name only (headings stay sans, "continued" in two-tone grey), monochrome summary in a linen card, skills cards in the same linen, sub-headings as black mono labels after an orange square (no chip) |
 | Remitly | Warm-neutral pills (#EFECE7), 12px/600 tag style | Summary in a 16px-radius Eucalyptus (#E5F6F9) card with teal icons, skills cards on the site's Eucalyptus, Wasabi and Macadamia backgrounds, sub-headings as pills by group: light teal, green, ube purple |
 | Anduril | Outlined 2px boxes, uppercase | Squircle photo; metadata as the site's uppercase tracked sans labels; skills cards on its off-white #F1F0EA with 2px corners, sub-headings as chips by group: black with lime, olive, grey |
+| Anthropic | Its secondary buttons: #F5F4ED fill, #D1CFC5 hairline, 8px corners | Serif prose under sans headings and mono metadata, as on the site; skills cards on its pastel tiles (oat #E3DACC, cactus #BCD1CA, heather #CBCADB) titled with slate chips |
 | Mitti | Outlined 6px boxes, like its secondary buttons | 18px rounded-square photo; Funnel Display name and headings; metadata as the site's uppercase Geist labels tracked 0.1em; skills cards on its light grey #F2F1F1 with 16px corners, sub-headings as chips by group: indigo, yellow, cyan |
 | finguide | Neutral pill badges (#2E2E2E, hairline border) | Rounded-square photo (16px); lime role dash and summary labels; skills cards on the raised neutral (#262626) with lime-wash title chips |
 | Default, Stripe, Relevance AI | Interpunct-separated mono text | |

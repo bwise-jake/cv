@@ -117,20 +117,20 @@ export const headlines: Record<Focus, Headline> = {
   balanced: {
     kicker: '10+ yrs · Ex-Intuit · 60+ experiments · $5.5m+ incremental LTV',
     role: 'Frontend Growth Engineer',
-    roleByTheme: { anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader' },
+    roleByTheme: { anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer' },
     kickerByTheme: { mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV' },
   },
   growth: {
     kicker: '$5.5m+ incremental LTV · 60+ experiments · Ex-Intuit',
     role: 'Senior Growth Engineer',
-    roleByTheme: { anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader' },
+    roleByTheme: { anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer' },
     kickerByTheme: { mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV' },
   },
   engineering: {
     kicker: '10+ Years’ Experience · React & TypeScript · Design Systems',
     kickerByTheme: { anduril: '10+ Years’ Experience · React & TypeScript · Systems Design', mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV' },
     role: 'Senior Frontend Engineer',
-    roleByTheme: { atlassian: 'Senior Frontend Software Engineer', anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader' },
+    roleByTheme: { atlassian: 'Senior Frontend Software Engineer', anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer' },
   },
 };
 
@@ -336,7 +336,7 @@ export const ventures: Employer[] = [
     name: '[bwise-jake.github.io/cv/](https://bwise-jake.github.io/cv/)',
     repo: 'https://github.com/bwise-jake/cv',
     span: 'Started Sep 2026',
-    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 36 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
+    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 39 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
     introByTheme: {
       mitti: 'Built this open-source CV as a TypeScript/Vite app that tailors its theme and copy to each company.',
     },

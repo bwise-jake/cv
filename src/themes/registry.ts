@@ -27,6 +27,13 @@ export const themes: Theme[] = [
     note: 'Inter Tight, standing in for Helvetica Now Display',
   },
   {
+    id: 'anthropic',
+    label: 'Anthropic',
+    fonts: 'family=Poppins:wght@400;500;600;700&family=Lora:ital,wght@0,400..600;1,400&family=DM+Mono:wght@400;500',
+    families: ['Poppins', 'Lora', 'DM Mono'],
+    note: 'Poppins + Lora + DM Mono, standing in for Anthropic Sans, Serif & Mono',
+  },
+  {
     id: 'atlassian',
     label: 'Atlassian',
     fonts: 'family=Inter:wght@400..700&family=Outfit:wght@700',

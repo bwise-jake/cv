@@ -11,6 +11,7 @@
  *   Everlab    Tobias, Saans, Saans Mono            → Newsreader, Schibsted Grotesk, DM Mono
  *   Remitly    Greycliff CF                         → Figtree
  *   Anduril    Helvetica Now Display                → Inter Tight
+ *   Anthropic  Anthropic Sans, Serif, Mono          → Poppins + Lora (its brand guidelines' fallbacks), DM Mono
  *   Mitti      Funnel Display + Geist               → same (open source)
  *   finguide   Hanken Grotesk (open source)               → same
  */
@@ -308,6 +309,46 @@
      site's square 2px corners. */
   --radius-avatar: 28px;
   --radius-logo: 2px;
+}
+
+/* ---------- Anthropic ---------- */
+/* Sampled from anthropic.com/careers (2026-11-20): ivory #faf9f5 page, slate #141413 type, the warm grey scale
+   (#f0eee6, #e8e6dc, #5e5d59, #87867f), clay #d97757 as the brand accent and #c6613f as its interactive shade, which
+   is the one dark enough for small text. Headings and UI are Anthropic Sans (700), paragraphs Anthropic Serif, small
+   labels Anthropic Mono: 11px, uppercase, lightly tracked, in grey #5e5d59. */
+:root[data-theme="anthropic"] {
+  --paper: #faf9f5;
+  --canvas: #e8e6dc;
+  --ink: #141413;
+  --ink-soft: #3d3d3a;
+  --ink-faint: #5e5d59;
+  --line: #e8e6dc;
+  --accent: #c6613f;
+  --accent-wash: #f5e6df;
+  --tag: #3d3d3a;
+  --link: #c6613f;
+
+  /* A light header like the site's "ivory medium" panels (#f0eee6): slate type, grey mono kicker, clay role dash. */
+  --header-bg: #f0eee6;
+  --header-noise-opacity: 0;
+  --paper-on-ink: #141413;
+  --muted-on-ink: #3d3d3a;
+  --line-on-ink: #d1cfc5;
+  --accent-on-ink: #c6613f;
+  --cta-bg: #141413;
+  --cta-fg: #faf9f5;
+
+  /* Sans for headings and names, serif for the prose, mono for metadata, as on the site. The site's headings are 700;
+     Poppins runs heavier than Anthropic Sans, so 600 matches it by eye. */
+  --display: 'Poppins', 'Arial', system-ui, sans-serif;
+  --sans: 'Lora', 'Georgia', serif;
+  --mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --name-weight: 600;
+  --name-tracking: -0.01em;
+  --heading-weight: 600;
+  --strong-weight: 600;
+  --radius-avatar: 16px;
+  --radius-logo: 8px;
 }
 
 /* ---------- Mitti ---------- */
@@ -806,4 +847,52 @@
   .skill-group[data-skill="frontend"] h3 { background: #4a42c8; color: #ffffff; }
   .skill-group[data-skill="growth"] h3 { background: #ffc800; color: #1c1714; }
   .skill-group[data-skill="ai"] h3 { background: #5ecefa; color: #1c1714; }
+}
+
+/* Anthropic: the site's components. Metadata is its mono label style; industry tags are its secondary buttons
+   (#f5f4ed fill, #d1cfc5 hairline, 8px corners); the skills cards take the pastel tiles it sets behind its
+   illustrations (oat, cactus, heather), each titled with a chip styled like its slate primary button. */
+:root[data-theme="anthropic"] {
+  .contact { font-family: var(--display); }
+  /* The headline for the Applied AI Architect role, in every focus (content/cv.ts). */
+  .role-title:has(.role-alt[data-theme-role="anthropic"]) .role-std { display: none; }
+  .role-alt[data-theme-role="anthropic"] { display: inline; }
+
+  .kicker { color: #5e5d59; font-size: 10px; font-weight: 400; letter-spacing: 0.02em; }
+  .job-meta,
+  .employer-span { font-size: 9.5px; }
+
+  .tag {
+    display: inline-block;
+    margin-right: 2px;
+    padding: 0 7px;
+    border: 1px solid #d1cfc5;
+    border-radius: 8px;
+    background: #f5f4ed;
+    color: #3d3d3a;
+    font-family: var(--display);
+    font-size: 9.5px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 16px;
+    white-space: nowrap;
+  }
+  .tag + .tag::before { content: none; }
+  .employer-tags { line-height: 1.9; }
+
+  --radius-card: 12px;
+  .skill-group h3 {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: #141413;
+    color: #faf9f5;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  /* By group, not position, since the focus reorders them. */
+  .skill-group[data-skill="frontend"] { --skill-card: #e3dacc; }
+  .skill-group[data-skill="growth"] { --skill-card: #bcd1ca; }
+  .skill-group[data-skill="ai"] { --skill-card: #cbcadb; }
 }
