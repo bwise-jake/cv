@@ -371,13 +371,13 @@ export const skills: SkillGroup[] = [
     titleByTheme: { mitti: 'Martech & experimentation', uber: 'Growth & experimentation' },
     skills: [
       'A/B Testing, Experiment Design & Analysis, Experimentation Infrastructure, CRO, UX Design & Wireframing, Holdout Testing, Multi-Armed Bandit Testing, Personalisation',
-      'Analytics Instrumentation, Funnel Analytics, Behavioural Analytics, Session Replay, Event Tracking, Incrementality & LTV Measurement',
+      'Analytics Instrumentation, Funnel Analytics, Behavioural Analytics, Session Replay, Event Tracking, Incrementality & LTV Measurement, Excel & Google Sheets',
       'Paid Performance Measurement, SEO, Regional GTM Launches, Impact/Effort Prioritisation',
     ],
     skillsByTheme: {
       mitti: [
         'A/B Testing, Experimentation Roadmaps, Experimentation Infrastructure, CRO, Holdout Testing, Multi-Armed Bandit Testing, Personalisation, Test Design & Success Criteria',
-        'Funnel Analytics, MQL & SQL Tracking, Analytics Instrumentation, Behavioural Analytics, Session Replay, Event Tracking, Incrementality & LTV Measurement',
+        'Funnel Analytics, MQL & SQL Tracking, Analytics Instrumentation, Behavioural Analytics, Session Replay, Event Tracking, Incrementality & LTV Measurement, Excel & Google Sheets',
         'Salesforce, HubSpot, Segment, Braze, Lifecycle Automation, Trigger-Based Outreach, Abandoned-Cart Flows, SEO, Regional GTM Launches, Impact/Effort Prioritisation',
       ],
     },
