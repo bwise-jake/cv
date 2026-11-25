@@ -117,20 +117,20 @@ export const headlines: Record<Focus, Headline> = {
   balanced: {
     kicker: '10+ yrs · Ex-Intuit · 60+ experiments · $5.5m+ incremental LTV',
     role: 'Frontend Growth Engineer',
-    roleByTheme: { anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer' },
-    kickerByTheme: { mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV' },
+    roleByTheme: { anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer', uber: 'Growth Strategy & Experimentation Lead' },
+    kickerByTheme: { mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV', uber: '$5.5m+ incremental LTV · 60+ experiments · 9+ APAC markets' },
   },
   growth: {
     kicker: '$5.5m+ incremental LTV · 60+ experiments · Ex-Intuit',
     role: 'Senior Growth Engineer',
-    roleByTheme: { anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer' },
-    kickerByTheme: { mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV' },
+    roleByTheme: { anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer', uber: 'Growth Strategy & Experimentation Lead' },
+    kickerByTheme: { mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV', uber: '$5.5m+ incremental LTV · 60+ experiments · 9+ APAC markets' },
   },
   engineering: {
     kicker: '10+ Years’ Experience · React & TypeScript · Design Systems',
-    kickerByTheme: { anduril: '10+ Years’ Experience · React & TypeScript · Systems Design', mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV' },
+    kickerByTheme: { anduril: '10+ Years’ Experience · React & TypeScript · Systems Design', mitti: '10+ yrs in marketing technology · 60+ experiments · $5.5m+ incremental LTV', uber: '$5.5m+ incremental LTV · 60+ experiments · 9+ APAC markets' },
     role: 'Senior Frontend Engineer',
-    roleByTheme: { atlassian: 'Senior Frontend Software Engineer', anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer' },
+    roleByTheme: { atlassian: 'Senior Frontend Software Engineer', anduril: 'Senior Software Engineering Manager', mitti: 'Growth Technology Leader', anthropic: 'Applied AI · Growth Engineer', uber: 'Growth Strategy & Experimentation Lead' },
   },
 };
 
@@ -142,16 +142,20 @@ export const summary: SummaryItem[] = [
     textByTheme: {
       mitti:
         'Engineer / marketer who led web growth for QuickBooks and Mailchimp across APAC ([[50m+ visitors p/a|b,g]]). Owned the web funnel, CRO and roadmap, scoping and building [[60+ experiments|b,g]] across multiple channels, measured on sign-ups, SQLs, activation and SKU upsells, driving [[$5.5m+ in incremental LTV|b,g,e]].',
+      uber:
+        'Growth lead who owned the web funnel, experimentation roadmap and regional launches for QuickBooks and Mailchimp across APAC ([[50m+ visitors p/a|b,g]]). Prioritised opportunities by impact and effort, then took them from hypothesis to rollout: [[60+ experiments|b,g]], measured on sign-ups, activation and SKU upsells, driving [[$5.5m+ in incremental LTV|b,g,e]].',
     },
   },
   {
     id: 'engineering',
     label: 'Engineering',
-    labelByTheme: { mitti: 'Technology' },
+    labelByTheme: { mitti: 'Technology', uber: 'Hands-on' },
     text: 'Senior [[frontend engineer with 10+ years|b,e]] of [[enterprise|e]]/agency experience, shipping [[performant, decoupled, testable code in React|b,e]] on high-traffic and revenue-critical sites with a focus on reliability. Maximises velocity through tailored [[agentic workflows|b,e]] gated by [[automated tests|e]] and [[human-in-the-loop|e]] code reviews.',
     textByTheme: {
       mitti:
         'Hands-on builder who has shipped [[performant, testable React|b,e]] on high-traffic, revenue-critical sites at Intuit and an agency. Uses AI daily and builds [[AI-powered workflows that ship|b,g]], gated by [[automated tests|e]] and [[human-in-the-loop|e]] review, to scale a team\'s output.',
+      uber:
+        'Configures and ships the work directly: experiments, [[analytics instrumentation|b,g]], lifecycle automation and the web front end. Uses AI daily, building [[AI-powered workflows|b,g]] that speed up analysis and delivery, gated by automated tests and human review.',
     },
   },
   {
@@ -166,11 +170,13 @@ export const summary: SummaryItem[] = [
   {
     id: 'customer',
     label: 'Customer-focused',
-    labelByTheme: { mitti: 'Customer' },
+    labelByTheme: { mitti: 'Customer', uber: 'Customer' },
     text: 'Shapes UI from [[user evidence|b,g,e]]: uses analytics and session recordings to pinpoint and remove user friction. Translates sales and support feedback into tailored full-funnel personalised omni-channel experiences, resulting in compounding improvements measured by behavioural signals, heuristic tracking and automated experience metrics.',
     textByTheme: {
       mitti:
         'Uses analytics, session recordings, and sales and support feedback to find funnel leaks, then combines that evidence with [[martech and customer data|b,g]] to build personalised full-funnel journeys, measured by behavioural signals and automated experience metrics.',
+      uber:
+        'Finds where customers drop off using analytics, session recordings and support feedback, then segments and personalises their journeys with [[customer data (Segment, Salesforce)|b,g]] and lifecycle campaigns, measured by behavioural signals.',
     },
   },
 ];
@@ -186,6 +192,8 @@ export const experience: Employer[] = [
     introByTheme: {
       mitti:
         'Growth lead within Intuit\'s marketing organisation, promoted 3× from Senior Web Development Manager to Senior Staff Growth Engineer. Owned the [[web funnel|b,g]], experimentation, CRO and SEO for QuickBooks Australia, then QuickBooks and Mailchimp in 9+ countries across APAC, building a pipeline of [[MQLs and SQLs|b,g]] alongside self-serve sign-ups. [[Mentored senior marketers|b,g]] in digital marketing and sales, training them in analytics, web and CRO.',
+      uber:
+        'Growth lead within Intuit\'s marketing organisation, promoted 3× from Senior Web Development Manager to Senior Staff Growth Engineer. Owned the [[web funnel|b,g]], experimentation, CRO and SEO for QuickBooks Australia, then QuickBooks and Mailchimp in 9+ countries across APAC, working with Product, Marketing, Finance and Sales partners to turn strategy into launched, measured initiatives. [[Mentored senior marketers|b,g]] in analytics, web and CRO.',
     },
     long: true,
     jobs: [
@@ -336,7 +344,7 @@ export const ventures: Employer[] = [
     name: '[bwise-jake.github.io/cv/](https://bwise-jake.github.io/cv/)',
     repo: 'https://github.com/bwise-jake/cv',
     span: 'Started Sep 2026',
-    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 39 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
+    intro: 'Built this CV as a [[framework-free TypeScript/Vite|b,e]] app with per-company themes and an emphasis toggle that reorders it by role. [[Vitest tests and CI|e]] check every deploy, keeping all 42 PDFs at 2 pages, in reading order and passing [[WCAG AA contrast|e]].',
     introByTheme: {
       mitti: 'Built this open-source CV as a TypeScript/Vite app that tailors its theme and copy to each company.',
     },
@@ -360,7 +368,7 @@ export const skills: SkillGroup[] = [
   {
     id: 'growth',
     title: 'Analytics & experimentation',
-    titleByTheme: { mitti: 'Martech & experimentation' },
+    titleByTheme: { mitti: 'Martech & experimentation', uber: 'Growth & experimentation' },
     skills: [
       'A/B Testing, Experiment Design & Analysis, Experimentation Infrastructure, CRO, UX Design & Wireframing, Holdout Testing, Multi-Armed Bandit Testing, Personalisation',
       'Analytics Instrumentation, Funnel Analytics, Behavioural Analytics, Session Replay, Event Tracking, Incrementality & LTV Measurement',
@@ -405,6 +413,31 @@ export const skills: SkillGroup[] = [
     logosLabel: 'AI-Native Workflows platforms',
   },
 ];
+
+/**
+ * One company's tuned copy as the base for another's: every summary item, intro, bullet list and skills card the
+ * target has no version of takes the source's. The Uber (Rider Growth) version starts from the reviewed Mitti growth
+ * copy and only overrides what that role needs (headline, summary, Intuit intro, skills title), set inline above.
+ */
+function inheritCopy(from: ThemeId, to: ThemeId) {
+  const copy = <T>(map: Partial<Record<ThemeId, T>> | undefined) => {
+    if (map && map[from] !== undefined && map[to] === undefined) map[to] = map[from];
+  };
+  for (const item of summary) {
+    copy(item.labelByTheme);
+    copy(item.textByTheme);
+  }
+  for (const employer of [...experience, ...ventures]) {
+    copy(employer.introByTheme);
+    for (const job of employer.jobs) copy(job.bulletsByTheme);
+  }
+  for (const group of skills) {
+    copy(group.titleByTheme);
+    copy(group.skillsByTheme);
+    copy(group.titlesByTheme);
+  }
+}
+inheritCopy('mitti', 'uber');
 
 /** Order of summary items and skill groups per focus. Balanced matches the original CV. */
 export const order: Record<Focus, { summary: SummaryItem['id'][]; skills: SkillGroup['id'][] }> = {

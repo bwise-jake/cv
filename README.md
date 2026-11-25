@@ -2,7 +2,7 @@
 
 A two-page A4 CV that restyles itself for the company reading it.
 
-- **Company themes**: Default, Anduril, Anthropic, Atlassian, Canva, Everlab, finguide (Jake's own app), Linear, Mitti, Notion, Relevance AI, Remitly and Stripe. Colours were
+- **Company themes**: Default, Anduril, Anthropic, Atlassian, Canva, Everlab, finguide (Jake's own app), Linear, Mitti, Notion, Relevance AI, Remitly, Stripe and Uber. Colours were
   sampled from each company's live site; proprietary typefaces are swapped for the closest open
   font (see the header of `src/styles/themes.css`).
 - **Focus modes**: Engineering (the default), Growth, Balanced. Each changes which phrases are bold, the order
@@ -38,7 +38,7 @@ npm install
 npm run dev        # http://localhost:5173
 npm test           # content/state unit tests
 npm run lint       # Atlassian Design System Stylelint (Atlassian theme) + ESLint plugins
-npm run pdf        # builds, renders all 39 theme × focus PDFs to exports/, asserts each is 2 pages
+npm run pdf        # builds, renders all 42 theme × focus PDFs to exports/, asserts each is 2 pages
 npm run og         # renders the link-preview intro slide (finguide style) to public/og-image.jpg
 npm run ads:tokens # regenerate src/styles/ads-tokens.css from @atlaskit/tokens
 ```
@@ -86,5 +86,5 @@ checked against `src/types.ts` by `tests/prepaint.test.ts`.
 ## Deploy
 
 `.github/workflows/deploy.yml` builds and publishes `dist/` to GitHub Pages on every push to `main`
-(enable Pages → "GitHub Actions" in the repo settings once). The 39 PDFs from the PDF check ship with it under
+(enable Pages → "GitHub Actions" in the repo settings once). The 42 PDFs from the PDF check ship with it under
 `dist/pdf/`, for the Download PDF button on touch devices.

@@ -103,6 +103,13 @@ export const themes: Theme[] = [
     families: ['Inter Tight', 'Source Code Pro'],
     note: 'Inter Tight, standing in for Söhne',
   },
+  {
+    id: 'uber',
+    label: 'Uber',
+    fonts: 'family=Figtree:wght@400..700',
+    families: ['Figtree'],
+    note: 'Figtree, standing in for Uber Move & Uber Move Text',
+  },
 ];
 
 export const getTheme = (id: ThemeId): Theme => themes.find((t) => t.id === id) ?? themes[0];

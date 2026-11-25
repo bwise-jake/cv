@@ -65,7 +65,7 @@ describe('cvMarkup', () => {
 
   it('carries the Mitti-tuned summary, intro and bullets beside the standard ones', () => {
     const html = cvMarkup('growth');
-    expect(html).toContain('<span data-theme-std="mitti">');
+    expect(html).toContain('<span data-theme-std="mitti uber">');
     expect(html).toMatch(/<span data-theme-alt="mitti">Engineer \/ marketer who led web growth/);
     expect(html).toMatch(/<p class="employer-intro" data-theme-alt="mitti">Growth lead within Intuit's marketing organisation/);
     expect(html).toMatch(/<ul class="bullets" data-theme-alt="mitti">(?:(?!<\/ul>).)*Tracked <b class="kw" data-f="balanced growth">SQLs in Salesforce/s);
@@ -83,7 +83,20 @@ describe('cvMarkup', () => {
       expect(html).toContain('<b class="summary-label" data-theme-alt="mitti">Technology</b>');
       expect(html).toMatch(/<div class="skill-list" data-theme-alt="mitti">.*Salesforce, HubSpot, Segment/s);
       expect(html).toContain('<h3 data-theme-alt="mitti">Martech &amp; experimentation</h3>');
-      expect(html).toContain('<h3 data-theme-std="mitti">Analytics &amp; experimentation</h3>');
+      expect(html).toContain('<h3 data-theme-std="mitti uber">Analytics &amp; experimentation</h3>');
+    }
+  });
+
+  it('carries the Uber Rider Growth copy, built on the Mitti copy, in every focus', () => {
+    for (const focus of ['balanced', 'growth', 'engineering'] as const) {
+      const html = cvMarkup(focus);
+      expect(html).toContain('data-theme-role="uber">Growth Strategy &amp; Experimentation Lead</span>');
+      expect(html).toContain('data-theme-kicker="uber">$5.5m+ incremental LTV · 60+ experiments · 9+ APAC markets</span>');
+      expect(html).toMatch(/<span data-theme-alt="uber">Growth lead who owned the web funnel, experimentation roadmap and regional launches/);
+      expect(html).toContain('<b class="summary-label" data-theme-alt="uber">Hands-on</b>');
+      expect(html).toContain('<h3 data-theme-alt="uber">Growth &amp; experimentation</h3>');
+      // Inherited from the Mitti version: the R.M.Williams lifecycle bullet.
+      expect(html).toMatch(/<ul class="bullets" data-theme-alt="uber"><li>Built <b class="kw" data-f="balanced growth">marketing and lifecycle automation/);
     }
   });
 
@@ -136,7 +149,7 @@ describe('cvMarkup', () => {
     const html = cvMarkup('engineering');
     expect(html).toContain('<span class="tag">Open source</span>');
     expect(html).toContain('Started Sep 2026');
-    expect(html).toContain('keeping all 39 PDFs at 2 pages, in reading order');
+    expect(html).toContain('keeping all 42 PDFs at 2 pages, in reading order');
     expect(html).toContain('passing <b class="kw" data-f="engineering">WCAG AA contrast</b>');
     expect(html).not.toContain('7 company themes');
     expect(html).not.toContain('This CV as a');
@@ -213,7 +226,8 @@ describe('cvMarkup', () => {
     expect(growthCard('growth')).toContain('aria-label="Semrush"');
     expect(growthCard('balanced')).toContain('aria-label="Semrush"');
     expect(cvMarkup('engineering')).toContain('Analytics &amp; experimentation');
-    expect(cvMarkup('engineering')).not.toContain('Growth &amp; experimentation');
+    // The standard card title (the Uber version has its own "Growth & experimentation", hidden elsewhere).
+    expect(cvMarkup('engineering')).not.toMatch(/<h3( data-theme-std="[^"]*")?>Growth &amp; experimentation/);
   });
 
   it('includes the keywords that balance the shorter cards, in every theme', () => {

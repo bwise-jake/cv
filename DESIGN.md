@@ -92,7 +92,7 @@ uses a blend mode that makes Apple's PDF renderer flatten gradients).
 
 ## Company themes (interactive version)
 
-The default design above is one of thirteen themes. The others re-skin the same layout by overriding
+The default design above is one of fourteen themes. The others re-skin the same layout by overriding
 tokens only (`src/styles/themes.css`); no theme changes the structure, so ATS text order and
 the two-page layout hold everywhere.
 
@@ -109,6 +109,7 @@ the two-page layout hold everywhere.
 | Anduril | Inter Tight (for Helvetica Now Display), no mono | near-black #010101 and olive #505544; lime #DFF140 on black only | flat near-black #010101, lime kicker and role dash |
 | Anthropic | Poppins + Lora + DM Mono (for Anthropic Sans, Serif and Mono) | clay #C6613F (brand #D97757) on ivory #FAF9F5, slate #141413 | light warm panel #F0EEE6, slate type, grey mono kicker, clay role dash |
 | Mitti | Funnel Display + Geist (both open), no mono | indigo #4A42C8 on warm near-black #1C1714; yellow #FFC800, cyan #5ECEFA | flat near-black #1C1714 with the logo's indigo → cyan → yellow swoosh along its foot, yellow kicker and role dash |
+| Uber | Figtree (for Uber Move and Uber Move Text), no mono | black #000 on white; Uber Eats green #06C167 as fills only | black card with 22px corners inset on the white page, white type, white bold kicker, green role dash |
 | finguide | Hanken Grotesk (finguide's own, open) | lime #C0F43E on Ink | dark page (#1C1C1C card on #080808), Ink header band, lime role dash and labels |
 
 The controls (`src/render/controls.ts`) are typeset as a CV section headed **Version** in the
@@ -142,5 +143,6 @@ real text, so PDFs and ATS parsing are unaffected):
 | Anduril | Outlined 2px boxes, uppercase | Squircle photo; metadata as the site's uppercase tracked sans labels; skills cards on its off-white #F1F0EA with 2px corners, sub-headings as chips by group: black with lime, olive, grey |
 | Anthropic | Its secondary buttons: #F5F4ED fill, #D1CFC5 hairline, 8px corners | Serif prose under sans headings and mono metadata, as on the site; skills cards on its pastel tiles (oat #E3DACC, cactus #BCD1CA, heather #CBCADB) titled with slate chips |
 | Mitti | Outlined 6px boxes, like its secondary buttons | 18px rounded-square photo; Funnel Display name and headings; metadata as the site's uppercase Geist labels tracked 0.1em; skills cards on its light grey #F2F1F1 with 16px corners, sub-headings as chips by group: indigo, yellow, cyan |
+| Uber | Light grey pills (#F3F3F3), sentence case | Circular photo; sentence-case metadata; skills cards on its light grey #F3F3F3 with 18px corners, titled with pills: black, Eats green, outlined white |
 | finguide | Neutral pill badges (#2E2E2E, hairline border) | Rounded-square photo (16px); lime role dash and summary labels; skills cards on the raised neutral (#262626) with lime-wash title chips |
 | Default, Stripe, Relevance AI | Interpunct-separated mono text | |

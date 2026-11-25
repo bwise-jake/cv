@@ -313,6 +313,8 @@ section + section {
    these elements (skill headings, intros) with more specific selectors, which must never show both versions. */
 :root:not([data-theme="mitti"]) [data-theme-alt="mitti"],
 :root[data-theme="mitti"] [data-theme-std~="mitti"] { display: none !important; }
+:root:not([data-theme="uber"]) [data-theme-alt="uber"],
+:root[data-theme="uber"] [data-theme-std~="uber"] { display: none !important; }
 
 h2 {
   font-family: var(--display);

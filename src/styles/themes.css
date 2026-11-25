@@ -12,6 +12,7 @@
  *   Remitly    Greycliff CF                         → Figtree
  *   Anduril    Helvetica Now Display                → Inter Tight
  *   Anthropic  Anthropic Sans, Serif, Mono          → Poppins + Lora (its brand guidelines' fallbacks), DM Mono
+ *   Uber       Uber Move + Uber Move Text           → Figtree (closest to its round, geometric g, e and o)
  *   Mitti      Funnel Display + Geist               → same (open source)
  *   finguide   Hanken Grotesk (open source)               → same
  */
@@ -386,6 +387,47 @@
   /* Rounded squares, like its 16px cards and 12px buttons. */
   --radius-avatar: 18px;
   --radius-logo: 6px;
+}
+
+/* ---------- Uber ---------- */
+/* Sampled from jobs.uber.com (2026-11-25): pure black #000 and white, light greys #f3f3f3, #eeeeee and #ebebeb, the
+   Uber Eats green #06c167 on its Apply button (with black text), pill-shaped chips. Its job hero is a black card with
+   30px corners inset on the white page, with white 700 labels ("Location") over 400 values. Type is Uber Move for
+   headings (500, tight) and Uber Move Text for body; bold is 700. The green fails contrast as text on white, so text
+   stays black or white and the green is only ever a fill: the role dash and one skills chip. */
+:root[data-theme="uber"] {
+  --paper: #ffffff;
+  --canvas: #f3f3f3;
+  --ink: #000000;
+  --ink-soft: #1f1f1f;
+  --ink-faint: #5e5e5e;
+  --line: #e2e2e2;
+  --accent: #000000;
+  --accent-wash: #e6f9ef;
+  --tag: #1f1f1f;
+  --link: #000000;
+
+  /* The careers page's black hero card (components below): white type and labels, the Eats green role dash. */
+  --header-bg: #000000;
+  --header-noise-opacity: 0;
+  --paper-on-ink: #ffffff;
+  --muted-on-ink: #d6d6d6;
+  --line-on-ink: #333333;
+  --accent-on-ink: #06c167;
+  --cta-bg: #000000;
+  --cta-fg: #ffffff;
+
+  --display: 'Figtree', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --sans: 'Figtree', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  /* No monospace on the site: its metadata is the sans, small (components below). */
+  --mono: var(--sans);
+  --name-weight: 500;
+  --name-tracking: -0.02em;
+  --heading-weight: 500;
+  --strong-weight: 700;
+  /* Circular photos, like its people and team avatars; logos keep its 8px corners. */
+  --radius-avatar: 999px;
+  --radius-logo: 8px;
 }
 
 /* ---------- finguide (dark) ---------- */
@@ -895,4 +937,68 @@
   .skill-group[data-skill="frontend"] { --skill-card: #e3dacc; }
   .skill-group[data-skill="growth"] { --skill-card: #bcd1ca; }
   .skill-group[data-skill="ai"] { --skill-card: #cbcadb; }
+}
+
+/* Uber: the careers site's components. The header is its black hero card, inset on the white page with large
+   rounded corners; metadata is its Move Text, small and sentence case, and the kicker is its white bold label;
+   industry tags are its light grey pill buttons (#f3f3f3, near-black #161616 text); the skills cards are its light grey #f3f3f3 surface with rounded corners,
+   titled with pills styled like its buttons: black, the Eats green with black text, and an outlined white one. */
+:root[data-theme="uber"] {
+  header.identity {
+    margin: calc(14px - var(--page-pad-top)) calc(14px - var(--page-pad-x)) 14px;
+    padding-left: calc(var(--page-pad-x) - 14px);
+    padding-right: calc(var(--page-pad-x) - 14px);
+    border-radius: 22px;
+  }
+  .kicker,
+  .section-cont,
+  .job-meta,
+  .employer-span,
+  .prepared-for {
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .kicker { color: #ffffff; font-size: 10.5px; font-weight: 700; }
+
+  /* The Rider Growth headline and kicker in every focus (content/cv.ts). */
+  .role-title:has(.role-alt[data-theme-role="uber"]) .role-std { display: none; }
+  .role-alt[data-theme-role="uber"] { display: inline; }
+  .kicker:has(.kicker-alt[data-theme-kicker="uber"]) .kicker-std { display: none; }
+  .kicker-alt[data-theme-kicker="uber"] { display: inline; }
+  .job-meta,
+  .employer-span { font-size: 10px; }
+
+  .tag {
+    display: inline-block;
+    margin-right: 2px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #f3f3f3;
+    color: #161616;
+    font-size: 9.5px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 16px;
+    white-space: nowrap;
+  }
+  .tag + .tag::before { content: none; }
+  .employer-tags { line-height: 1.9; }
+
+  --radius-card: 18px;
+  --skill-card: #f3f3f3;
+  .skill-group h3 {
+    display: inline-block;
+    padding: 2px 9px;
+    border: 1px solid #000000;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  /* By group, not position, since the focus reorders them. */
+  .skill-group[data-skill="frontend"] h3 { background: #000000; color: #ffffff; }
+  .skill-group[data-skill="growth"] h3 { background: #06c167; border-color: #06c167; color: #000000; }
+  .skill-group[data-skill="ai"] h3 { background: #ffffff; color: #000000; }
 }

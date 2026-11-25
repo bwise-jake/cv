@@ -11,6 +11,7 @@ import notion from '../assets/brands/notion.png';
 import relevance from '../assets/brands/relevance.png';
 import remitly from '../assets/brands/remitly.svg';
 import stripe from '../assets/brands/stripe.png';
+import uber from '../assets/brands/uber.svg';
 import type { ThemeId } from '../types';
 
 /**
@@ -23,6 +24,7 @@ export const themeLogos: Record<ThemeId, string> = {
   notion,
   canva,
   stripe,
+  uber,
   linear,
   relevance,
   everlab,
