@@ -357,7 +357,7 @@ export const skills: SkillGroup[] = [
     id: 'frontend',
     title: 'Frontend engineering',
     skills: [
-      'Component Architecture, Design Systems, Design Patterns, State & Data Management, API Integration (GraphQL, REST), CMS & Content Authoring, Design Tokens, Migrations & Rebrands',
+      'Component Architecture, Design Systems, Design Patterns, State & Data Management, API Integration (GraphQL, REST), SQL, CMS & Content Authoring, Design Tokens, Migrations & Rebrands',
       'Responsive UI, Cross-Browser Compatibility, Accessibility (WCAG), Internationalisation (i18n), Web Performance (Core Web Vitals)',
       'Unit & Visual Regression Testing, Code Review, Technical Design, CI/CD, Cloud Hosting',
     ],

@@ -190,7 +190,7 @@ describe('cvMarkup', () => {
     expect(sets('frontend')).toHaveLength(3);
     expect(sets('growth')).toHaveLength(3);
     expect(sets('ai')).toHaveLength(4);
-    expect(items('frontend')).toHaveLength(18);
+    expect(items('frontend')).toHaveLength(19);
     expect(items('growth')).toHaveLength(18);
     expect(items('ai')).toHaveLength(15);
 
